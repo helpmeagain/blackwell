@@ -1,0 +1,15 @@
+{
+  "name": "blackwell",
+  "version": "1.0.0",
+  "description": "Precisamos entender o problema que o cliente coloca\r DDD não tem correlação direta com a implementação no código, tampouco com camadas. Para a parte do código, temos que pensar em como fazer de forma limpa, ou seja, sem pensar em banco da dados, bibliotecas e frameworks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  }
+}
