@@ -8,7 +8,11 @@ interface scheduleClinicalConsultationRequest {
 
 class scheduleClinicalConsultation {
     execute({clinicianId, patientId, appointmentDate}: scheduleClinicalConsultationRequest){
-        const clinicalCare = new ClinicalCare(clinicianId, patientId, appointmentDate)
+        const clinicalCare = new ClinicalCare({
+            clinicianId, 
+            patientId, 
+            appointmentDate
+        })
         return clinicalCare;
     }
 }

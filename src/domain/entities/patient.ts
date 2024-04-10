@@ -1,13 +1,18 @@
 import { randomUUID } from "node:crypto";
 
+interface PatientProps {
+    name: string;
+    surname: string;
+}
+
 class Patient {
     public id: string;
     public name: string;
     public surname: string;
 
-    constructor (name: string, surname: string , id?: string ) {
-        this.name = name;
-        this.surname = surname;
+    constructor (props: PatientProps , id?: string ) {
+        this.name = props.name;
+        this.surname = props.surname;
         this.id = id ?? randomUUID();
     }
 }
