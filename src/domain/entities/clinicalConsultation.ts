@@ -6,7 +6,7 @@ interface clinicalConsultationProps {
     appointmentDate: Date;
 }
 
-class clinicalConsultation {
+class ClinicalConsultation {
     public id: string;
     public clinicianId: string;
     public patientId: string;
@@ -20,4 +20,4 @@ class clinicalConsultation {
     }
 }
 
-export default clinicalConsultation;
+export default ClinicalConsultation;
