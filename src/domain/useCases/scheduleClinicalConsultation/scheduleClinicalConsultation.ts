@@ -1,4 +1,5 @@
 import ClinicalCare from "../../entities/clinicalConsultation";
+import ClinicalConsultationRepository from "../../repositories/ClinicalConsultationRepository";
 
 interface scheduleClinicalConsultationRequest {
     clinicianId: string;
@@ -7,12 +8,19 @@ interface scheduleClinicalConsultationRequest {
 }
 
 class scheduleClinicalConsultation {
-    execute({clinicianId, patientId, appointmentDate}: scheduleClinicalConsultationRequest){
+
+    constructor(
+        private readonly clinicalCareRepository: ClinicalConsultationRepository
+    ) {}
+
+    async execute({clinicianId, patientId, appointmentDate}: scheduleClinicalConsultationRequest){
         const clinicalCare = new ClinicalCare({
             clinicianId, 
             patientId, 
             appointmentDate
         })
+
+        await this.clinicalCareRepository.create(clinicalCare);
         return clinicalCare;
     }
 }
