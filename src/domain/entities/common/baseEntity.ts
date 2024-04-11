@@ -1,4 +1,4 @@
-import uniqueEntityId from "../valueObjects/uniqueEntityId/uniqueEntityId";
+import uniqueEntityId from "@entities/valueObjects/uniqueEntityId/uniqueEntityId";
 
 class baseEntity<Props> {
   private _id: uniqueEntityId;

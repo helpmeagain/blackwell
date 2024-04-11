@@ -1,6 +1,6 @@
-import ClinicalCare from "../../entities/clinicalConsultation";
-import uniqueEntityId from "../../entities/valueObjects/uniqueEntityId/uniqueEntityId";
-import ClinicalConsultationRepository from "../../repositories/ClinicalConsultationRepository";
+import ClinicalConsultation from "@entities/clinicalConsultation";
+import uniqueEntityId from "@entities/valueObjects/uniqueEntityId/uniqueEntityId";
+import ClinicalConsultationRepository from "@/domain/repositories/ClinicalConsultationRepository";
 
 interface scheduleClinicalConsultationRequest {
     clinicianId: string;
@@ -16,7 +16,7 @@ class scheduleClinicalConsultation {
     ) {}
 
     async execute({clinicianId, patientId, room, appointmentDate}: scheduleClinicalConsultationRequest){
-        const clinicalCare = ClinicalCare.create({
+        const clinicalCare = ClinicalConsultation.create({
             clinicianId: new uniqueEntityId(clinicianId),
             patientId: new uniqueEntityId(patientId), 
             room,

@@ -1,7 +1,6 @@
-import { expect, test } from 'vitest';
 import scheduleClinicalConsultation from './scheduleClinicalConsultation';
-import ClinicalConsultationRepository from '../../repositories/ClinicalConsultationRepository';
-import ClinicalConsultation from '../../entities/clinicalConsultation';
+import ClinicalConsultationRepository from '@/domain/repositories/ClinicalConsultationRepository';
+import ClinicalConsultation from '@entities/clinicalConsultation';
 
 const fakeClinicalConsultationRepository: ClinicalConsultationRepository = {
     create: async (clinicalConsultation: ClinicalConsultation) => {
@@ -14,6 +13,7 @@ test('Create a Clinical Consultation', async () => {
     const response = await appointment.execute({
         clinicianId: '1',
         patientId: '1',
+        room: 1,
         appointmentDate: new Date(Date.UTC(2021, 0, 1, 0, 0, 0))
     })
 
