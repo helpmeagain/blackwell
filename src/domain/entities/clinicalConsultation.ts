@@ -1,9 +1,13 @@
 import baseEntity from "./common/baseEntity";
+import uniqueEntityId from "./valueObjects/uniqueEntityId/uniqueEntityId";
 
 interface clinicalConsultationProps {
-    clinicianId: string;
-    patientId: string;
+    clinicianId: uniqueEntityId;
+    patientId: uniqueEntityId;
+    room: number;
     appointmentDate: Date;
+    createdAt: Date;
+    updatedAt?: Date;
 }
 
 class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {

@@ -4,9 +4,9 @@ class baseEntity<Props> {
   private _id: uniqueEntityId;
   protected props: Props;
 
-  constructor (props: Props, id?: string) {
+  protected constructor (props: Props, id?: uniqueEntityId) {
     this.props = props;
-    this._id = new uniqueEntityId(id);
+    this._id = id ?? new uniqueEntityId(id);
   }
 
   get id(): uniqueEntityId {
