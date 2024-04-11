@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import baseEntity from "./common/baseEntity";
 
 interface clinicalConsultationProps {
     clinicianId: string;
@@ -6,17 +6,9 @@ interface clinicalConsultationProps {
     appointmentDate: Date;
 }
 
-class ClinicalConsultation {
-    public id: string;
-    public clinicianId: string;
-    public patientId: string;
-    public appointmentDate: Date;
-
-    constructor (props: clinicalConsultationProps, id?: string) {
-        this.id = id ?? randomUUID();
-        this.clinicianId = props.clinicianId;
-        this.patientId = props.patientId;
-        this.appointmentDate = props.appointmentDate;
+class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {
+    get appointmentDate() {
+        return this.props.appointmentDate;
     }
 }
 

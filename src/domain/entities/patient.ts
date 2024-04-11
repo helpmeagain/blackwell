@@ -1,20 +1,12 @@
-import { randomUUID } from "node:crypto";
+import baseEntity from "./common/baseEntity";
 
 interface PatientProps {
     name: string;
     surname: string;
 }
 
-class Patient {
-    public id: string;
-    public name: string;
-    public surname: string;
+class Patient extends baseEntity<PatientProps> {
 
-    constructor (props: PatientProps , id?: string ) {
-        this.name = props.name;
-        this.surname = props.surname;
-        this.id = id ?? randomUUID();
-    }
 }
 
 export default Patient;
