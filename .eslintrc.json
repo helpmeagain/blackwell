@@ -1,18 +1,21 @@
 {
     "env": {
         "node": true,
-        "es2021": true
+        "es2021": true,
+        "vitest-globals/env": true
     },
     "extends": [
         "standard",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:vitest-globals/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "rules": {
+        "no-useless-constructor": "off",
         "prettier/prettier": [
             "error",
             {

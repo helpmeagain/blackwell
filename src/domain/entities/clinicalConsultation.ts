@@ -1,64 +1,70 @@
-import baseEntity from "./common/baseEntity";
-import { Optional } from "./common/optionalType";
-import uniqueEntityId from "./valueObjects/uniqueEntityId/uniqueEntityId";
+import baseEntity from './common/baseEntity';
+import { type Optional } from './common/optionalType';
+import type UniqueEntityId from './valueObjects/uniqueEntityId/uniqueEntityId';
 
 interface clinicalConsultationProps {
-    clinicianId: uniqueEntityId;
-    patientId: uniqueEntityId;
-    room: number;
-    appointmentDate: Date;
-    createdAt: Date;
-    updatedAt?: Date;
+  clinicianId: UniqueEntityId;
+  patientId: UniqueEntityId;
+  room: number;
+  appointmentDate: Date;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {
-    static create (props: Optional<clinicalConsultationProps, 'createdAt'>, id?: uniqueEntityId) {
-        const clinicalConsultation = new ClinicalConsultation({
-            ...props,
-            createdAt: new Date(),
-        }, id);
-        return clinicalConsultation;
-    }
+  static create(
+    props: Optional<clinicalConsultationProps, 'createdAt'>,
+    id?: UniqueEntityId,
+  ) {
+    const clinicalConsultation = new ClinicalConsultation(
+      {
+        ...props,
+        createdAt: new Date(),
+      },
+      id,
+    );
+    return clinicalConsultation;
+  }
 
-    // Getters //
-    get clinicianId() {
-        return this.props.clinicianId;
-    }
+  // Getters //
+  get clinicianId() {
+    return this.props.clinicianId;
+  }
 
-    get patientId() {
-        return this.props.patientId;
-    }
+  get patientId() {
+    return this.props.patientId;
+  }
 
-    get room() {
-        return this.props.room;
-    }
+  get room() {
+    return this.props.room;
+  }
 
-    get createdAt() {
-        return this.props.createdAt;
-    }
+  get createdAt() {
+    return this.props.createdAt;
+  }
 
-    get updatedAt() {
-        return this.props.updatedAt;
-    }
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
 
-    get appointmentDate() {
-        return this.props.appointmentDate;
-    }
+  get appointmentDate() {
+    return this.props.appointmentDate;
+  }
 
-    // Setter //
-    private touch() {  
-        this.props.updatedAt = new Date();
-    }
+  // Setter //
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
 
-    set appointmentDate(appointmentDate: Date){
-        this.props.appointmentDate = appointmentDate;
-        this.touch();
-    }
+  set appointmentDate(appointmentDate: Date) {
+    this.props.appointmentDate = appointmentDate;
+    this.touch();
+  }
 
-    set room (room: number) {
-        this.props.room = room;
-        this.touch();
-    }
+  set room(room: number) {
+    this.props.room = room;
+    this.touch();
+  }
 }
 
 export default ClinicalConsultation;

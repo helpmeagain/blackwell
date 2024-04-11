@@ -18,8 +18,9 @@ DDD não tem correlação direta com a implementação no código, tampouco com 
 - Casos de uso
 
 # Entidades e casos de usos
-Tudo que é factível na aplicação. Geralmente será descoberto na conversa com o Domain Expert
-- "Eu tenho que responder os alunos e eu me perco em quais dúvidas já foram respondidas"
+Tudo que é factível na aplicação. Geralmente será descoberto na conversa com o Domain Expert.
 
-Partes que vão se transformar em entidades: eu, alunos
-Partes que vão se transformar em casos de uso: responder
+"Eu tenho que responder os alunos e eu me perco em quais dúvidas já foram respondidas"
+
+- Partes que vão se transformar em entidades: eu, alunos
+- Partes que vão se transformar em casos de uso: responder

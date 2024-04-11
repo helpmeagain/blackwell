@@ -1,15 +1,15 @@
-import uniqueEntityId from "@entities/valueObjects/uniqueEntityId/uniqueEntityId";
+import UniqueEntityId from '@entities/valueObjects/uniqueEntityId/uniqueEntityId';
 
 class baseEntity<Props> {
-  private _id: uniqueEntityId;
+  private readonly _id: UniqueEntityId;
   protected props: Props;
 
-  protected constructor (props: Props, id?: uniqueEntityId) {
+  protected constructor(props: Props, id?: UniqueEntityId) {
     this.props = props;
-    this._id = id ?? new uniqueEntityId(id);
+    this._id = id ?? new UniqueEntityId(id);
   }
 
-  get id(): uniqueEntityId {
+  get id(): UniqueEntityId {
     return this._id;
   }
 }
