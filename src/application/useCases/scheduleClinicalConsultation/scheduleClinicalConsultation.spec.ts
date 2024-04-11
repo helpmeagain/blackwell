@@ -1,5 +1,5 @@
 import ScheduleClinicalConsultation from './scheduleClinicalConsultation';
-import type ClinicalConsultationRepository from '@/domain/repositories/ClinicalConsultationRepository';
+import type ClinicalConsultationRepository from '@application/repositories/ClinicalConsultationRepository';
 import type ClinicalConsultation from '@entities/clinicalConsultation';
 
 const fakeClinicalConsultationRepository: ClinicalConsultationRepository = {

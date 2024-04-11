@@ -1,6 +1,6 @@
 import ClinicalConsultation from '@entities/clinicalConsultation';
 import UniqueEntityId from '@entities/valueObjects/uniqueEntityId/uniqueEntityId';
-import type ClinicalConsultationRepository from '@/domain/repositories/ClinicalConsultationRepository';
+import type ClinicalConsultationRepository from '@application/repositories/ClinicalConsultationRepository';
 
 interface scheduleClinicalConsultationRequest {
   clinicianId: string;

@@ -1,6 +1,10 @@
 {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": "explicit"
+    },
+    "material-icon-theme.folders.associations": {
+        "domain": "controller",
+        "application": "dist",
     }
 }

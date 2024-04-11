@@ -1,4 +1,4 @@
-import type ClinicalConsultation from '../entities/clinicalConsultation';
+import type ClinicalConsultation from '@entities/clinicalConsultation';
 
 interface ClinicalConsultationRepository {
   create: (clinicalConsultation: ClinicalConsultation) => Promise<void>;

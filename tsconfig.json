@@ -30,6 +30,12 @@
       "@/*": [
         "./src/*"
       ],
+      "@application/*": [
+        "./src/application/*"
+      ],
+      "@domain/*": [
+        "./src/domain/*"
+      ],
       "@entities/*": [
         "./src/domain/entities/*"
       ]
