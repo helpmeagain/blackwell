@@ -1,5 +1,5 @@
-import baseEntity from './common/baseEntity';
-import type UniqueEntityId from './valueObjects/uniqueEntityId/uniqueEntityId';
+import { baseEntity } from '@domain/common/base-entity';
+import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
 interface ClinicianProps {
   name: string;
@@ -7,11 +7,9 @@ interface ClinicianProps {
   occupation: string;
 }
 
-class Clinician extends baseEntity<ClinicianProps> {
+export class Clinician extends baseEntity<ClinicianProps> {
   static create(props: ClinicianProps, id?: UniqueEntityId) {
     const clinician = new Clinician(props, id);
     return clinician;
   }
 }
-
-export default Clinician;

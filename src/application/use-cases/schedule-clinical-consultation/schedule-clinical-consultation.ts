@@ -1,6 +1,6 @@
-import ClinicalConsultation from '@entities/clinicalConsultation';
-import UniqueEntityId from '@entities/valueObjects/uniqueEntityId/uniqueEntityId';
-import type ClinicalConsultationRepository from '@application/repositories/ClinicalConsultationRepository';
+import { ClinicalConsultation } from '@entities/clinical-consultation';
+import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
+import { type ClinicalConsultationRepository } from '@/application/repositories/clinical-consultation-repository';
 
 interface scheduleClinicalConsultationRequest {
   clinicianId: string;
@@ -9,7 +9,7 @@ interface scheduleClinicalConsultationRequest {
   appointmentDate: Date;
 }
 
-class ScheduleClinicalConsultation {
+export class ScheduleClinicalConsultation {
   constructor(
     private readonly clinicalCareRepository: ClinicalConsultationRepository,
   ) {}
@@ -31,5 +31,3 @@ class ScheduleClinicalConsultation {
     return clinicalCare;
   }
 }
-
-export default ScheduleClinicalConsultation;

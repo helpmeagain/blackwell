@@ -1,6 +1,6 @@
-import UniqueEntityId from '@entities/valueObjects/uniqueEntityId/uniqueEntityId';
+import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
-class baseEntity<Props> {
+export class baseEntity<Props> {
   private readonly _id: UniqueEntityId;
   protected props: Props;
 
@@ -13,5 +13,3 @@ class baseEntity<Props> {
     return this._id;
   }
 }
-
-export default baseEntity;

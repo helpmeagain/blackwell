@@ -1,4 +1,4 @@
-class Slug {
+export class Slug {
   public value: string;
 
   constructor(value: string) {
@@ -19,5 +19,3 @@ class Slug {
     return new Slug(slugText);
   }
 }
-
-export default Slug;

@@ -1,6 +1,6 @@
-import baseEntity from './common/baseEntity';
-import { type Optional } from './common/optionalType';
-import type UniqueEntityId from './valueObjects/uniqueEntityId/uniqueEntityId';
+import { baseEntity } from '@domain/common/base-entity';
+import { type Optional } from '@domain/common/optional-type';
+import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
 interface clinicalConsultationProps {
   clinicianId: UniqueEntityId;
@@ -11,7 +11,7 @@ interface clinicalConsultationProps {
   updatedAt?: Date;
 }
 
-class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {
+export class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {
   static create(
     props: Optional<clinicalConsultationProps, 'createdAt'>,
     id?: UniqueEntityId,
@@ -66,5 +66,3 @@ class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {
     this.touch();
   }
 }
-
-export default ClinicalConsultation;

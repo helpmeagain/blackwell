@@ -1,6 +1,6 @@
-import ScheduleClinicalConsultation from './scheduleClinicalConsultation';
-import type ClinicalConsultationRepository from '@application/repositories/ClinicalConsultationRepository';
-import type ClinicalConsultation from '@entities/clinicalConsultation';
+import { ScheduleClinicalConsultation } from './schedule-clinical-consultation';
+import { ClinicalConsultationRepository } from '@/application/repositories/clinical-consultation-repository';
+import { type ClinicalConsultation } from '@entities/clinical-consultation';
 
 const fakeClinicalConsultationRepository: ClinicalConsultationRepository = {
   create: async (clinicalConsultation: ClinicalConsultation) => {},
