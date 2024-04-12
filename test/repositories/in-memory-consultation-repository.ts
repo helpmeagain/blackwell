@@ -17,4 +17,9 @@ export class InMemoryConsultationRepository implements ClinicalConsultationRepos
   async create(clinicalConsultation: ClinicalConsultation) {
     this.items.push(clinicalConsultation);
   }
+
+  async delete(clinicalConsultation: ClinicalConsultation) {
+    const index = this.items.findIndex((item) => item.id === clinicalConsultation.id);
+    this.items.splice(index, 1);
+  }
 }

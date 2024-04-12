@@ -3,4 +3,5 @@ import { type ClinicalConsultation } from '@/domain/entities/clinical-consultati
 export interface ClinicalConsultationRepository {
   findById: (id: string) => Promise<ClinicalConsultation | null>;
   create: (clinicalConsultation: ClinicalConsultation) => Promise<void>;
+  delete: (clinicalConsultation: ClinicalConsultation) => Promise<void>;
 }
