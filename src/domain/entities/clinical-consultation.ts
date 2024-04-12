@@ -2,7 +2,7 @@ import { BaseEntity } from '@domain/common/base-entity';
 import { type Optional } from '@domain/common/optional-type';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
-interface clinicalConsultationProps {
+export interface clinicalConsultationProps {
   clinicianId: UniqueEntityId;
   patientId: UniqueEntityId;
   room: number;
