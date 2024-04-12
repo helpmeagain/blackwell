@@ -16,7 +16,7 @@ describe('Get Clinical Consultation By Id', () => {
     await inMemoryConsultationRepository.create(newClinicalConsultation);
 
     const { clinicalConsultation } = await sut.execute({
-      id: newClinicalConsultation.id,
+      clinicalConsultationId: newClinicalConsultation.id,
     });
 
     expect(clinicalConsultation.id).toBeTruthy();
