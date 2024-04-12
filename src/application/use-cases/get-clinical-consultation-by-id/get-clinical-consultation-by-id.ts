@@ -1,9 +1,8 @@
 import { ClinicalConsultation } from '@entities/clinical-consultation';
 import { type ClinicalConsultationRepository } from '@/application/repositories/clinical-consultation-repository';
-import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
 interface getClinicalConsultationByIdRequest {
-  clinicalConsultationId: UniqueEntityId;
+  clinicalConsultationId: string;
 }
 
 interface getClinicalConsultationByIdResponse {
