@@ -1,15 +1,15 @@
-import { DeleteClinicalConsultationById } from './delete-clinical-consultation-by-id';
+import { DeleteClinicalConsultationByIdUseCase } from './delete-clinical-consultation-by-id-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { makeConsultation } from 'test/factories/make-consultation';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
 let inMemoryConsultationRepository: InMemoryConsultationRepository;
-let sut: DeleteClinicalConsultationById;
+let sut: DeleteClinicalConsultationByIdUseCase;
 
 describe('Delete a clinical consultation By Id', () => {
   beforeEach(() => {
     inMemoryConsultationRepository = new InMemoryConsultationRepository();
-    sut = new DeleteClinicalConsultationById(inMemoryConsultationRepository);
+    sut = new DeleteClinicalConsultationByIdUseCase(inMemoryConsultationRepository);
   });
 
   it('should be able to delete a clinical consultation by id', async () => {

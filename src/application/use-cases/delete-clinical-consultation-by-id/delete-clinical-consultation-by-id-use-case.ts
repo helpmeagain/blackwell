@@ -7,7 +7,7 @@ interface deleteClinicalConsultationByIdRequest {
 
 interface deleteClinicalConsultationByIdResponse {}
 
-export class DeleteClinicalConsultationById {
+export class DeleteClinicalConsultationByIdUseCase {
   constructor(
     private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
   ) {}

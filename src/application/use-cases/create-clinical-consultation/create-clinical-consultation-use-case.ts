@@ -13,7 +13,7 @@ interface createClinicalConsultationResponse {
   clinicalConsultation: ClinicalConsultation;
 }
 
-export class CreateClinicalConsultation {
+export class CreateClinicalConsultationUseCase {
   constructor(
     private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
   ) {}

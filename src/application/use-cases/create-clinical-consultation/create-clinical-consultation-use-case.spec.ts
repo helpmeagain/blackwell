@@ -1,13 +1,13 @@
-import { CreateClinicalConsultation } from './create-clinical-consultation';
+import { CreateClinicalConsultationUseCase } from './create-clinical-consultation-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 
 let inMemoryClinicalConsultationRepository: InMemoryConsultationRepository;
-let sut: CreateClinicalConsultation;
+let sut: CreateClinicalConsultationUseCase;
 
 describe('Schedule Clinical Consultation', () => {
   beforeEach(() => {
     inMemoryClinicalConsultationRepository = new InMemoryConsultationRepository();
-    sut = new CreateClinicalConsultation(inMemoryClinicalConsultationRepository);
+    sut = new CreateClinicalConsultationUseCase(inMemoryClinicalConsultationRepository);
   });
 
   it('should be able to schedule a clinical consultation', async () => {

@@ -9,7 +9,7 @@ interface getClinicalConsultationByIdResponse {
   clinicalConsultation: ClinicalConsultation;
 }
 
-export class GetClinicalConsultationById {
+export class GetClinicalConsultationByIdUseCase {
   constructor(
     private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
   ) {}
