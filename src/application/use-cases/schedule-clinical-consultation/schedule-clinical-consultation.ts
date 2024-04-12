@@ -9,9 +9,13 @@ interface scheduleClinicalConsultationRequest {
   appointmentDate: Date;
 }
 
+interface scheduleClinicalConsultationResponse {
+  clinicalConsultation: ClinicalConsultation;
+}
+
 export class ScheduleClinicalConsultation {
   constructor(
-    private readonly clinicalCareRepository: ClinicalConsultationRepository,
+    private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
   ) {}
 
   async execute({
@@ -19,15 +23,15 @@ export class ScheduleClinicalConsultation {
     patientId,
     room,
     appointmentDate,
-  }: scheduleClinicalConsultationRequest) {
-    const clinicalCare = ClinicalConsultation.create({
+  }: scheduleClinicalConsultationRequest): Promise<scheduleClinicalConsultationResponse> {
+    const clinicalConsultation = ClinicalConsultation.create({
       clinicianId: new UniqueEntityId(clinicianId),
       patientId: new UniqueEntityId(patientId),
       room,
       appointmentDate,
     });
 
-    await this.clinicalCareRepository.create(clinicalCare);
-    return clinicalCare;
+    await this.clinicalConsultationRepository.create(clinicalConsultation);
+    return { clinicalConsultation };
   }
 }

@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
-export class baseEntity<Props> {
+export abstract class BaseEntity<Props> {
   private readonly _id: UniqueEntityId;
   protected props: Props;
 

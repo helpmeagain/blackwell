@@ -1,4 +1,4 @@
-import { baseEntity } from '@domain/common/base-entity';
+import { BaseEntity } from '@domain/common/base-entity';
 import { type Optional } from '@domain/common/optional-type';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
@@ -11,7 +11,7 @@ interface clinicalConsultationProps {
   updatedAt?: Date;
 }
 
-export class ClinicalConsultation extends baseEntity<clinicalConsultationProps> {
+export class ClinicalConsultation extends BaseEntity<clinicalConsultationProps> {
   static create(
     props: Optional<clinicalConsultationProps, 'createdAt'>,
     id?: UniqueEntityId,

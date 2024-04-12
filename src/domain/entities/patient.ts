@@ -1,4 +1,4 @@
-import { baseEntity } from '@domain/common/base-entity';
+import { BaseEntity } from '@domain/common/base-entity';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
 interface PatientProps {
@@ -6,7 +6,7 @@ interface PatientProps {
   surname: string;
 }
 
-export class Patient extends baseEntity<PatientProps> {
+export class Patient extends BaseEntity<PatientProps> {
   static create(props: PatientProps, id?: UniqueEntityId) {
     const patient = new Patient(props, id);
     return patient;
