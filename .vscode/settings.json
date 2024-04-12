@@ -6,5 +6,7 @@
     "material-icon-theme.folders.associations": {
         "domain": "controller",
         "application": "dist",
+        "presentation": "meta",
+        "infrastructure": "interface"
     }
 }
