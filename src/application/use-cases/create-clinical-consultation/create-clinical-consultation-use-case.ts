@@ -14,9 +14,7 @@ interface createClinicalConsultationResponse {
 }
 
 export class CreateClinicalConsultationUseCase {
-  constructor(
-    private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
-  ) {}
+  constructor(private readonly repository: ClinicalConsultationRepository) {}
 
   async execute({
     clinicianId,
@@ -31,7 +29,7 @@ export class CreateClinicalConsultationUseCase {
       appointmentDate,
     });
 
-    await this.clinicalConsultationRepository.create(clinicalConsultation);
+    await this.repository.create(clinicalConsultation);
     return { clinicalConsultation };
   }
 }

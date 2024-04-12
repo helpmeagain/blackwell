@@ -8,16 +8,13 @@ interface deleteClinicalConsultationByIdRequest {
 interface deleteClinicalConsultationByIdResponse {}
 
 export class DeleteClinicalConsultationByIdUseCase {
-  constructor(
-    private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
-  ) {}
+  constructor(private readonly repository: ClinicalConsultationRepository) {}
 
   async execute({
     clinicalConsultationId,
     clinicianId,
   }: deleteClinicalConsultationByIdRequest): Promise<deleteClinicalConsultationByIdResponse> {
-    const clinicalConsultation =
-      await this.clinicalConsultationRepository.findById(clinicalConsultationId);
+    const clinicalConsultation = await this.repository.findById(clinicalConsultationId);
 
     if (!clinicalConsultation) {
       throw new Error('Clinical consultation not found');
@@ -27,7 +24,7 @@ export class DeleteClinicalConsultationByIdUseCase {
       throw new Error('Unauthorized');
     }
 
-    await this.clinicalConsultationRepository.delete(clinicalConsultation);
-    return { clinicalConsultation };
+    await this.repository.delete(clinicalConsultation);
+    return {};
   }
 }

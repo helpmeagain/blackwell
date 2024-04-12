@@ -10,15 +10,12 @@ interface getClinicalConsultationByIdResponse {
 }
 
 export class GetClinicalConsultationByIdUseCase {
-  constructor(
-    private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
-  ) {}
+  constructor(private readonly repository: ClinicalConsultationRepository) {}
 
   async execute({
     clinicalConsultationId,
   }: getClinicalConsultationByIdRequest): Promise<getClinicalConsultationByIdResponse> {
-    const clinicalConsultation =
-      await this.clinicalConsultationRepository.findById(clinicalConsultationId);
+    const clinicalConsultation = await this.repository.findById(clinicalConsultationId);
 
     if (!clinicalConsultation) {
       throw new Error('Clinical consultation not found');
