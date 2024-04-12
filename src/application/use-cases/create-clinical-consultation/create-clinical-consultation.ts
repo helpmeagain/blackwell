@@ -2,18 +2,18 @@ import { ClinicalConsultation } from '@entities/clinical-consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 import { type ClinicalConsultationRepository } from '@/application/repositories/clinical-consultation-repository';
 
-interface scheduleClinicalConsultationRequest {
+interface createClinicalConsultationRequest {
   clinicianId: string;
   patientId: string;
   room: number;
   appointmentDate: Date;
 }
 
-interface scheduleClinicalConsultationResponse {
+interface createClinicalConsultationResponse {
   clinicalConsultation: ClinicalConsultation;
 }
 
-export class ScheduleClinicalConsultation {
+export class CreateClinicalConsultation {
   constructor(
     private readonly clinicalConsultationRepository: ClinicalConsultationRepository,
   ) {}
@@ -23,7 +23,7 @@ export class ScheduleClinicalConsultation {
     patientId,
     room,
     appointmentDate,
-  }: scheduleClinicalConsultationRequest): Promise<scheduleClinicalConsultationResponse> {
+  }: createClinicalConsultationRequest): Promise<createClinicalConsultationResponse> {
     const clinicalConsultation = ClinicalConsultation.create({
       clinicianId: new UniqueEntityId(clinicianId),
       patientId: new UniqueEntityId(patientId),
