@@ -2,6 +2,7 @@ import { DeleteConsultationByIdUseCase } from './delete-consultation-by-id-use-c
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { makeConsultation } from 'test/factories/make-consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
+import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
 
 let inMemoryRepository: InMemoryConsultationRepository;
 let sut: DeleteConsultationByIdUseCase;
@@ -19,11 +20,12 @@ describe('Delete a consultation By Id', () => {
     );
     await inMemoryRepository.create(newConsultation);
 
-    await sut.execute({
+    const result = await sut.execute({
       consultationId: 'consultationId-1',
       clinicianId: 'clinicianId-1',
     });
 
+    expect(result.isRight()).toBe(true);
     expect(inMemoryRepository.items).toHaveLength(0);
   });
 
@@ -34,11 +36,12 @@ describe('Delete a consultation By Id', () => {
     );
     await inMemoryRepository.create(newConsultation);
 
-    expect(() => {
-      return sut.execute({
-        consultationId: 'consultationId-1',
-        clinicianId: 'clinicianId-2',
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      consultationId: 'consultationId-1',
+      clinicianId: 'clinicianId-2',
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAllowed);
   });
 });
