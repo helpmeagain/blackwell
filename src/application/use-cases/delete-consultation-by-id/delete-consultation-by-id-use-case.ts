@@ -1,3 +1,6 @@
+import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
+import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
+import { Either, left, right } from '@application/common/error-handler/either';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
 
 interface deleteConsultationByIdRequest {
@@ -5,7 +8,10 @@ interface deleteConsultationByIdRequest {
   clinicianId: string;
 }
 
-interface deleteConsultationByIdResponse {}
+type deleteConsultationByIdResponse = Either<
+  ResourceNotFound | NotAllowed,
+  Record<string, never>
+>;
 
 export class DeleteConsultationByIdUseCase {
   constructor(private readonly repository: ConsultationRepository) {}
@@ -17,14 +23,14 @@ export class DeleteConsultationByIdUseCase {
     const consultation = await this.repository.findById(consultationId);
 
     if (!consultation) {
-      throw new Error('Consultation not found');
+      return left(new ResourceNotFound());
     }
 
     if (clinicianId !== consultation.clinicianId.toString()) {
-      throw new Error('Unauthorized');
+      return left(new NotAllowed());
     }
 
     await this.repository.delete(consultation);
-    return {};
+    return right({});
   }
 }
