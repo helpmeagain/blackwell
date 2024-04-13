@@ -1,4 +1,20 @@
 {
+    "explorer.compactFolders": false,
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "package.json": ".eslint*, prettier*, tsconfig*, vite*, pnpm-lock*, bun.lockb, nest*, package-lock.json",
+        ".gitignore": ".gitattributes",
+        ".env.local": ".env*",
+        ".env": ".env*",
+        "README*": "LICENSE*, License*"
+    },
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#2e2e2e"
+    },
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
