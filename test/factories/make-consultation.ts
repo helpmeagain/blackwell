@@ -1,15 +1,15 @@
 import { faker } from '@faker-js/faker';
 import {
-  ClinicalConsultation,
-  clinicalConsultationProps,
-} from '@entities/clinical-consultation';
+  Consultation,
+  consultationProps,
+} from '@/domain/entities/consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
 export function makeConsultation(
-  override: Partial<clinicalConsultationProps> = {},
+  override: Partial<consultationProps> = {},
   id?: UniqueEntityId,
 ) {
-  const consultation = ClinicalConsultation.create(
+  const consultation = Consultation.create(
     {
       clinicianId: new UniqueEntityId(),
       patientId: new UniqueEntityId(),

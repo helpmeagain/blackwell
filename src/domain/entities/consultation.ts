@@ -2,7 +2,7 @@ import { BaseEntity } from '@domain/common/base-entity';
 import { type Optional } from '@domain/common/optional-type';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
-export interface clinicalConsultationProps {
+export interface consultationProps {
   clinicianId: UniqueEntityId;
   patientId: UniqueEntityId;
   room: number;
@@ -11,19 +11,16 @@ export interface clinicalConsultationProps {
   updatedAt?: Date;
 }
 
-export class ClinicalConsultation extends BaseEntity<clinicalConsultationProps> {
-  static create(
-    props: Optional<clinicalConsultationProps, 'createdAt'>,
-    id?: UniqueEntityId,
-  ) {
-    const clinicalConsultation = new ClinicalConsultation(
+export class Consultation extends BaseEntity<consultationProps> {
+  static create(props: Optional<consultationProps, 'createdAt'>, id?: UniqueEntityId) {
+    const consultation = new Consultation(
       {
         ...props,
         createdAt: new Date(),
       },
       id,
     );
-    return clinicalConsultation;
+    return consultation;
   }
 
   // Getters //

@@ -1,25 +1,25 @@
-import { ClinicalConsultation } from '@entities/clinical-consultation';
-import { ClinicalConsultationRepository } from '@application/repositories/clinical-consultation-repository';
+import { Consultation } from '@/domain/entities/consultation';
+import { ConsultationRepository } from '@/application/repositories/consultation-repository';
 
-export class InMemoryConsultationRepository implements ClinicalConsultationRepository {
-  public items: ClinicalConsultation[] = [];
+export class InMemoryConsultationRepository implements ConsultationRepository {
+  public items: Consultation[] = [];
 
   async findById(id: string) {
-    const clinicalConsultation = this.items.find((item) => item.id.toString() === id);
+    const consultation = this.items.find((item) => item.id.toString() === id);
 
-    if (!clinicalConsultation) {
+    if (!consultation) {
       return null;
     }
 
-    return clinicalConsultation;
+    return consultation;
   }
 
-  async create(clinicalConsultation: ClinicalConsultation) {
-    this.items.push(clinicalConsultation);
+  async create(consultation: Consultation) {
+    this.items.push(consultation);
   }
 
-  async delete(clinicalConsultation: ClinicalConsultation) {
-    const index = this.items.findIndex((item) => item.id === clinicalConsultation.id);
+  async delete(consultation: Consultation) {
+    const index = this.items.findIndex((item) => item.id === consultation.id);
     this.items.splice(index, 1);
   }
 }
