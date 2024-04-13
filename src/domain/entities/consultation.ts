@@ -16,7 +16,7 @@ export class Consultation extends BaseEntity<consultationProps> {
     const consultation = new Consultation(
       {
         ...props,
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     );

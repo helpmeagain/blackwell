@@ -1,5 +1,6 @@
 import { Consultation } from '@/domain/entities/consultation';
 import { ConsultationRepository } from '@/application/repositories/consultation-repository';
+import { PaginationParams } from '@/application/common/pagination-params';
 
 export class InMemoryConsultationRepository implements ConsultationRepository {
   public items: Consultation[] = [];
@@ -12,6 +13,14 @@ export class InMemoryConsultationRepository implements ConsultationRepository {
     }
 
     return consultation;
+  }
+
+  async findManyRecent({ page }: PaginationParams) {
+    const consultations = this.items
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((page - 1) * 20, page * 20);
+
+    return consultations;
   }
 
   async create(consultation: Consultation) {
