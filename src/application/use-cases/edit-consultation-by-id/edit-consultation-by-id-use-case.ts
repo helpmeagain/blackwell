@@ -1,3 +1,4 @@
+import { Consultation } from '@entities/consultation';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
 
 interface editConsultationByIdRequest {
@@ -7,7 +8,9 @@ interface editConsultationByIdRequest {
   room: number;
 }
 
-interface editConsultationByIdResponse {}
+interface editConsultationByIdResponse {
+  consultation: Consultation;
+}
 
 export class EditConsultationByIdUseCase {
   constructor(private readonly repository: ConsultationRepository) {}
@@ -32,6 +35,6 @@ export class EditConsultationByIdUseCase {
     consultation.room = room;
 
     await this.repository.save(consultation);
-    return {};
+    return { consultation };
   }
 }
