@@ -18,6 +18,11 @@ export class InMemoryConsultationRepository implements ConsultationRepository {
     this.items.push(consultation);
   }
 
+  async save(consultation: Consultation) {
+    const index = this.items.findIndex((item) => item.id === consultation.id);
+    this.items[index] = consultation;
+  }
+
   async delete(consultation: Consultation) {
     const index = this.items.findIndex((item) => item.id === consultation.id);
     this.items.splice(index, 1);
