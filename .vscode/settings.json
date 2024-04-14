@@ -2,7 +2,7 @@
     "explorer.compactFolders": false,
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
-        "package.json": ".eslint*, prettier*, tsconfig*, vite*, pnpm-lock*, bun.lockb, nest*, package-lock.json",
+        "package.json": ".eslint*, prettier*, tsconfig*, vite*, pnpm-lock*, yarn.lock*, bun.lockb, nest*, package-lock.json",
         ".gitignore": ".gitattributes",
         ".env.local": ".env*",
         ".env": ".env*",
