@@ -2,10 +2,12 @@ import { Either, left, right } from '@application/common/error-handler/either';
 import { Patient } from '@entities/patient';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
+import { Gender } from '@/domain/common/types/gender-type';
 
 interface createPatientRequest {
   name: string;
   surname: string;
+  gender: Gender;
   birthDate: Date;
   phoneNumber: string;
   email: string;
@@ -19,6 +21,7 @@ export class CreatePatientUseCase {
   async execute({
     name,
     surname,
+    gender,
     birthDate,
     phoneNumber,
     email,
@@ -26,10 +29,15 @@ export class CreatePatientUseCase {
     const patient = Patient.create({
       name,
       surname,
+      gender,
       birthDate,
       phoneNumber,
       email,
     });
+
+    if (!['male', 'female', 'non-binary', 'other'].includes(gender)) {
+      return left(new BadRequest());
+    }
 
     if (!(birthDate instanceof Date) || isNaN(birthDate.getTime())) {
       return left(new BadRequest());

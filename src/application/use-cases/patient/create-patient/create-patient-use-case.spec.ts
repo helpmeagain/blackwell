@@ -14,11 +14,25 @@ describe('Create Patient', () => {
     const result = await sut.execute({
       name: 'John',
       surname: 'Doe',
+      gender: 'male',
       birthDate: new Date(),
       phoneNumber: '+1234567890',
       email: 'jonhdoe@email.com',
     });
 
     expect(result.isRight()).toBe(true);
+  });
+
+  it('should not be able to create a patient with invalid email', async () => {
+    const result = await sut.execute({
+      name: 'John',
+      surname: 'Doe',
+      gender: 'male',
+      birthDate: new Date(),
+      phoneNumber: '+1234567890',
+      email: 'jonhdoeemail.com',
+    });
+
+    expect(result.isLeft()).toBe(true);
   });
 });
