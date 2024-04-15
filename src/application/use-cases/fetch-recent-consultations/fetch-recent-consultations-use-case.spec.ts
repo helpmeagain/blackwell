@@ -1,4 +1,4 @@
-import { FetchRecentConsultationUseCase } from './fetch-recent-consultations';
+import { FetchRecentConsultationUseCase } from './fetch-recent-consultations-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { makeConsultation } from 'test/factories/make-consultation';
 

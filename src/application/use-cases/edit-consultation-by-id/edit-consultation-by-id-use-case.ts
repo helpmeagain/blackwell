@@ -38,7 +38,7 @@ export class EditConsultationByIdUseCase {
     consultation.appointmentDate = appointmentDate;
     consultation.room = room;
     await this.repository.save(consultation);
-    
+
     return right({ consultation });
   }
 }

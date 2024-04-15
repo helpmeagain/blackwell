@@ -7,7 +7,10 @@ interface getConsultationByIdRequest {
   consultationId: string;
 }
 
-type getConsultationByIdResponse = Either<ResourceNotFound, { consultation: Consultation }>;
+type getConsultationByIdResponse = Either<
+  ResourceNotFound,
+  { consultation: Consultation }
+>;
 
 export class GetConsultationByIdUseCase {
   constructor(private readonly repository: ConsultationRepository) {}
