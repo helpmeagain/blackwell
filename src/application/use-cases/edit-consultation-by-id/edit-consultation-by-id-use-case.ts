@@ -1,5 +1,8 @@
 import { Consultation } from '@entities/consultation';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
+import { Either, left, right } from '@/application/common/error-handler/either';
+import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
+import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
 
 interface editConsultationByIdRequest {
   consultationId: string;
@@ -8,9 +11,10 @@ interface editConsultationByIdRequest {
   room: number;
 }
 
-interface editConsultationByIdResponse {
-  consultation: Consultation;
-}
+type editConsultationByIdResponse = Either<
+  ResourceNotFound | NotAllowed,
+  { consultation: Consultation }
+>;
 
 export class EditConsultationByIdUseCase {
   constructor(private readonly repository: ConsultationRepository) {}
@@ -24,17 +28,17 @@ export class EditConsultationByIdUseCase {
     const consultation = await this.repository.findById(consultationId);
 
     if (!consultation) {
-      throw new Error('Consultation not found');
+      return left(new ResourceNotFound());
     }
 
     if (clinicianId !== consultation.clinicianId.toString()) {
-      throw new Error('Unauthorized');
+      return left(new NotAllowed());
     }
 
     consultation.appointmentDate = appointmentDate;
     consultation.room = room;
-
     await this.repository.save(consultation);
-    return { consultation };
+    
+    return right({ consultation });
   }
 }

@@ -1,13 +1,12 @@
 import { Consultation } from '@entities/consultation';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
+import { Either, right } from '@/application/common/error-handler/either';
 
 interface fetchRecentConsultationRequest {
   page: number;
 }
 
-interface fetchRecentConsultationResponse {
-  consultations: Consultation[];
-}
+type fetchRecentConsultationResponse = Either<null, { consultations: Consultation[] }>;
 
 export class FetchRecentConsultationUseCase {
   constructor(private readonly repository: ConsultationRepository) {}
@@ -17,6 +16,6 @@ export class FetchRecentConsultationUseCase {
   }: fetchRecentConsultationRequest): Promise<fetchRecentConsultationResponse> {
     const consultations = await this.repository.findManyRecent({ page });
 
-    return { consultations };
+    return right({ consultations });
   }
 }

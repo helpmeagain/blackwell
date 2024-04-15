@@ -1,13 +1,13 @@
 import { Consultation } from '@entities/consultation';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
+import { Either, left, right } from '@/application/common/error-handler/either';
+import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
 interface getConsultationByIdRequest {
   consultationId: string;
 }
 
-interface getConsultationByIdResponse {
-  consultation: Consultation;
-}
+type getConsultationByIdResponse = Either<ResourceNotFound, { consultation: Consultation }>;
 
 export class GetConsultationByIdUseCase {
   constructor(private readonly repository: ConsultationRepository) {}
@@ -18,9 +18,9 @@ export class GetConsultationByIdUseCase {
     const consultation = await this.repository.findById(consultationId);
 
     if (!consultation) {
-      throw new Error('Consultation not found');
+      return left(new ResourceNotFound());
     }
 
-    return { consultation };
+    return right({ consultation });
   }
 }
