@@ -1,10 +1,12 @@
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 import { AggregateRoot } from '../common/aggregate-root';
-import { Optional } from '../common/optional-type';
+import { Optional } from '../common/types/optional-type';
+import { Gender } from '../common/types/gender-type';
 
 interface PatientProps {
   name: string;
   surname: string;
+  gender: Gender;
   birthDate: Date;
   phoneNumber: string;
   email: string;
@@ -30,6 +32,10 @@ export class Patient extends AggregateRoot<PatientProps> {
     return this.props.surname;
   }
 
+  get gender(): Gender {
+    return this.props.gender;
+  }
+
   get birthDate(): Date {
     return this.props.birthDate;
   }
@@ -49,6 +55,11 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set name(name: string) {
     this.props.name = name;
+    this.touch();
+  }
+
+  set gender(gender: Gender) {
+    this.props.gender = gender;
     this.touch();
   }
 

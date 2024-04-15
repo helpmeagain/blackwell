@@ -1,5 +1,5 @@
 import { BaseEntity } from '@domain/common/base-entity';
-import { type Optional } from '@domain/common/optional-type';
+import { type Optional } from '@/domain/common/types/optional-type';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
 export interface consultationProps {
