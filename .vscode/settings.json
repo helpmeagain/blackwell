@@ -6,7 +6,7 @@
         ".gitignore": ".gitattributes",
         ".env.local": ".env*",
         ".env": ".env*",
-        "README*": "LICENSE*, License*"
+        "README*": "LICENSE*, License*, NOTICE*, notice*"
     },
     "editor.rulers": [
         80,
