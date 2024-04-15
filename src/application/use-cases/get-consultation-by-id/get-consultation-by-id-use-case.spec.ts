@@ -16,11 +16,13 @@ describe('Get Consultation By Id', () => {
     const newConsultation = makeConsultation({}, new UniqueEntityId('id-1'));
     await inMemoryRepository.create(newConsultation);
 
-    const { consultation } = await sut.execute({
+    const result = await sut.execute({
       consultationId: 'id-1',
     });
 
-    expect(consultation.id).toBeTruthy();
-    expect(consultation.id).toEqual(newConsultation.id);
+    expect(result.isRight()).toBe(true);
+    if (result.isRight()) {
+      expect(result.value?.consultation.id).toEqual(newConsultation.id);
+    }
   });
 });

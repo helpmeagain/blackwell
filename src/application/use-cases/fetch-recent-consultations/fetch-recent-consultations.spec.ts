@@ -5,44 +5,49 @@ import { makeConsultation } from 'test/factories/make-consultation';
 let inMemoryRepository: InMemoryConsultationRepository;
 let sut: FetchRecentConsultationUseCase;
 
-describe('Fetch recent consultations', () => {
+describe('Fetch recent result', () => {
   beforeEach(() => {
     inMemoryRepository = new InMemoryConsultationRepository();
     sut = new FetchRecentConsultationUseCase(inMemoryRepository);
   });
 
-  it('should be able to fetch recent consultations', async () => {
-    await inMemoryRepository.create(
-      makeConsultation({ createdAt: new Date(2021, 1, 28) }),
-    );
-    await inMemoryRepository.create(
-      makeConsultation({ createdAt: new Date(2021, 1, 14) }),
-    );
-    await inMemoryRepository.create(
-      makeConsultation({ createdAt: new Date(2021, 1, 24) }),
-    );
+  it('should be able to fetch recent result', async () => {
+    const nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
 
-    const { consultations } = await sut.execute({
+    const twoWeeksLater = new Date();
+    twoWeeksLater.setDate(twoWeeksLater.getDate() + 14);
+
+    const threeWeeksLater = new Date();
+    threeWeeksLater.setDate(threeWeeksLater.getDate() + 21);
+
+    await inMemoryRepository.create(makeConsultation({ createdAt: nextWeek }));
+    await inMemoryRepository.create(makeConsultation({ createdAt: threeWeeksLater }));
+    await inMemoryRepository.create(makeConsultation({ createdAt: twoWeeksLater }));
+
+    const result = await sut.execute({
       page: 1,
     });
 
-    expect(consultations.length).toBe(3);
-    expect(consultations).toEqual([
-      expect.objectContaining({ createdAt: new Date(2021, 1, 28) }),
-      expect.objectContaining({ createdAt: new Date(2021, 1, 24) }),
-      expect.objectContaining({ createdAt: new Date(2021, 1, 14) }),
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.consultations).toHaveLength(3);
+    expect(result.value?.consultations).toEqual([
+      expect.objectContaining({ createdAt: threeWeeksLater }),
+      expect.objectContaining({ createdAt: twoWeeksLater }),
+      expect.objectContaining({ createdAt: nextWeek }),
     ]);
   });
 
-  it('should be able to fetch recent consultations with pagination', async () => {
+  it('should be able to fetch recent result with pagination', async () => {
     for (let i = 1; i <= 22; i++) {
       await inMemoryRepository.create(makeConsultation());
     }
 
-    const { consultations } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
     });
 
-    expect(consultations).toHaveLength(2);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.consultations).toHaveLength(2);
   });
 });
