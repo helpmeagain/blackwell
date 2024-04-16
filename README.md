@@ -1,9 +1,9 @@
-# Blackwell &middot; ![version](https://img.shields.io/github/package-json/v/felipecomarques/blackwell) ![license](https://img.shields.io/github/license/felipecomarques/blackwell) ![unit tests](https://img.shields.io/github/actions/workflow/status/felipecomarques/blackwell/run-unit-tests.yml?event=push&logo=vitest&logoColor=%23ffffff&label=unit%20tests)
+# Blackwell &middot; [![version](https://img.shields.io/github/package-json/v/felipecomarques/blackwell)](./package.json) [![license](https://img.shields.io/github/license/felipecomarques/blackwell)](./LICENSE.md) [![unit tests](https://img.shields.io/github/actions/workflow/status/felipecomarques/blackwell/run-unit-tests.yml?event=push&logo=vitest&logoColor=%23ffffff&label=unit%20tests)](https://github.com/felipecomarques/blackwell/actions/workflows/run-unit-tests.yml)
 
 A medical clinic API for managing medical services.
 
 ## Technologies
-![Technologies](https://skillicons.dev/icons?i=ts,prisma,nestjs,postgres,vitest)
+[![Technologies](https://skillicons.dev/icons?i=ts,prisma,nestjs,postgres,vitest)](./package.json)
 
 ## Installation
 
