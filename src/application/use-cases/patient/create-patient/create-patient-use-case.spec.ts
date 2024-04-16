@@ -21,6 +21,12 @@ describe('Create Patient', () => {
     });
 
     expect(result.isRight()).toBe(true);
+    if (result.isRight()) {
+      expect(result.value.patient.medicalRecord.id).toBeDefined();
+      expect(result.value.patient.medicalRecord.patientId).toEqual(
+        result.value.patient.id,
+      );
+    }
   });
 
   it('should not be able to create a patient with invalid email', async () => {

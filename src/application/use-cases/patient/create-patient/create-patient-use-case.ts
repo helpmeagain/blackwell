@@ -3,6 +3,7 @@ import { Patient } from '@entities/patient';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { Gender } from '@/domain/common/types/gender-type';
+import { MedicalRecord } from '@/domain/entities/medical-record';
 
 interface createPatientRequest {
   name: string;
@@ -34,6 +35,15 @@ export class CreatePatientUseCase {
       phoneNumber,
       email,
     });
+
+    const medicalRecord = MedicalRecord.create({
+      patientId: patient.id,
+      consultationId: [],
+      diagnosis: '',
+      comorbidity: '',
+    });
+
+    patient.medicalRecord = medicalRecord;
 
     if (!['male', 'female', 'non-binary', 'other'].includes(gender)) {
       return left(new BadRequest());
