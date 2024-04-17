@@ -1,8 +1,5 @@
 import { faker } from '@faker-js/faker';
-import {
-  Consultation,
-  consultationProps,
-} from '@/domain/entities/consultation';
+import { Consultation, consultationProps } from '@/domain/entities/consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
 export function makeConsultation(
