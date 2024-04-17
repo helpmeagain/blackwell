@@ -71,13 +71,18 @@ export class Patient extends BaseEntity<PatientProps> {
     this.touch();
   }
 
+  set surname(surname: string) {
+    this.props.surname = surname;
+    this.touch();
+  }
+
   set gender(gender: Gender) {
     this.props.gender = gender;
     this.touch();
   }
 
-  set surname(surname: string) {
-    this.props.surname = surname;
+  set birthDate(birthDate: Date) {
+    this.props.birthDate = birthDate;
     this.touch();
   }
 
