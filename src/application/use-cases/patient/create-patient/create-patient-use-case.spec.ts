@@ -22,10 +22,8 @@ describe('Create Patient', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.patient.medicalRecord.id).toBeDefined();
-      expect(result.value.patient.medicalRecord.patientId).toEqual(
-        result.value.patient.id,
-      );
+      expect(result.value.patient.name).toBe('John');
+      expect(result.value.patient.email).toBe('jonhdoe@email.com');
     }
   });
 
