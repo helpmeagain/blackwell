@@ -1,3 +1,4 @@
+import { makePatient } from 'test/factories/make-patient';
 import { CreateConsultationUseCase } from './create-consultation-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 
@@ -27,5 +28,22 @@ describe('Schedule Consultation', () => {
       result.value?.consultation.clinicianId.toString(),
     );
     expect(inMemoryRepository.items[0].id).toEqual(result.value?.consultation.id);
+  });
+
+  it('should be able to schedule a consultation for a patient', async () => {
+    const newPatient = makePatient({});
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const result = await sut.execute({
+      clinicianId: '1',
+      patientId: newPatient.id.toString(),
+      room: 1,
+      appointmentDate: tomorrow,
+    });
+
+    expect(result.isRight()).toBe(true);
+    expect(inMemoryRepository.items.length).toEqual(1);
+    expect(inMemoryRepository.items[0].patientId).toEqual(newPatient.id);
   });
 });
