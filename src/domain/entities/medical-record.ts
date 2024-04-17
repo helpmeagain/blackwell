@@ -4,6 +4,7 @@ import { UniqueEntityId } from '../value-objects/unique-entity-id/unique-entity-
 
 interface MedicalRecordProps {
   patientId: UniqueEntityId;
+  clinicianId: UniqueEntityId;
   consultationId?: UniqueEntityId[];
   diagnosis?: string;
   comorbidity?: string;
