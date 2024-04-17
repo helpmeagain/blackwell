@@ -1,9 +1,8 @@
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
-import { AggregateRoot } from '../common/aggregate-root';
 import { Optional } from '../common/types/optional-type';
 import { Gender } from '../common/types/gender-type';
-import { MedicalRecord } from './medical-record';
 import { Slug } from '../value-objects/slug/slug';
+import { BaseEntity } from '../common/base-entity';
 
 interface PatientProps {
   name: string;
@@ -13,21 +12,19 @@ interface PatientProps {
   birthDate: Date;
   phoneNumber: string;
   email: string;
-  medicalRecord: MedicalRecord;
   createdAt: Date;
   updatedAt?: Date;
 }
 
-export class Patient extends AggregateRoot<PatientProps> {
+export class Patient extends BaseEntity<PatientProps> {
   static create(
-    props: Optional<PatientProps, 'createdAt' | 'slug' | 'medicalRecord'>,
+    props: Optional<PatientProps, 'createdAt' | 'slug'>,
     id?: UniqueEntityId,
   ) {
     const patient = new Patient(
       {
         ...props,
-        slug: Slug.createFromText(props.name + props.surname),
-        medicalRecord: props.medicalRecord ?? MedicalRecord.create({ patientId: id! }),
+        slug: Slug.createFromText(props.name + ' ' + props.surname),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
@@ -60,10 +57,6 @@ export class Patient extends AggregateRoot<PatientProps> {
     return this.props.email;
   }
 
-  get medicalRecord(): MedicalRecord {
-    return this.props.medicalRecord;
-  }
-
   // Setter //
   private touch() {
     this.props.updatedAt = new Date();
@@ -91,11 +84,6 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set email(email: string) {
     this.props.email = email;
-    this.touch();
-  }
-
-  set medicalRecord(medicalRecord: MedicalRecord) {
-    this.props.medicalRecord = medicalRecord;
     this.touch();
   }
 }
