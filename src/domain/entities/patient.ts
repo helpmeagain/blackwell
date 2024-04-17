@@ -57,6 +57,10 @@ export class Patient extends BaseEntity<PatientProps> {
     return this.props.email;
   }
 
+  get slug(): string {
+    return this.props.slug;
+  }
+
   // Setter //
   private touch() {
     this.props.updatedAt = new Date();
