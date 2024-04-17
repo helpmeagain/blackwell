@@ -4,7 +4,7 @@ import { Gender } from '../common/types/gender-type';
 import { Slug } from '../value-objects/slug/slug';
 import { BaseEntity } from '../common/base-entity';
 
-interface PatientProps {
+export interface PatientProps {
   name: string;
   surname: string;
   gender: Gender;
