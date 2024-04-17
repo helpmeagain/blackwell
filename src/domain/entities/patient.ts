@@ -8,7 +8,7 @@ export interface PatientProps {
   name: string;
   surname: string;
   gender: Gender;
-  slug: Slug;
+  slug: string;
   birthDate: Date;
   phoneNumber: string;
   email: string;
@@ -24,7 +24,7 @@ export class Patient extends BaseEntity<PatientProps> {
     const patient = new Patient(
       {
         ...props,
-        slug: Slug.createFromText(props.name + ' ' + props.surname),
+        slug: Slug.createFromText(props.name + ' ' + props.surname).value,
         createdAt: props.createdAt ?? new Date(),
       },
       id,
