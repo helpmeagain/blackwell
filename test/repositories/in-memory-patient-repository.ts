@@ -28,6 +28,11 @@ export class InMemoryPatientRepository implements PatientRepository {
     this.items.push(patient);
   }
 
+  async save(patient: Patient) {
+    const index = this.items.findIndex((item) => item.id === patient.id);
+    this.items[index] = patient;
+  }
+
   async delete(patient: Patient) {
     const index = this.items.findIndex((item) => item.id === patient.id);
     this.items.splice(index, 1);
