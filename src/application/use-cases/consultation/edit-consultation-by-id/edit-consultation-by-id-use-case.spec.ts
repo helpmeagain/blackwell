@@ -3,22 +3,31 @@ import { InMemoryConsultationRepository } from 'test/repositories/in-memory-cons
 import { makeConsultation } from 'test/factories/make-consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
+import { makePatient } from 'test/factories/make-patient';
+import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 
-let inMemoryRepository: InMemoryConsultationRepository;
+let inConsultationMemoryRepository: InMemoryConsultationRepository;
+let inPatientMemoryRepository: InMemoryPatientRepository;
 let sut: EditConsultationByIdUseCase;
 
 describe('Edit a consultation By Id', () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryConsultationRepository();
-    sut = new EditConsultationByIdUseCase(inMemoryRepository);
+    inConsultationMemoryRepository = new InMemoryConsultationRepository();
+    inPatientMemoryRepository = new InMemoryPatientRepository();
+    sut = new EditConsultationByIdUseCase(
+      inConsultationMemoryRepository,
+      inPatientMemoryRepository,
+    );
   });
 
   it('should be able to edit a consultation by id', async () => {
+    const newPatient = makePatient();
     const newConsultation = makeConsultation(
-      { clinicianId: new UniqueEntityId('clinicianId-1') },
+      { patientId: newPatient.id, clinicianId: new UniqueEntityId('clinicianId-1') },
       new UniqueEntityId('consultationId-1'),
     );
-    await inMemoryRepository.create(newConsultation);
+    await inConsultationMemoryRepository.create(newConsultation);
+    await inPatientMemoryRepository.create(newPatient);
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -31,10 +40,15 @@ describe('Edit a consultation By Id', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(inMemoryRepository.items[0].appointmentDate).toEqual(
+      expect(inConsultationMemoryRepository.items[0].appointmentDate).toEqual(
         result.value?.consultation.appointmentDate,
       );
-      expect(inMemoryRepository.items[0].room).toEqual(result.value?.consultation.room);
+      expect(inConsultationMemoryRepository.items[0].room).toEqual(
+        result.value?.consultation.room,
+      );
+      expect(
+        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems,
+      ).toContainEqual(newConsultation.id);
     }
   });
 
@@ -43,7 +57,7 @@ describe('Edit a consultation By Id', () => {
       { clinicianId: new UniqueEntityId('clinicianId-1') },
       new UniqueEntityId('consultationId-1'),
     );
-    await inMemoryRepository.create(newConsultation);
+    await inConsultationMemoryRepository.create(newConsultation);
 
     const newAppointmentDate = new Date(2021, 0, 1, 0, 0, 0);
     const result = await sut.execute({
