@@ -2,7 +2,8 @@ import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-en
 import { Optional } from '../common/types/optional-type';
 import { Gender } from '../common/types/gender-type';
 import { Slug } from '../value-objects/slug/slug';
-import { BaseEntity } from '../common/base-entity';
+import { AggregateRoot } from '../common/aggregate-root';
+import { MedicalRecord } from './medical-record';
 
 export interface PatientProps {
   name: string;
@@ -12,11 +13,12 @@ export interface PatientProps {
   birthDate: Date;
   phoneNumber: string;
   email: string;
+  medicalRecord?: MedicalRecord;
   createdAt: Date;
   updatedAt?: Date;
 }
 
-export class Patient extends BaseEntity<PatientProps> {
+export class Patient extends AggregateRoot<PatientProps> {
   static create(
     props: Optional<PatientProps, 'createdAt' | 'slug'>,
     id?: UniqueEntityId,
@@ -29,6 +31,8 @@ export class Patient extends BaseEntity<PatientProps> {
       },
       id,
     );
+
+    patient.medicalRecord = MedicalRecord.create({ patientId: patient.id });
     return patient;
   }
 
@@ -59,6 +63,10 @@ export class Patient extends BaseEntity<PatientProps> {
 
   get slug(): string {
     return this.props.slug;
+  }
+
+  get medicalRecord(): MedicalRecord {
+    return this.props.medicalRecord as MedicalRecord;
   }
 
   // Setter //
@@ -93,6 +101,11 @@ export class Patient extends BaseEntity<PatientProps> {
 
   set email(email: string) {
     this.props.email = email;
+    this.touch();
+  }
+
+  set medicalRecord(medicalRecord: MedicalRecord) {
+    this.props.medicalRecord = medicalRecord;
     this.touch();
   }
 }
