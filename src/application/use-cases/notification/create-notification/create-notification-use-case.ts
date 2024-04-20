@@ -1,6 +1,7 @@
 import { Either, right } from '@error/either';
 import { Notification } from '@entities/generic/notification';
 import { NotificationRepository } from '@/application/repositories/notification-repository';
+import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
 interface createNotificationRequest {
   recipientId: string;
@@ -19,7 +20,7 @@ export class CreateNotificationUseCase {
     message,
   }: createNotificationRequest): Promise<createNotificationResponse> {
     const notification = Notification.create({
-      recipientId,
+      recipientId: new UniqueEntityId(recipientId),
       title,
       message,
     });

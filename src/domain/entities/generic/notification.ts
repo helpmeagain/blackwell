@@ -2,8 +2,8 @@ import { BaseEntity } from '@/domain/common/base-entity';
 import { Optional } from '@/domain/common/types/optional-type';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
-interface NotificationProps {
-  recipientId: string;
+export interface NotificationProps {
+  recipientId: UniqueEntityId;
   title: string;
   message: string;
   readAt?: Date;
