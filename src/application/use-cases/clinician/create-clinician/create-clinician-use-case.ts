@@ -1,4 +1,4 @@
-import { Either, right } from '@application/common/error-handler/either';
+import { Either, right } from '@error/either';
 import { Clinician } from '@entities/clinician';
 import { ClinicianRepository } from '@/application/repositories/clinician-repository';
 

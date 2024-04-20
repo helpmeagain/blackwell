@@ -1,7 +1,7 @@
+import { Either, left, right } from '@error/either';
+import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { Consultation } from '@entities/consultation';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
-import { Either, left, right } from '@/application/common/error-handler/either';
-import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
 interface getConsultationByIdRequest {
   consultationId: string;

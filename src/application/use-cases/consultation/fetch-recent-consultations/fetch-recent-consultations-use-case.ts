@@ -1,6 +1,6 @@
+import { Either, right } from '@error/either';
 import { Consultation } from '@entities/consultation';
 import { type ConsultationRepository } from '@application/repositories/consultation-repository';
-import { Either, right } from '@/application/common/error-handler/either';
 
 interface fetchRecentConsultationRequest {
   page: number;

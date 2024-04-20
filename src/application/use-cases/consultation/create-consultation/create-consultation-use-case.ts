@@ -1,9 +1,9 @@
-import { Either, left, right } from '@application/common/error-handler/either';
+import { Either, left, right } from '@error/either';
+import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { Consultation } from '@entities/consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 import { type ConsultationRepository } from '@/application/repositories/consultation-repository';
 import { PatientRepository } from '@/application/repositories/patient-repository';
-import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
 interface createConsultationRequest {
   clinicianId: string;

@@ -1,6 +1,6 @@
-import { Either, left, right } from '@/application/common/error-handler/either';
-import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
-import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
+import { Either, left, right } from '@error/either';
+import { NotAllowed } from '@error/errors/not-allowed';
+import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 
 interface deletePatientByIdRequest {
