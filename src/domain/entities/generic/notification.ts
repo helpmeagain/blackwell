@@ -19,6 +19,10 @@ export class Notification extends BaseEntity<NotificationProps> {
     return notification;
   }
 
+  read() {
+    this.props.readAt = new Date();
+  }
+
   get recipientId() {
     return this.props.recipientId;
   }
