@@ -1,6 +1,7 @@
-import { BaseEntity } from '@domain/common/base-entity';
 import { type Optional } from '@/domain/common/types/optional-type';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
+import { AggregateRoot } from '../common/aggregate-root';
+import { ConsultationCreatedEvent } from '../events/consultation-created-event';
 
 export interface consultationProps {
   clinicianId: UniqueEntityId;
@@ -11,7 +12,7 @@ export interface consultationProps {
   updatedAt?: Date;
 }
 
-export class Consultation extends BaseEntity<consultationProps> {
+export class Consultation extends AggregateRoot<consultationProps> {
   static create(props: Optional<consultationProps, 'createdAt'>, id?: UniqueEntityId) {
     const consultation = new Consultation(
       {
@@ -20,6 +21,12 @@ export class Consultation extends BaseEntity<consultationProps> {
       },
       id,
     );
+
+    const isNewConsultation = !id;
+    if (isNewConsultation) {
+      consultation.addDomainEvent(new ConsultationCreatedEvent(consultation));
+    }
+
     return consultation;
   }
 
