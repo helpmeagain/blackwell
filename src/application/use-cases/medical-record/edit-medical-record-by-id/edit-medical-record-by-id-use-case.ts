@@ -1,7 +1,7 @@
+import { Either, left, right } from '@error/either';
+import { ResourceNotFound } from '@error/errors/resource-not-found';
+import { NotAllowed } from '@error/errors/not-allowed';
 import { MedicalRecord } from '@entities/medical-record';
-import { Either, left, right } from '@/application/common/error-handler/either';
-import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 
 interface editMedicalRecordByIdRequest {

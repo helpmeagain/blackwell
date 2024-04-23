@@ -1,7 +1,7 @@
-import { Either, left, right } from '@application/common/error-handler/either';
+import { Either, left, right } from '@error/either';
+import { BadRequest } from '@error/errors/bad-request';
 import { Patient } from '@entities/patient';
 import { PatientRepository } from '@/application/repositories/patient-repository';
-import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { Gender } from '@/domain/common/types/gender-type';
 
 interface createPatientRequest {

@@ -1,8 +1,8 @@
+import { Either, left, right } from '@error/either';
+import { ResourceNotFound } from '@error/errors/resource-not-found';
+import { NotAllowed } from '@error/errors/not-allowed';
 import { Patient } from '@entities/patient';
 import { type PatientRepository } from '@application/repositories/patient-repository';
-import { Either, left, right } from '@/application/common/error-handler/either';
-import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { NotAllowed } from '@/application/common/error-handler/errors/not-allowed';
 import { Gender } from '@/domain/common/types/gender-type';
 
 interface editPatientByIdRequest {

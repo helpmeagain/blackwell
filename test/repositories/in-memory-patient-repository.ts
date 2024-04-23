@@ -1,4 +1,5 @@
 import { PatientRepository } from '@/application/repositories/patient-repository';
+import { MedicalRecord } from '@/domain/entities/medical-record';
 import { Patient } from '@/domain/entities/patient';
 
 export class InMemoryPatientRepository implements PatientRepository {
@@ -31,7 +32,7 @@ export class InMemoryPatientRepository implements PatientRepository {
       return null;
     }
 
-    return patient;
+    return patient.medicalRecord;
   }
 
   async create(patient: Patient) {
@@ -41,6 +42,13 @@ export class InMemoryPatientRepository implements PatientRepository {
   async save(patient: Patient) {
     const index = this.items.findIndex((item) => item.id === patient.id);
     this.items[index] = patient;
+  }
+
+  async saveMedicalRecord(medicalRecord: MedicalRecord) {
+    const index = this.items.findIndex(
+      (item) => item.medicalRecord.id === medicalRecord.id,
+    );
+    this.items[index].medicalRecord = medicalRecord;
   }
 
   async delete(patient: Patient) {
