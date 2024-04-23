@@ -4,7 +4,7 @@ import { UniqueEntityId } from '../value-objects/unique-entity-id/unique-entity-
 
 export class ConsultationCreatedEvent implements DomainEvent {
   public ocurredAt: Date;
-  private consultation: Consultation;
+  public consultation: Consultation;
 
   constructor(consultation: Consultation) {
     this.consultation = consultation;
