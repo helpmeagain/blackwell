@@ -1,6 +1,7 @@
 import { Consultation } from '@/domain/entities/consultation';
 import { ConsultationRepository } from '@/application/repositories/consultation-repository';
 import { PaginationParams } from '@/application/common/pagination-params';
+import { DomainEvents } from '@/domain/common/events/domain-events';
 
 export class InMemoryConsultationRepository implements ConsultationRepository {
   public items: Consultation[] = [];
@@ -25,11 +26,15 @@ export class InMemoryConsultationRepository implements ConsultationRepository {
 
   async create(consultation: Consultation) {
     this.items.push(consultation);
+
+    DomainEvents.dispatchEventsForAggregate(consultation.id);
   }
 
   async save(consultation: Consultation) {
     const index = this.items.findIndex((item) => item.id === consultation.id);
     this.items[index] = consultation;
+
+    DomainEvents.dispatchEventsForAggregate(consultation.id);
   }
 
   async delete(consultation: Consultation) {
