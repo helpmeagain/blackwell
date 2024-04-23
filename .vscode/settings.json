@@ -16,6 +16,8 @@
         "domain": "controller",
         "application": "dist",
         "presentation": "meta",
-        "infrastructure": "interface"
+        "infrastructure": "interface",
+        "events": "",
+        "common": ""
     }
 }
