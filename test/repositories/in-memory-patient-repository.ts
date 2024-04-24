@@ -16,7 +16,7 @@ export class InMemoryPatientRepository implements PatientRepository {
   }
 
   async findBySlug(slug: string) {
-    const patient = this.items.find((item) => item.slug === slug);
+    const patient = this.items.find((item) => item.slug.value === slug);
 
     if (!patient) {
       return null;

@@ -2,6 +2,7 @@ import { InMemoryClinicianRepository } from 'test/repositories/in-memory-clinici
 import { DeleteClinicianByIdUseCase } from './delete-clinician-by-id-use-case';
 import { makeClinician } from 'test/factories/make-clinician';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
+import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
 let inMemoryRepository: InMemoryClinicianRepository;
 let sut: DeleteClinicianByIdUseCase;
@@ -22,5 +23,14 @@ describe('Delete a clinician By Id', () => {
 
     expect(result.isRight()).toBe(true);
     expect(inMemoryRepository.items).toHaveLength(0);
+  });
+
+  it('should not be able to delete a clinician with incorrect id', async () => {
+    const result = await sut.execute({
+      clinicianId: 'clinicianId-1',
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(ResourceNotFound);
   });
 });
