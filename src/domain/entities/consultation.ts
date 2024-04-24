@@ -30,7 +30,6 @@ export class Consultation extends AggregateRoot<consultationProps> {
     return consultation;
   }
 
-  // Getters //
   get clinicianId() {
     return this.props.clinicianId;
   }
@@ -55,7 +54,6 @@ export class Consultation extends AggregateRoot<consultationProps> {
     return this.props.appointmentDate;
   }
 
-  // Setter //
   private touch() {
     this.props.updatedAt = new Date();
   }
