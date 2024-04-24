@@ -1,17 +1,21 @@
 import { Either, left, right } from '@error/either';
 import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { NotAllowed } from '@error/errors/not-allowed';
-import { Clinician } from '@entities/clinician';
 import { type ClinicianRepository } from '@application/repositories/clinician-repository';
+import { Clinician } from '@/domain/entities/clinician';
+import { Gender } from '@/domain/common/types/gender-type';
 
-interface editClinicianByIdRequest {
+export interface editClinicianByIdRequest {
   clinicianId: string;
   name: string;
   surname: string;
   occupation: string;
+  gender: Gender;
+  phoneNumber: string;
+  email: string;
 }
 
-type editClinicianByIdResponse = Either<
+export type editClinicianByIdResponse = Either<
   ResourceNotFound | NotAllowed,
   { clinician: Clinician }
 >;
@@ -19,12 +23,8 @@ type editClinicianByIdResponse = Either<
 export class EditClinicianByIdUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
 
-  async execute({
-    clinicianId,
-    name,
-    surname,
-    occupation,
-  }: editClinicianByIdRequest): Promise<editClinicianByIdResponse> {
+  async execute(req: editClinicianByIdRequest): Promise<editClinicianByIdResponse> {
+    const { clinicianId, name, surname, gender, phoneNumber, email, occupation } = req;
     const clinician = await this.repository.findById(clinicianId);
 
     if (!clinician) {
@@ -37,9 +37,12 @@ export class EditClinicianByIdUseCase {
 
     clinician.name = name;
     clinician.surname = surname;
+    clinician.gender = gender;
+    clinician.phoneNumber = phoneNumber;
+    clinician.email = email;
     clinician.occupation = occupation;
-    await this.repository.save(clinician);
 
+    await this.repository.save(clinician);
     return right({ clinician });
   }
 }

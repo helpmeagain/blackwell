@@ -8,12 +8,12 @@ interface getClinicianByIdRequest {
 }
 
 type getClinicianByIdResponse = Either<ResourceNotFound, { clinician: Clinician }>;
+
 export class GetClinicianByIdUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
 
-  async execute({
-    clinicianId,
-  }: getClinicianByIdRequest): Promise<getClinicianByIdResponse> {
+  async execute(req: getClinicianByIdRequest): Promise<getClinicianByIdResponse> {
+    const { clinicianId } = req;
     const clinician = await this.repository.findById(clinicianId);
 
     if (!clinician) {

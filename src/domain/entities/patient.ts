@@ -9,7 +9,7 @@ export interface PatientProps {
   name: string;
   surname: string;
   gender: Gender;
-  slug: string;
+  slug: Slug;
   birthDate: Date;
   phoneNumber: string;
   email: string;
@@ -26,17 +26,21 @@ export class Patient extends AggregateRoot<PatientProps> {
     const patient = new Patient(
       {
         ...props,
-        slug: Slug.createFromText(props.name + ' ' + props.surname).value,
+        slug: Slug.createFromText(props.name + ' ' + props.surname),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
     );
 
+    // Transform into domain event?
     patient.medicalRecord = MedicalRecord.create({ patientId: patient.id });
     return patient;
   }
 
-  // Getters //
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
   get name(): string {
     return this.props.name;
   }
@@ -61,17 +65,12 @@ export class Patient extends AggregateRoot<PatientProps> {
     return this.props.email;
   }
 
-  get slug(): string {
+  get slug(): Slug {
     return this.props.slug;
   }
 
   get medicalRecord(): MedicalRecord {
     return this.props.medicalRecord as MedicalRecord;
-  }
-
-  // Setter //
-  private touch() {
-    this.props.updatedAt = new Date();
   }
 
   set name(name: string) {
@@ -86,6 +85,11 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set gender(gender: Gender) {
     this.props.gender = gender;
+    this.touch();
+  }
+
+  set slug(slug: Slug) {
+    this.props.slug = slug;
     this.touch();
   }
 

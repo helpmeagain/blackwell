@@ -14,7 +14,10 @@ export function makeClinician(
     {
       name: mockName,
       surname: mockSurName,
+      gender: faker.person.sexType(),
       occupation: faker.person.jobTitle(),
+      phoneNumber: faker.phone.number(),
+      email: faker.internet.email(),
       ...override,
     },
     id,
