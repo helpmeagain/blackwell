@@ -1,27 +1,32 @@
-import { Either, right } from '@error/either';
 import { Clinician } from '@entities/clinician';
 import { ClinicianRepository } from '@/application/repositories/clinician-repository';
+import { Either, right } from '@/application/common/error-handler/either';
 
-interface createClinicianRequest {
+import { Gender } from '@/domain/common/types/gender-type';
+
+export interface createClinicianRequest {
   name: string;
   surname: string;
+  gender: Gender;
+  phoneNumber: string;
+  email: string;
   occupation: string;
 }
 
-type createConsultationResponse = Either<null, { clinician: Clinician }>;
+export type createConsultationResponse = Either<null, { clinician: Clinician }>;
 
 export class CreateClinicianUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
 
-  async execute({
-    name,
-    surname,
-    occupation,
-  }: createClinicianRequest): Promise<createConsultationResponse> {
+  async execute(req: createClinicianRequest): Promise<createConsultationResponse> {
+    const { name, surname, gender, phoneNumber, email, occupation } = req;
     const clinician = Clinician.create({
       name,
       surname,
       occupation,
+      gender,
+      phoneNumber,
+      email,
     });
 
     await this.repository.create(clinician);

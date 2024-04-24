@@ -14,14 +14,17 @@ describe('Create Clinician', () => {
     const result = await sut.execute({
       name: 'John',
       surname: 'Doe',
+      gender: 'male',
+      phoneNumber: '123456789',
+      email: 'johndoe@email.com',
       occupation: 'Doctor',
     });
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
       expect(result.value.clinician.name).toBe('John');
-      expect(result.value.clinician.surname).toBe('Doe');
-      expect(result.value.clinician.occupation).toBe('Doctor');
+      expect(inMemoryRepository.items).toHaveLength(1);
+      expect(inMemoryRepository.items[0]).toEqual(result.value.clinician);
     }
   });
 });
