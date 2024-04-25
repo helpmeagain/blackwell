@@ -6,7 +6,7 @@ export abstract class BaseEntity<Props> {
 
   protected constructor(props: Props, id?: UniqueEntityId) {
     this.props = props;
-    this._id = id ?? new UniqueEntityId(id);
+    this._id = id ?? new UniqueEntityId();
   }
 
   public equals(entity: BaseEntity<Props>): boolean {
