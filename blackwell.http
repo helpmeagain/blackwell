@@ -1,5 +1,22 @@
-### Get all Clinicians
+@hostname = http://localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
 
-GET http://localhost:8080/api/clinician
+### Create clinician
+
+POST {{host}}/clinicians
+Content-Type: {{contentType}}
+
+{
+  "name": "John",
+  "surname": "Doe",
+  "slug": "john-doe",
+  "gender": "male",
+  "occupation": "doctor",
+  "phoneNumber": "123456789",
+  "email": "jonhdoe@email.com",
+  "password": "12345"
+}
 
 ###
