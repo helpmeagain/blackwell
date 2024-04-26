@@ -12,6 +12,7 @@
         "source.fixAll.eslint": "explicit"
     },
     "editor.tabSize": 2,
+    "material-icon-theme.activeIconPack": "nest",
     "material-icon-theme.folders.associations": {
         "domain": "controller",
         "application": "dist",

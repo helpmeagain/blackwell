@@ -1,0 +1,15 @@
+name: blackwell-postgres
+
+services:
+  postgres:
+    container_name: blackwell-pg
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker-password
+      POSTGRES_DB: blackwell
+      PGDATA: /data/postgres
+    volumes:
+      - /.data/pg:/data/postgres

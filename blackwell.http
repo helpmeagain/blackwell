@@ -1,0 +1,5 @@
+### Get all Clinicians
+
+GET http://localhost:8080/api/clinician
+
+###
