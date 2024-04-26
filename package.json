@@ -25,7 +25,9 @@
     "@prisma/client": "^5.13.0",
     "bcryptjs": "^2.4.3",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "zod": "^3.23.4",
+    "zod-validation-error": "^3.2.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
