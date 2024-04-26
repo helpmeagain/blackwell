@@ -6,3 +6,51 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Clinician {
+  id           String         @id @default(uuid())
+  name         String
+  surname      String
+  slug         String         @unique
+  gender       String
+  occupation   String
+  phoneNumber  String         @map("phone_number")
+  email        String         @unique
+  password     String
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime?      @updatedAt @map("updated_at")
+  Consultations Consultation[]
+
+  @@map("clinicians")
+}
+
+model Patient {
+  id           String         @id @default(uuid())
+  name         String
+  surname      String
+  slug         String         @unique
+  gender       String
+  birthDate    DateTime       @map("birth_date")
+  phoneNumber  String         @map("phone_number")
+  // medicalRecord <other_table>
+  email        String         @unique
+  password     String
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime?      @updatedAt @map("updated_at")
+  Consultations Consultation[]
+
+  @@map("patients")
+}
+
+model Consultation {
+  id              String    @id @default(uuid())
+  room            Int
+  appointmentDate DateTime  @map("appointment_date")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+  clinicianId     String    @map("clinician_id")
+  patientId       String    @map("patient_id")
+
+  clinician Clinician @relation(fields: [clinicianId], references: [id])
+  patient   Patient   @relation(fields: [patientId], references: [id])
+}
