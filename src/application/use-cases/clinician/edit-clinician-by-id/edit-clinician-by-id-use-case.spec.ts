@@ -15,7 +15,6 @@ describe('Edit a clinician By Id', () => {
     const newClinician = makeClinician({ name: 'Jane' });
     await inMemoryRepository.create(newClinician);
 
-    console.log(newClinician.name);
     const result = await sut.execute({
       clinicianId: newClinician.id.toString(),
       name: 'John',
@@ -25,7 +24,6 @@ describe('Edit a clinician By Id', () => {
       email: 'johndoe@email.com',
       occupation: 'Doctor',
     });
-    console.log(newClinician.name);
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
