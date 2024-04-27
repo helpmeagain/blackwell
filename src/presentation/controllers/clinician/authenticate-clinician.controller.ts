@@ -1,47 +1,48 @@
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiConflictResponse,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
-import { hash } from 'bcryptjs';
+import { Body, Controller, Post, UnauthorizedException, UsePipes } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { compare } from 'bcryptjs';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { JwtService } from '@nestjs/jwt';
 
-// const createClinicianSchema = z.object({
-//   name: z.string(),
-//   surname: z.string(),
-//   slug: z.string(),
-//   gender: z.enum(['male', 'female', 'non-binary', 'other']),
-//   occupation: z.string(),
-//   phoneNumber: z.string(),
-//   email: z.string().email(),
-//   password: z.string(),
-// });
+const authenticateBodySchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
 
-// type CreateClinicianSchema = z.infer<typeof createClinicianSchema>;
-// const requestBodyForOpenAPI = zodToOpenAPI(createClinicianSchema);
+type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
+const requestBodyForOpenAPI = zodToOpenAPI(authenticateBodySchema);
 
 @Controller('clinicians')
 export class AuthenticateClinicianController {
-  constructor(private jwt: JwtService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwt: JwtService,
+  ) {}
 
   @Post('login')
   @ApiTags('Clinicians')
-  // @ApiOperation({ summary: 'Create a clinician' })
-  // @ApiBody({ schema: requestBodyForOpenAPI })
-  // @ApiCreatedResponse({ description: 'Clinician created' })
-  // @ApiBadRequestResponse({ description: 'Invalid information' })
-  // @ApiConflictResponse({ description: 'Conflict' })
-  // @UsePipes(new ZodValidationPipe(createClinicianSchema))
-  async handle() {
-    const token = this.jwt.sign({ sub: 'user-id' });
-    return token;
+  @ApiOperation({ summary: 'Authenticate a clinician' })
+  @ApiBody({ schema: requestBodyForOpenAPI })
+  @UsePipes(new ZodValidationPipe(authenticateBodySchema))
+  async handle(@Body() body: AuthenticateBodySchema) {
+    const { email, password } = body;
+
+    const clinician = await this.prisma.clinician.findUnique({ where: { email } });
+    if (!clinician) {
+      throw new UnauthorizedException('User credentials do not match any user.');
+    }
+
+    const isPasswordValid = await compare(password, clinician.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('User credentials do not match any user.');
+    }
+
+    const token = this.jwt.sign({ sub: clinician.id });
+    return {
+      access_token: token,
+    };
   }
 }
