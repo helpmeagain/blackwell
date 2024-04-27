@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
+import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
+import { Env } from './env';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,9 +20,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(8080);
-  console.log(
-    `Server is running! You on can check the Swagger documentation on: http://localhost:8080/api/`,
-  );
+  const configService: ConfigService<Env, true> = app.get(ConfigService);
+  const port = configService.get('PORT', { infer: true });
+  await app.listen(port);
+  console.log(`Server is running! Swagger documentation: http://localhost:${port}/api/`);
 }
 bootstrap();
