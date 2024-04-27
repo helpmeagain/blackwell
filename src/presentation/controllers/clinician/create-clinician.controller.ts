@@ -1,21 +1,23 @@
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
+import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
 import {
-  Body,
-  ConflictException,
-  Controller,
-  HttpCode,
-  Post,
-  UsePipes,
-} from '@nestjs/common';
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { hash } from 'bcryptjs';
 import { z } from 'zod';
+import { zodToOpenAPI } from 'nestjs-zod';
 
 const createClinicianSchema = z.object({
   name: z.string(),
   surname: z.string(),
   slug: z.string(),
-  gender: z.string(),
+  gender: z.enum(['male', 'female', 'non-binary', 'other']),
   occupation: z.string(),
   phoneNumber: z.string(),
   email: z.string().email(),
@@ -23,15 +25,20 @@ const createClinicianSchema = z.object({
 });
 
 type CreateClinicianSchema = z.infer<typeof createClinicianSchema>;
+const requestBodyForOpenAPI = zodToOpenAPI(createClinicianSchema);
 
 @Controller('clinicians')
 export class CreateClinicianController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
+  @ApiTags('Clinicians')
+  @ApiOperation({ summary: 'Create a clinician' })
+  @ApiBody({ schema: requestBodyForOpenAPI })
+  @ApiCreatedResponse({ description: 'Clinician created' })
+  @ApiBadRequestResponse({ description: 'Invalid information' })
+  @ApiConflictResponse({ description: 'Conflict' })
   @UsePipes(new ZodValidationPipe(createClinicianSchema))
-  @HttpCode(201)
-  @HttpCode(409)
   async handle(@Body() body: CreateClinicianSchema) {
     const { name, surname, slug, gender, occupation, phoneNumber, email, password } =
       body;
@@ -54,7 +61,7 @@ export class CreateClinicianController {
 
     const hashedPassword = await hash(password, 8);
 
-    await this.prisma.clinician.create({
+    const result = await this.prisma.clinician.create({
       data: {
         name,
         surname,
@@ -66,5 +73,7 @@ export class CreateClinicianController {
         password: hashedPassword,
       },
     });
+
+    return { result };
   }
 }
