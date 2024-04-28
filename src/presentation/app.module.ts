@@ -6,6 +6,7 @@ import { envSchema } from './env';
 import { AuthModule } from '@/infrastructure/auth/auth.module';
 import { AuthenticateClinicianController } from './controllers/clinician/authenticate-clinician.controller';
 import { CreateConsultationController } from './controllers/consultation/create-consultation.controller';
+import { CreatePatientController } from './controllers/patient/create-patient.controller';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CreateConsultationController } from './controllers/consultation/create-
     CreateClinicianController,
     AuthenticateClinicianController,
     CreateConsultationController,
+    CreatePatientController,
   ],
   providers: [PrismaService],
 })

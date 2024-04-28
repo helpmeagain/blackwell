@@ -31,6 +31,22 @@ Content-Type: {{contentType}}
 }
 
 ###
+# @name create_patient
+POST {{host}}/patients
+Content-Type: {{contentType}}
+
+{
+  "name": "John",
+  "surname": "Doe",
+  "slug": "john-doe",
+  "gender": "male",
+  "birthDate": "2000-01-01T12:00:00.000Z",
+  "phoneNumber": "123456789",
+  "email": "jonhdoe@email.com",
+  "password": "12345"
+}
+
+###
 # @name create_consultation
 POST {{host}}/consultations
 Content-Type: {{contentType}}
