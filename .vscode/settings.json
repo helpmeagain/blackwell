@@ -18,6 +18,7 @@
         "application": "dist",
         "presentation": "meta",
         "infrastructure": "interface",
+        "persistence": "database",
         "events": "",
         "common": ""
     }

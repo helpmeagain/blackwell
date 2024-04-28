@@ -5,6 +5,7 @@ import { CreateClinicianController } from './controllers/clinician/create-clinic
 import { envSchema } from './env';
 import { AuthModule } from '@/infrastructure/auth/auth.module';
 import { AuthenticateClinicianController } from './controllers/clinician/authenticate-clinician.controller';
+import { CreateConsultationController } from './controllers/consultation/create-consultation.controller';
 
 @Module({
   imports: [
@@ -14,7 +15,11 @@ import { AuthenticateClinicianController } from './controllers/clinician/authent
     }),
     AuthModule,
   ],
-  controllers: [CreateClinicianController, AuthenticateClinicianController],
+  controllers: [
+    CreateClinicianController,
+    AuthenticateClinicianController,
+    CreateConsultationController,
+  ],
   providers: [PrismaService],
 })
 export class AppModule {}

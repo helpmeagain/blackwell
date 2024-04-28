@@ -22,7 +22,7 @@ export class AuthenticateClinicianController {
     private jwt: JwtService,
   ) {}
 
-  @Post('login')
+  @Post('authenticate')
   @ApiTags('Clinicians')
   @ApiOperation({ summary: 'Authenticate a clinician' })
   @ApiBody({ schema: requestBodyForOpenAPI })

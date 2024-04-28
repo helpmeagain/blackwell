@@ -16,6 +16,7 @@ async function bootstrap() {
       'https://github.com/felipecomarques/blackwell/blob/main/LICENSE.txt',
     )
     .setExternalDoc('Source code', 'https://github.com/felipecomarques/blackwell')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
