@@ -7,6 +7,7 @@ import { AuthModule } from '@/infrastructure/auth/auth.module';
 import { AuthenticateClinicianController } from './controllers/clinician/authenticate-clinician.controller';
 import { CreateConsultationController } from './controllers/consultation/create-consultation.controller';
 import { CreatePatientController } from './controllers/patient/create-patient.controller';
+import { FetchRecentConsultationsController } from './controllers/consultation/fetch-recent-consultations.controller';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CreatePatientController } from './controllers/patient/create-patient.co
     AuthenticateClinicianController,
     CreateConsultationController,
     CreatePatientController,
+    FetchRecentConsultationsController,
   ],
   providers: [PrismaService],
 })

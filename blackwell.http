@@ -60,3 +60,10 @@ Authorization: Bearer {{authTokenClinician}}
   "clinicianId": "{{clinicianId}}",
   "patientId": "{{patientId}}"
 }
+
+###
+# @name fetch_recent_consultation
+GET {{host}}/consultations?page=3
+Content-Type: {{contentType}}
+Authorization: Bearer {{authTokenClinician}}
+
