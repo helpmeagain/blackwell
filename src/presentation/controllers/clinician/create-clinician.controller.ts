@@ -43,13 +43,10 @@ export class CreateClinicianController {
     const { name, surname, slug, gender, occupation, phoneNumber, email, password } =
       body;
 
-    const clinicianWithSameEmail = await this.prisma.clinician.findUnique({
-      where: { email },
-    });
-
-    const clinicianWithSameSlug = await this.prisma.clinician.findUnique({
-      where: { slug },
-    });
+    const [clinicianWithSameEmail, clinicianWithSameSlug] = await Promise.all([
+      this.prisma.clinician.findUnique({ where: { email } }),
+      this.prisma.clinician.findUnique({ where: { slug } }),
+    ]);
 
     if (clinicianWithSameEmail) {
       throw new ConflictException('Clinician with same email already exists');

@@ -36,19 +36,16 @@ export class CreateConsultationController {
   async handle(@Body() body: CreateConsultationSchema) {
     const { clinicianId, patientId, room, appointmentDate } = body;
 
-    const patientDoesNotExist = !(await this.prisma.patient.findUnique({
-      where: { id: patientId },
-    }));
+    const [patient, clinician] = await Promise.all([
+      this.prisma.patient.findUnique({ where: { id: patientId } }),
+      this.prisma.clinician.findUnique({ where: { id: clinicianId } }),
+    ]);
 
-    if (patientDoesNotExist) {
+    if (!patient) {
       throw new NotFoundException('Patient not found');
     }
 
-    const clinicianDoesNotExist = !(await this.prisma.clinician.findUnique({
-      where: { id: clinicianId },
-    }));
-
-    if (clinicianDoesNotExist) {
+    if (!clinician) {
       throw new NotFoundException('Clinician not found');
     }
 
