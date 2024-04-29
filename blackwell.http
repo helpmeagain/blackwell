@@ -3,6 +3,8 @@
 @host = {{hostname}}:{{port}}
 @contentType = application/json
 @authTokenClinician = {{authenticate_clinician.response.body.access_token}}
+@clinicianId = {{create_clinician.response.body.result.id}}
+@patientId = {{create_patient.response.body.result.id}}
 
 ###
 # @name create_clinician
@@ -51,3 +53,10 @@ Content-Type: {{contentType}}
 POST {{host}}/consultations
 Content-Type: {{contentType}}
 Authorization: Bearer {{authTokenClinician}}
+
+{
+  "room": 1,
+  "appointmentDate": "2000-01-01T12:00:00.000Z",
+  "clinicianId": "{{clinicianId}}",
+  "patientId": "{{patientId}}"
+}
