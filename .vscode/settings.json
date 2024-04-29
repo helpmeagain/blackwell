@@ -13,6 +13,9 @@
     },
     "editor.tabSize": 2,
     "material-icon-theme.activeIconPack": "nest",
+    "material-icon-theme.files.associations": {
+        "vitest.config.e2e.mts": "vitest"
+    },
     "material-icon-theme.folders.associations": {
         "domain": "controller",
         "application": "dist",
