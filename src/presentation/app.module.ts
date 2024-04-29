@@ -1,11 +1,29 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
+import { CreateClinicianController } from './controllers/clinician/create-clinician.controller';
+import { envSchema } from './env';
+import { AuthModule } from '@/infrastructure/auth/auth.module';
+import { AuthenticateClinicianController } from './controllers/clinician/authenticate-clinician.controller';
+import { CreateConsultationController } from './controllers/consultation/create-consultation.controller';
+import { CreatePatientController } from './controllers/patient/create-patient.controller';
+import { FetchRecentConsultationsController } from './controllers/consultation/fetch-recent-consultations.controller';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+  imports: [
+    ConfigModule.forRoot({
+      validate: (obj) => envSchema.parse(obj),
+      isGlobal: true,
+    }),
+    AuthModule,
+  ],
+  controllers: [
+    CreateClinicianController,
+    AuthenticateClinicianController,
+    CreateConsultationController,
+    CreatePatientController,
+    FetchRecentConsultationsController,
+  ],
+  providers: [PrismaService],
 })
 export class AppModule {}
