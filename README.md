@@ -1,4 +1,4 @@
-# Blackwell &middot; [![version](https://img.shields.io/github/package-json/v/felipecomarques/blackwell)](./package.json) [![license](https://img.shields.io/github/license/felipecomarques/blackwell)](./LICENSE.md) [![unit tests](https://img.shields.io/github/actions/workflow/status/felipecomarques/blackwell/run-unit-tests.yml?event=push&logo=vitest&logoColor=%23ffffff&label=unit%20tests)](https://github.com/felipecomarques/blackwell/actions/workflows/run-unit-tests.yml) [![e2e tests](https://img.shields.io/github/actions/workflow/status/felipecomarques/blackwell/run-e2e-tests.yml?branch=main&event=pull_request&style=flat&logo=vitest&logoColor=white&label=e2e%20tests)](https://github.com/felipecomarques/blackwell/actions/workflows/run-e2e-tests.yml)
+# Blackwell &middot; [![version](https://img.shields.io/github/package-json/v/felipecomarques/blackwell)](./package.json) [![license](https://img.shields.io/github/license/felipecomarques/blackwell)](./LICENSE.md) [![unit tests](https://img.shields.io/github/actions/workflow/status/felipecomarques/blackwell/run-unit-tests.yml?branch=main&event=push&logo=vitest&logoColor=%23ffffff&label=unit%20tests)](https://github.com/felipecomarques/blackwell/actions/workflows/run-unit-tests.yml) [![e2e tests](https://img.shields.io/github/actions/workflow/status/felipecomarques/blackwell/run-e2e-tests.yml?branch=main&event=push&style=flat&logo=vitest&logoColor=white&label=e2e%20tests)](https://github.com/felipecomarques/blackwell/actions/workflows/run-e2e-tests.yml)
 
 A medical clinic API for managing medical services.
 
@@ -53,6 +53,7 @@ pnpm install
 # Generate private and public key
 openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
 openssl rsa -pubout -in private_key.pem -out public_key.pem
+
 # Generate bas64 versions of the key
 openssl base64 -in private_key.pem -out private_key_base64.txt
 openssl base64 -in public_key.pem -out public_key_base64.txt
