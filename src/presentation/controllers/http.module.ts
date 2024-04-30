@@ -4,9 +4,10 @@ import { AuthenticateClinicianController } from './clinician/authenticate-clinic
 import { CreateConsultationController } from './consultation/create-consultation.controller';
 import { CreatePatientController } from './patient/create-patient.controller';
 import { FetchRecentConsultationsController } from './consultation/fetch-recent-consultations.controller';
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
+import { PersistenceModule } from '@/infrastructure/persistence/persistence.module';
 
 @Module({
+  imports: [PersistenceModule],
   controllers: [
     CreateClinicianController,
     AuthenticateClinicianController,
@@ -14,6 +15,5 @@ import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.servic
     CreatePatientController,
     FetchRecentConsultationsController,
   ],
-  providers: [PrismaService],
 })
 export class HttpModule {}
