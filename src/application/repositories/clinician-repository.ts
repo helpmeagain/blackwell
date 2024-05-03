@@ -1,8 +1,9 @@
 import { Clinician } from '@entities/clinician';
 
-export interface ClinicianRepository {
-  findById: (id: string) => Promise<Clinician | null>;
-  create: (clinician: Clinician) => Promise<void>;
-  save: (clinician: Clinician) => Promise<void>;
-  delete: (consultation: Clinician) => Promise<void>;
+export abstract class ClinicianRepository {
+  abstract findById: (id: string) => Promise<Clinician | null>;
+  abstract findBySlug: (id: string) => Promise<Clinician | null>;
+  abstract create: (clinician: Clinician) => Promise<void>;
+  abstract save: (clinician: Clinician) => Promise<void>;
+  abstract delete: (consultation: Clinician) => Promise<void>;
 }

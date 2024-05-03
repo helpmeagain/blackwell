@@ -14,6 +14,16 @@ export class InMemoryClinicianRepository implements ClinicianRepository {
     return clinician;
   }
 
+  async findBySlug(slug: string) {
+    const clinician = this.items.find((item) => item.slug.value.toString() === slug);
+
+    if (!clinician) {
+      return null;
+    }
+
+    return clinician;
+  }
+
   async create(clinician: Clinician) {
     this.items.push(clinician);
   }

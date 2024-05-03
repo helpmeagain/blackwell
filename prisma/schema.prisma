@@ -7,37 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+  CLIENT
+}
+
 model Clinician {
-  id           String         @id @default(uuid())
-  name         String
-  surname      String
-  slug         String         @unique
-  gender       String
-  occupation   String
-  phoneNumber  String         @map("phone_number")
-  email        String         @unique
-  password     String
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime?      @updatedAt @map("updated_at")
-  Consultations Consultation[]
+  id          String    @id @default(uuid())
+  name        String
+  surname     String
+  slug        String    @unique
+  gender      String
+  occupation  String
+  phoneNumber String    @map("phone_number")
+  email       String    @unique
+  password    String
+  role        UserRole  @default(EMPLOYEE)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  consultations Consultation[]
 
   @@map("clinicians")
 }
 
 model Patient {
-  id           String         @id @default(uuid())
-  name         String
-  surname      String
-  slug         String         @unique
-  gender       String
-  birthDate    DateTime       @map("birth_date")
-  phoneNumber  String         @map("phone_number")
-  // medicalRecord <other_table>
-  email        String         @unique
-  password     String
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime?      @updatedAt @map("updated_at")
-  Consultations Consultation[]
+  id              String    @id @default(uuid())
+  name            String
+  surname         String
+  slug            String    @unique
+  gender          String
+  birthDate       DateTime  @map("birth_date")
+  phoneNumber     String    @map("phone_number")
+  medicalRecordId String?   @unique @map("medical_record_id")
+  email           String    @unique
+  password        String
+  role            UserRole  @default(CLIENT)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+
+  Consultation  Consultation[]
+  MedicalRecord MedicalRecord? @relation("record", fields: [medicalRecordId], references: [id])
 
   @@map("patients")
 }
@@ -50,7 +61,24 @@ model Consultation {
   updatedAt       DateTime? @updatedAt @map("updated_at")
   clinicianId     String    @map("clinician_id")
   patientId       String    @map("patient_id")
+  medicalRecordId String
 
-  clinician Clinician @relation(fields: [clinicianId], references: [id])
-  patient   Patient   @relation(fields: [patientId], references: [id])
+  clinician     Clinician     @relation(fields: [clinicianId], references: [id])
+  patient       Patient       @relation(fields: [patientId], references: [id])
+  MedicalRecord MedicalRecord @relation(fields: [medicalRecordId], references: [id])
+
+  @@map("consultations")
+}
+
+model MedicalRecord {
+  id               String   @id @default(uuid())
+  patientId        String   @unique @map("patient_id")
+  consultationsIds String[] @map("consultations_ids")
+  diagnosis        String
+  comorbidity      String
+
+  Consultation Consultation[]
+  Patient      Patient?       @relation("record")
+
+  @@map("medical_records")
 }
