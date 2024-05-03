@@ -8,8 +8,8 @@ import { MedicalRecord } from './medical-record';
 export interface PatientProps {
   name: string;
   surname: string;
-  gender: Gender;
   slug: Slug;
+  gender: Gender;
   birthDate: Date;
   phoneNumber: string;
   email: string;
@@ -45,37 +45,13 @@ export class Patient extends AggregateRoot<PatientProps> {
     return this.props.name;
   }
 
-  get surname(): string {
-    return this.props.surname;
-  }
-
-  get gender(): Gender {
-    return this.props.gender;
-  }
-
-  get birthDate(): Date {
-    return this.props.birthDate;
-  }
-
-  get phoneNumber(): string {
-    return this.props.phoneNumber;
-  }
-
-  get email(): string {
-    return this.props.email;
-  }
-
-  get slug(): Slug {
-    return this.props.slug;
-  }
-
-  get medicalRecord(): MedicalRecord {
-    return this.props.medicalRecord as MedicalRecord;
-  }
-
   set name(name: string) {
     this.props.name = name;
     this.touch();
+  }
+
+  get surname(): string {
+    return this.props.surname;
   }
 
   set surname(surname: string) {
@@ -83,9 +59,8 @@ export class Patient extends AggregateRoot<PatientProps> {
     this.touch();
   }
 
-  set gender(gender: Gender) {
-    this.props.gender = gender;
-    this.touch();
+  get slug(): Slug {
+    return this.props.slug;
   }
 
   set slug(slug: Slug) {
@@ -93,9 +68,26 @@ export class Patient extends AggregateRoot<PatientProps> {
     this.touch();
   }
 
+  get gender(): Gender {
+    return this.props.gender;
+  }
+
+  set gender(gender: Gender) {
+    this.props.gender = gender;
+    this.touch();
+  }
+
+  get birthDate(): Date {
+    return this.props.birthDate;
+  }
+
   set birthDate(birthDate: Date) {
     this.props.birthDate = birthDate;
     this.touch();
+  }
+
+  get phoneNumber(): string {
+    return this.props.phoneNumber;
   }
 
   set phoneNumber(phoneNumber: string) {
@@ -103,9 +95,17 @@ export class Patient extends AggregateRoot<PatientProps> {
     this.touch();
   }
 
+  get email(): string {
+    return this.props.email;
+  }
+
   set email(email: string) {
     this.props.email = email;
     this.touch();
+  }
+
+  get medicalRecord(): MedicalRecord {
+    return this.props.medicalRecord as MedicalRecord;
   }
 
   set medicalRecord(medicalRecord: MedicalRecord) {
