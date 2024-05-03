@@ -25,7 +25,7 @@ export class Right<L, R> {
     return true;
   }
 
-  isLeft(): this is Right<L, R> {
+  isLeft(): this is Left<L, R> {
     return false;
   }
 }
