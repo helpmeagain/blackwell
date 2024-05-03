@@ -20,15 +20,30 @@ export class PrismaClinicianRepository implements ClinicianRepository {
     return PrismaClinicianMapper.toDomain(clinician);
   }
 
-  create(clinician: Clinician): Promise<void> {
-    throw new Error('not implemented');
+  async findBySlug(slug: string): Promise<Clinician | null> {
+    const clinician = await this.prisma.clinician.findUnique({
+      where: { slug },
+    });
+
+    if (!clinician) {
+      return null;
+    }
+
+    return PrismaClinicianMapper.toDomain(clinician);
   }
 
-  save(clinician: Clinician): Promise<void> {
-    throw new Error('not implemented');
+  async create(clinician: Clinician): Promise<void> {
+    const data = PrismaClinicianMapper.toPersistence(clinician);
+    await this.prisma.clinician.create({ data });
   }
 
-  delete(consultation: Clinician): Promise<void> {
-    throw new Error('not implemented');
+  async save(clinician: Clinician): Promise<void> {
+    const data = PrismaClinicianMapper.toPersistence(clinician);
+    await this.prisma.clinician.update({ where: { id: data.id }, data });
+  }
+
+  async delete(clinician: Clinician): Promise<void> {
+    const data = PrismaClinicianMapper.toPersistence(clinician);
+    await this.prisma.clinician.delete({ where: { id: data.id } });
   }
 }

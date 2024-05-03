@@ -1,7 +1,7 @@
 import { Gender } from '@/domain/common/types/gender-type';
 import { Clinician } from '@/domain/entities/clinician';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
-import { Clinician as PrismaClinician } from '@prisma/client';
+import { Clinician as PrismaClinician, Prisma } from '@prisma/client';
 
 export class PrismaClinicianMapper {
   static toDomain(raw: PrismaClinician): Clinician {
@@ -18,5 +18,19 @@ export class PrismaClinicianMapper {
       },
       new UniqueEntityId(raw.id),
     );
+  }
+
+  static toPersistence(clinician: Clinician): Prisma.ClinicianUncheckedCreateInput {
+    return {
+      id: clinician.id.toString(),
+      name: clinician.name,
+      surname: clinician.surname,
+      slug: clinician.slug.value,
+      gender: clinician.gender,
+      occupation: clinician.occupation,
+      phoneNumber: clinician.phoneNumber,
+      email: clinician.email,
+      password: 'placeholder',
+    };
   }
 }
