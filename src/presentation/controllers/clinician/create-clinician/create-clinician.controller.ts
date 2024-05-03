@@ -12,6 +12,7 @@ import {
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
+import { clinicianPresenter } from '@/presentation/presenters/clinician-presenter';
 
 const createClinicianSchema = z.object({
   name: z.string(),
@@ -51,6 +52,10 @@ export class CreateClinicianController {
       email,
     });
 
-    return { result };
+    if (result.isLeft()) {
+      throw new Error('Clinician not created');
+    }
+
+    return { clinician: clinicianPresenter.toHTTP(result.value.clinician) };
   }
 }
