@@ -11,10 +11,14 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
     },
+    "[prisma]": {
+        "editor.formatOnSave": true
+    },
     "editor.tabSize": 2,
     "material-icon-theme.activeIconPack": "nest",
     "material-icon-theme.files.associations": {
-        "vitest.config.e2e.mts": "vitest"
+        "vitest.config.e2e.mts": "vitest",
+        ".env.exemple": "tune"
     },
     "material-icon-theme.folders.associations": {
         "domain": "controller",
@@ -22,6 +26,7 @@
         "presentation": "meta",
         "infrastructure": "interface",
         "persistence": "database",
+        "adapter": "generator",
         "events": "",
         "common": ""
     }

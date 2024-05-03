@@ -13,7 +13,7 @@ export interface ClinicianProps {
   email: string;
   occupation: string;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export class Clinician extends BaseEntity<ClinicianProps> {

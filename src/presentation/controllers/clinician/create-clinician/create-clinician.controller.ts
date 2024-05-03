@@ -1,6 +1,5 @@
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -9,9 +8,11 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { hash } from 'bcryptjs';
+// import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
+import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
+import { clinicianPresenter } from '@/presentation/presenters/clinician-presenter';
 
 const createClinicianSchema = z.object({
   name: z.string(),
@@ -29,7 +30,7 @@ const requestBodyForOpenAPI = zodToOpenAPI(createClinicianSchema);
 
 @Controller('clinicians')
 export class CreateClinicianController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createClinician: NestCreateClinicianUseCase) {}
 
   @Post()
   @ApiTags('Clinicians')
@@ -40,37 +41,21 @@ export class CreateClinicianController {
   @ApiConflictResponse({ description: 'Conflict' })
   @UsePipes(new ZodValidationPipe(createClinicianSchema))
   async handle(@Body() body: CreateClinicianSchema) {
-    const { name, surname, slug, gender, occupation, phoneNumber, email, password } =
-      body;
+    const { name, surname, gender, occupation, phoneNumber, email } = body;
 
-    const [clinicianWithSameEmail, clinicianWithSameSlug] = await Promise.all([
-      this.prisma.clinician.findUnique({ where: { email } }),
-      this.prisma.clinician.findUnique({ where: { slug } }),
-    ]);
-
-    if (clinicianWithSameEmail) {
-      throw new ConflictException('Clinician with same email already exists');
-    }
-
-    if (clinicianWithSameSlug) {
-      throw new ConflictException('Clinician with same slug already exists');
-    }
-
-    const hashedPassword = await hash(password, 8);
-
-    const result = await this.prisma.clinician.create({
-      data: {
-        name,
-        surname,
-        slug,
-        gender,
-        occupation,
-        phoneNumber,
-        email,
-        password: hashedPassword,
-      },
+    const result = await this.createClinician.execute({
+      name,
+      surname,
+      gender,
+      occupation,
+      phoneNumber,
+      email,
     });
 
-    return { result };
+    if (result.isLeft()) {
+      throw new Error('Clinician not created');
+    }
+
+    return { clinician: clinicianPresenter.toHTTP(result.value.clinician) };
   }
 }
