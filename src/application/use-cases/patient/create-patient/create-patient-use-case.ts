@@ -32,21 +32,21 @@ export class CreatePatientUseCase {
     });
 
     if (!['male', 'female', 'non-binary', 'other'].includes(gender)) {
-      return left(new BadRequest());
+      return left(new BadRequest('gender'));
     }
 
     if (!(birthDate instanceof Date) || isNaN(birthDate.getTime())) {
-      return left(new BadRequest());
+      return left(new BadRequest('birth date'));
     }
 
     const phoneNumberRegex = /^\+[1-9]\d{1,14}$/;
     if (!phoneNumberRegex.test(phoneNumber)) {
-      return left(new BadRequest());
+      return left(new BadRequest('phone number'));
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return left(new BadRequest());
+      return left(new BadRequest('email'));
     }
 
     await this.repository.create(patient);
