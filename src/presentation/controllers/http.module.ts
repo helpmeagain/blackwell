@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CreateClinicianController } from './clinician/create-clinician/create-clinician.controller';
-import { AuthenticateClinicianController } from './clinician/authenticate-clinician.controller';
+import { AuthenticateClinicianController } from './authenticate/clinician/authenticate-clinician.controller';
 import { CreateConsultationController } from './consultation/create-consultation.controller';
 import { CreatePatientController } from './patient/create-patient.controller';
 import { FetchRecentConsultationsController } from './consultation/fetch-recent-consultations.controller';

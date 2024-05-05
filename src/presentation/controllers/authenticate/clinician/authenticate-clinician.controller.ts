@@ -15,15 +15,15 @@ const authenticateBodySchema = z.object({
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 const requestBodyForOpenAPI = zodToOpenAPI(authenticateBodySchema);
 
-@Controller('clinicians')
+@Controller('auth')
 export class AuthenticateClinicianController {
   constructor(
     private prisma: PrismaService,
     private jwt: JwtService,
   ) {}
 
-  @Post('authenticate')
-  @ApiTags('Clinicians')
+  @Post('clinician')
+  @ApiTags('Auth')
   @ApiOperation({ summary: 'Authenticate a clinician' })
   @ApiBody({ schema: requestBodyForOpenAPI })
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))

@@ -12,6 +12,7 @@ export class PrismaClinicianMapper {
         gender: raw.gender as Gender,
         phoneNumber: raw.phoneNumber,
         email: raw.email,
+        password: raw.password,
         occupation: raw.occupation,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
@@ -30,7 +31,7 @@ export class PrismaClinicianMapper {
       occupation: clinician.occupation,
       phoneNumber: clinician.phoneNumber,
       email: clinician.email,
-      password: 'placeholder',
+      password: clinician.password,
     };
   }
 }

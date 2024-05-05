@@ -8,7 +8,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-// import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
@@ -41,7 +40,7 @@ export class CreateClinicianController {
   @ApiConflictResponse({ description: 'Conflict' })
   @UsePipes(new ZodValidationPipe(createClinicianSchema))
   async handle(@Body() body: CreateClinicianSchema) {
-    const { name, surname, gender, occupation, phoneNumber, email } = body;
+    const { name, surname, gender, occupation, phoneNumber, email, password } = body;
 
     const result = await this.createClinician.execute({
       name,
@@ -50,6 +49,7 @@ export class CreateClinicianController {
       occupation,
       phoneNumber,
       email,
+      password,
     });
 
     if (result.isLeft()) {

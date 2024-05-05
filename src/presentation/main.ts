@@ -19,7 +19,12 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      tagsSorter: 'alpha',
+      operationsSorter: 'method',
+    },
+  });
 
   const configService: ConfigService<Env, true> = app.get(ConfigService);
   const port = configService.get('PORT', { infer: true });

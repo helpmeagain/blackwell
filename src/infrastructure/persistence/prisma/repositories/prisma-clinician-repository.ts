@@ -20,6 +20,18 @@ export class PrismaClinicianRepository implements ClinicianRepository {
     return PrismaClinicianMapper.toDomain(clinician);
   }
 
+  async findByEmail(email: string): Promise<Clinician | null> {
+    const clinician = await this.prisma.clinician.findUnique({
+      where: { email },
+    });
+
+    if (!clinician) {
+      return null;
+    }
+
+    return PrismaClinicianMapper.toDomain(clinician);
+  }
+
   async findBySlug(slug: string): Promise<Clinician | null> {
     const clinician = await this.prisma.clinician.findUnique({
       where: { slug },
