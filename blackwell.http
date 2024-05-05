@@ -24,7 +24,7 @@ Content-Type: {{contentType}}
 
 ### 
 # @name authenticate_clinician
-POST {{host}}/clinicians/authenticate
+POST {{host}}/auth/clinician
 Content-Type: {{contentType}}
 
 {

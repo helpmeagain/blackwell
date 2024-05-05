@@ -1,5 +1,5 @@
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
-import { AuthenticateClinicianUseCase } from './authenticate-clinician';
+import { AuthenticateClinicianUseCase } from './authenticate-clinician-use-case';
 import { InMemoryClinicianRepository } from 'test/repositories/in-memory-clinician-repository';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { makeClinician } from 'test/factories/make-clinician';

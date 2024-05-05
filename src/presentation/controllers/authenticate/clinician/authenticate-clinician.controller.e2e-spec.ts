@@ -33,12 +33,10 @@ describe('Authenticate clinician [E2E]', () => {
       },
     });
 
-    const result = await request(app.getHttpServer())
-      .post('/clinicians/authenticate')
-      .send({
-        email: 'jonhdoe@email.com',
-        password: '12345',
-      });
+    const result = await request(app.getHttpServer()).post('/auth/clinician').send({
+      email: 'jonhdoe@email.com',
+      password: '12345',
+    });
 
     expect(result.statusCode).toBe(201);
     expect(result.body).toEqual({

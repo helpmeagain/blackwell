@@ -1,11 +1,9 @@
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, Controller, Post, UnauthorizedException, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { compare } from 'bcryptjs';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
-import { JwtService } from '@nestjs/jwt';
+import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-clinician-use-case';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -17,10 +15,7 @@ const requestBodyForOpenAPI = zodToOpenAPI(authenticateBodySchema);
 
 @Controller('auth')
 export class AuthenticateClinicianController {
-  constructor(
-    private prisma: PrismaService,
-    private jwt: JwtService,
-  ) {}
+  constructor(private authenticateClinicianUseCase: NestAuthenticateClinicianUseCase) {}
 
   @Post('clinician')
   @ApiTags('Auth')
@@ -30,19 +25,16 @@ export class AuthenticateClinicianController {
   async handle(@Body() body: AuthenticateBodySchema) {
     const { email, password } = body;
 
-    const clinician = await this.prisma.clinician.findUnique({ where: { email } });
-    if (!clinician) {
-      throw new UnauthorizedException('User credentials do not match any user.');
+    const result = await this.authenticateClinicianUseCase.execute({ email, password });
+
+    if (result.isLeft()) {
+      throw new Error();
     }
 
-    const isPasswordValid = await compare(password, clinician.password);
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('User credentials do not match any user.');
-    }
+    const { accessToken } = result.value;
 
-    const token = this.jwt.sign({ sub: clinician.id });
     return {
-      access_token: token,
+      access_token: accessToken,
     };
   }
 }
