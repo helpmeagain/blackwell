@@ -13,6 +13,7 @@ export interface PatientProps {
   birthDate: Date;
   phoneNumber: string;
   email: string;
+  password: string;
   medicalRecord?: MedicalRecord;
   createdAt: Date;
   updatedAt?: Date;
@@ -101,6 +102,15 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set email(email: string) {
     this.props.email = email;
+    this.touch();
+  }
+
+  get password(): string {
+    return this.props.password;
+  }
+
+  set password(password: string) {
+    this.props.password = password;
     this.touch();
   }
 

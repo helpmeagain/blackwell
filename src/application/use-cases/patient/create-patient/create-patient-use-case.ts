@@ -11,6 +11,7 @@ interface createPatientRequest {
   birthDate: Date;
   phoneNumber: string;
   email: string;
+  password: string;
 }
 
 type createConsultationResponse = Either<BadRequest, { patient: Patient }>;
@@ -18,14 +19,8 @@ type createConsultationResponse = Either<BadRequest, { patient: Patient }>;
 export class CreatePatientUseCase {
   constructor(private readonly repository: PatientRepository) {}
 
-  async execute({
-    name,
-    surname,
-    gender,
-    birthDate,
-    phoneNumber,
-    email,
-  }: createPatientRequest): Promise<createConsultationResponse> {
+  async execute(req: createPatientRequest): Promise<createConsultationResponse> {
+    const { name, surname, gender, birthDate, phoneNumber, email, password } = req;
     const patient = Patient.create({
       name,
       surname,
@@ -33,6 +28,7 @@ export class CreatePatientUseCase {
       birthDate,
       phoneNumber,
       email,
+      password,
     });
 
     if (!['male', 'female', 'non-binary', 'other'].includes(gender)) {

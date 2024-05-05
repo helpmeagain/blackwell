@@ -13,6 +13,7 @@ export interface editClinicianByIdRequest {
   gender: Gender;
   phoneNumber: string;
   email: string;
+  password: string;
 }
 
 export type editClinicianByIdResponse = Either<
@@ -24,7 +25,16 @@ export class EditClinicianByIdUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
 
   async execute(req: editClinicianByIdRequest): Promise<editClinicianByIdResponse> {
-    const { clinicianId, name, surname, gender, phoneNumber, email, occupation } = req;
+    const {
+      clinicianId,
+      name,
+      surname,
+      gender,
+      phoneNumber,
+      email,
+      password,
+      occupation,
+    } = req;
     const clinician = await this.repository.findById(clinicianId);
 
     if (!clinician) {
@@ -41,6 +51,7 @@ export class EditClinicianByIdUseCase {
     clinician.phoneNumber = phoneNumber;
     clinician.email = email;
     clinician.occupation = occupation;
+    clinician.password = password;
 
     await this.repository.save(clinician);
     return right({ clinician });

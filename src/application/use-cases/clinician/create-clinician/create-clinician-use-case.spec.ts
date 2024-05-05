@@ -17,14 +17,13 @@ describe('Create Clinician', () => {
       gender: 'male',
       phoneNumber: '123456789',
       email: 'johndoe@email.com',
+      password: '123456',
       occupation: 'Doctor',
     });
 
     expect(result.isRight()).toBe(true);
-    if (result.isRight()) {
-      expect(result.value.clinician.name).toBe('John');
-      expect(inMemoryRepository.items).toHaveLength(1);
-      expect(inMemoryRepository.items[0]).toEqual(result.value.clinician);
-    }
+    expect(result.value?.clinician.name).toBe('John');
+    expect(inMemoryRepository.items).toHaveLength(1);
+    expect(inMemoryRepository.items[0]).toEqual(result.value?.clinician);
   });
 });

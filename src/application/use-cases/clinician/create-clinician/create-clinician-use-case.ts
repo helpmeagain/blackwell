@@ -10,6 +10,7 @@ export interface createClinicianRequest {
   gender: Gender;
   phoneNumber: string;
   email: string;
+  password: string;
   occupation: string;
 }
 
@@ -19,7 +20,7 @@ export class CreateClinicianUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
 
   async execute(req: createClinicianRequest): Promise<createConsultationResponse> {
-    const { name, surname, gender, phoneNumber, email, occupation } = req;
+    const { name, surname, gender, phoneNumber, email, password, occupation } = req;
     const clinician = Clinician.create({
       name,
       surname,
@@ -27,6 +28,7 @@ export class CreateClinicianUseCase {
       gender,
       phoneNumber,
       email,
+      password,
     });
 
     await this.repository.create(clinician);

@@ -18,6 +18,7 @@ export function makeClinician(
       occupation: faker.person.jobTitle(),
       phoneNumber: faker.phone.number(),
       email: faker.internet.email(),
+      password: faker.internet.password(),
       ...override,
     },
     id,

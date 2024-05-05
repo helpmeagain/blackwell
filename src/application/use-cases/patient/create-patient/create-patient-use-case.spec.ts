@@ -19,6 +19,7 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       phoneNumber: '+1234567890',
       email: 'jonhdoe@email.com',
+      password: 'password',
     });
 
     expect(result.isRight()).toBe(true);
@@ -36,6 +37,7 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       phoneNumber: '+1234567890',
       email: 'jonhdoe@email.com',
+      password: 'password',
     });
 
     expect(result.isRight()).toBe(true);
@@ -56,6 +58,7 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       phoneNumber: '+1234567890',
       email: 'jonhdoeemail.com',
+      password: 'password',
     });
 
     expect(result.isLeft()).toBe(true);

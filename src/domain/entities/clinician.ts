@@ -11,6 +11,7 @@ export interface ClinicianProps {
   gender: Gender;
   phoneNumber: string;
   email: string;
+  password: string;
   occupation: string;
   createdAt: Date;
   updatedAt?: Date | null;
@@ -82,6 +83,15 @@ export class Clinician extends BaseEntity<ClinicianProps> {
 
   set email(email: string) {
     this.props.email = email;
+    this.touch();
+  }
+
+  get password(): string {
+    return this.props.password;
+  }
+
+  set password(password: string) {
+    this.props.password = password;
     this.touch();
   }
 
