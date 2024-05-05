@@ -29,5 +29,8 @@
         "adapter": "generator",
         "events": "",
         "common": ""
-    }
+    },
+    "cSpell.words": [
+        "encrypter",
+    ]
 }
