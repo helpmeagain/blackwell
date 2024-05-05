@@ -4,24 +4,26 @@ import { HashComparator } from '@/application/cryptography/hash-comparator';
 import { Encrypter } from '@/application/cryptography/encrypter';
 import { WrongCredentials } from '@/application/common/error-handler/errors/wrong-credentials';
 
-export interface createClinicianRequest {
+export interface authenticateClinicianRequest {
   email: string;
   password: string;
 }
 
-export type createConsultationResponse = Either<
+export type authenticateConsultationResponse = Either<
   WrongCredentials,
   { accessToken: string }
 >;
 
-export class CreateClinicianUseCase {
+export class AuthenticateClinicianUseCase {
   constructor(
     private readonly repository: ClinicianRepository,
     private readonly hashComparator: HashComparator,
     private readonly encrypter: Encrypter,
   ) {}
 
-  async execute(req: createClinicianRequest): Promise<createConsultationResponse> {
+  async execute(
+    req: authenticateClinicianRequest,
+  ): Promise<authenticateConsultationResponse> {
     const { email, password } = req;
 
     const clinician = await this.repository.findByEmail(email);
