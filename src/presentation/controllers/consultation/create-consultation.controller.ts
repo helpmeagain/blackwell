@@ -49,14 +49,15 @@ export class CreateConsultationController {
       throw new NotFoundException('Clinician not found');
     }
 
-    const result = await this.prisma.consultation.create({
-      data: {
-        room,
-        appointmentDate,
-        clinicianId,
-        patientId,
-      },
-    });
+    const result = 'ok';
+    // const result = await this.prisma.consultation.create({
+    //   data: {
+    //     room,
+    //     appointmentDate,
+    //     clinicianId,
+    //     patientId,
+    //   },
+    // });
 
     return { consultation: result };
   }

@@ -8,6 +8,7 @@ import { PersistenceModule } from '@/infrastructure/persistence/persistence.modu
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
 import { CryptographyModule } from '@/infrastructure/cryptography/cryptography.module';
 import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-clinician-use-case';
+import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -18,6 +19,10 @@ import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authe
     CreatePatientController,
     FetchRecentConsultationsController,
   ],
-  providers: [NestCreateClinicianUseCase, NestAuthenticateClinicianUseCase],
+  providers: [
+    NestCreateClinicianUseCase,
+    NestAuthenticateClinicianUseCase,
+    NestCreatePatientUseCase,
+  ],
 })
 export class HttpModule {}

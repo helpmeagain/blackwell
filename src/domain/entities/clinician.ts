@@ -43,6 +43,7 @@ export class Clinician extends BaseEntity<ClinicianProps> {
 
   set name(name: string) {
     this.props.name = name;
+    this.props.slug = Slug.createFromText(name + ' ' + this.surname);
     this.touch();
   }
 
@@ -52,6 +53,7 @@ export class Clinician extends BaseEntity<ClinicianProps> {
 
   set surname(surname: string) {
     this.props.surname = surname;
+    this.props.slug = Slug.createFromText(this.name + ' ' + this.surname);
     this.touch();
   }
 

@@ -1,5 +1,6 @@
 import { Gender } from '@/domain/common/types/gender-type';
 import { Clinician } from '@/domain/entities/clinician';
+import { Slug } from '@/domain/value-objects/slug/slug';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 import { Clinician as PrismaClinician, Prisma } from '@prisma/client';
 
@@ -9,6 +10,7 @@ export class PrismaClinicianMapper {
       {
         name: raw.name,
         surname: raw.surname,
+        slug: Slug.createFromText(raw.slug),
         gender: raw.gender as Gender,
         phoneNumber: raw.phoneNumber,
         email: raw.email,
