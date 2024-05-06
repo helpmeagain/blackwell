@@ -9,12 +9,15 @@ import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/n
 import { CryptographyModule } from '@/infrastructure/cryptography/cryptography.module';
 import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-clinician-use-case';
 import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
+import { AuthenticatePatientController } from './authenticate/patient/authenticate-patient.controller';
+import { NestAuthenticatePatientUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-patient-use-case';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
   controllers: [
     CreateClinicianController,
     AuthenticateClinicianController,
+    AuthenticatePatientController,
     CreateConsultationController,
     CreatePatientController,
     FetchRecentConsultationsController,
@@ -22,6 +25,7 @@ import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-
   providers: [
     NestCreateClinicianUseCase,
     NestAuthenticateClinicianUseCase,
+    NestAuthenticatePatientUseCase,
     NestCreatePatientUseCase,
   ],
 })

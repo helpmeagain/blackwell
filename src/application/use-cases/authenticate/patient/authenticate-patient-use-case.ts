@@ -1,47 +1,44 @@
-import { ClinicianRepository } from '@/application/repositories/clinician-repository';
+import { PatientRepository } from '@/application/repositories/patient-repository';
 import { Either, left, right } from '@/application/common/error-handler/either';
 import { HashComparator } from '@/application/cryptography/hash-comparator';
 import { Encrypter } from '@/application/cryptography/encrypter';
 import { WrongCredentials } from '@/application/common/error-handler/errors/wrong-credentials';
 
-export interface authenticateClinicianRequest {
+export interface authenticatePatientRequest {
   email: string;
   password: string;
 }
 
-export type authenticateClinicianResponse = Either<
+export type authenticateConsultationResponse = Either<
   WrongCredentials,
   { accessToken: string }
 >;
 
-export class AuthenticateClinicianUseCase {
+export class AuthenticatePatientUseCase {
   constructor(
-    private readonly repository: ClinicianRepository,
+    private readonly repository: PatientRepository,
     private readonly hashComparator: HashComparator,
     private readonly encrypter: Encrypter,
   ) {}
 
   async execute(
-    req: authenticateClinicianRequest,
-  ): Promise<authenticateClinicianResponse> {
+    req: authenticatePatientRequest,
+  ): Promise<authenticateConsultationResponse> {
     const { email, password } = req;
 
-    const clinician = await this.repository.findByEmail(email);
+    const patient = await this.repository.findByEmail(email);
 
-    if (!clinician) {
+    if (!patient) {
       return left(new WrongCredentials());
     }
 
-    const hashedPassword = await this.hashComparator.compare(
-      password,
-      clinician.password,
-    );
+    const hashedPassword = await this.hashComparator.compare(password, patient.password);
 
     if (!hashedPassword) {
       return left(new WrongCredentials());
     }
 
-    const accessToken = await this.encrypter.encrypt({ sub: clinician.id.toString() });
+    const accessToken = await this.encrypter.encrypt({ sub: patient.id.toString() });
     return right({ accessToken });
   }
 }

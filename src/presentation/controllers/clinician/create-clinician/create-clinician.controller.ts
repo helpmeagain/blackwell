@@ -68,7 +68,7 @@ export class CreateClinicianController {
 
     return {
       message: 'Clinician created successfully',
-      clinician: clinicianPresenter.toHTTP(clinician),
+      clinician: clinicianPresenter.toHTTP(clinician, password),
     };
   }
 }

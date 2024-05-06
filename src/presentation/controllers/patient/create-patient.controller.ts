@@ -19,7 +19,17 @@ const createPatientSchema = z.object({
   name: z.string(),
   surname: z.string(),
   gender: z.enum(['male', 'female', 'non-binary', 'other']),
-  birthDate: z.coerce.date(),
+  birthDate: z
+    .string()
+    .datetime()
+    .refine(
+      (value) => {
+        const birthDate = new Date(value);
+        const currentDate = new Date();
+        return birthDate < currentDate;
+      },
+      { message: 'Birth date must be in the past' },
+    ),
   phoneNumber: z.string(),
   email: z.string().email(),
   password: z.string(),
@@ -47,7 +57,7 @@ export class CreatePatientController {
       name,
       surname,
       gender,
-      birthDate,
+      birthDate: new Date(birthDate),
       phoneNumber,
       email,
       password,
@@ -67,7 +77,7 @@ export class CreatePatientController {
 
     return {
       message: 'Patient created successfully',
-      clinician: patientPresenter.toHTTP(patient),
+      patient: patientPresenter.toHTTP(patient, password),
     };
   }
 }

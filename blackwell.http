@@ -3,8 +3,8 @@
 @host = {{hostname}}:{{port}}
 @contentType = application/json
 @authTokenClinician = {{authenticate_clinician.response.body.access_token}}
-@clinicianId = {{create_clinician.response.body.result.id}}
-@patientId = {{create_patient.response.body.result.id}}
+@clinicianId = {{create_clinician.response.body.clinician.id}}
+@patientId = {{create_patient.response.body.patient.id}}
 
 ###
 # @name create_clinician
@@ -40,10 +40,19 @@ Content-Type: {{contentType}}
 {
   "name": "John",
   "surname": "Doe",
-  "slug": "john-doe",
   "gender": "male",
   "birthDate": "2000-01-01T12:00:00.000Z",
   "phoneNumber": "123456789",
+  "email": "jonhdoe@email.com",
+  "password": "12345"
+}
+
+### 
+# @name authenticate_patient
+POST {{host}}/auth/patient
+Content-Type: {{contentType}}
+
+{
   "email": "jonhdoe@email.com",
   "password": "12345"
 }
