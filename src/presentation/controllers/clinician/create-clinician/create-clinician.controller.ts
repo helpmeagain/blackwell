@@ -1,5 +1,5 @@
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -12,6 +12,8 @@ import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
 import { clinicianPresenter } from '@/presentation/presenters/clinician-presenter';
+import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
+import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 
 const createClinicianSchema = z.object({
   name: z.string(),
@@ -53,9 +55,20 @@ export class CreateClinicianController {
     });
 
     if (result.isLeft()) {
-      throw new Error('Clinician not created');
+      const error = result.value;
+      switch (error.constructor) {
+        case UserAlreadyExists:
+          throw new ConflictException(error.message);
+        default:
+          throw new BadRequest(error.message);
+      }
     }
 
-    return { clinician: clinicianPresenter.toHTTP(result.value.clinician) };
+    const { clinician } = result.value;
+
+    return {
+      message: 'Clinician created successfully',
+      clinician: clinicianPresenter.toHTTP(clinician),
+    };
   }
 }

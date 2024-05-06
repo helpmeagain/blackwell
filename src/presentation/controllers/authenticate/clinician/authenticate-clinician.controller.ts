@@ -1,9 +1,11 @@
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { Body, Controller, Post, UnauthorizedException, UsePipes } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-clinician-use-case';
+import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
+import { WrongCredentials } from '@/application/common/error-handler/errors/wrong-credentials';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -28,7 +30,13 @@ export class AuthenticateClinicianController {
     const result = await this.authenticateClinicianUseCase.execute({ email, password });
 
     if (result.isLeft()) {
-      throw new Error();
+      const error = result.value;
+      switch (error.constructor) {
+        case WrongCredentials:
+          throw new UnauthorizedException(error.message);
+        default:
+          throw new BadRequest(error.message);
+      }
     }
 
     const { accessToken } = result.value;
