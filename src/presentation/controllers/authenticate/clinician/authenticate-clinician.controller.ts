@@ -6,6 +6,7 @@ import { zodToOpenAPI } from 'nestjs-zod';
 import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-clinician-use-case';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { WrongCredentials } from '@/application/common/error-handler/errors/wrong-credentials';
+import { Public } from '@/infrastructure/auth/public';
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -20,6 +21,7 @@ export class AuthenticateClinicianController {
   constructor(private authenticateClinicianUseCase: NestAuthenticateClinicianUseCase) {}
 
   @Post('clinician')
+  @Public()
   @ApiTags('Auth')
   @ApiOperation({ summary: 'Authenticate a clinician' })
   @ApiBody({ schema: requestBodyForOpenAPI })

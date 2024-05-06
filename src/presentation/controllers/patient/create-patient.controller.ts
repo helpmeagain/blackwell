@@ -14,6 +14,7 @@ import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { patientPresenter } from '@/presentation/presenters/patient-presenter';
+import { Public } from '@/infrastructure/auth/public';
 
 const createPatientSchema = z.object({
   name: z.string(),
@@ -43,6 +44,7 @@ export class CreatePatientController {
   constructor(private createPatient: NestCreatePatientUseCase) {}
 
   @Post()
+  @Public()
   @ApiTags('Patients')
   @ApiOperation({ summary: 'Create a patient' })
   @ApiBody({ schema: requestBodyForOpenAPI })

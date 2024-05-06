@@ -1,14 +1,6 @@
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
-import {
-  Body,
-  Controller,
-  NotFoundException,
-  Post,
-  UseGuards,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, Controller, NotFoundException, Post, UsePipes } from '@nestjs/common';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { JwtAuthGuard } from '@/infrastructure/auth/jwt-auth.guard';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
@@ -24,7 +16,6 @@ type CreateConsultationSchema = z.infer<typeof createConsultationSchema>;
 const requestBodyForOpenAPI = zodToOpenAPI(createConsultationSchema);
 
 @Controller('consultations')
-@UseGuards(JwtAuthGuard)
 export class CreateConsultationController {
   constructor(private prisma: PrismaService) {}
 
