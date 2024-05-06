@@ -13,9 +13,10 @@ export interface PatientProps {
   birthDate: Date;
   phoneNumber: string;
   email: string;
+  password: string;
   medicalRecord?: MedicalRecord;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export class Patient extends AggregateRoot<PatientProps> {
@@ -47,6 +48,7 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set name(name: string) {
     this.props.name = name;
+    this.props.slug = Slug.createFromText(name + ' ' + this.surname);
     this.touch();
   }
 
@@ -56,16 +58,12 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set surname(surname: string) {
     this.props.surname = surname;
+    this.props.slug = Slug.createFromText(this.name + ' ' + this.surname);
     this.touch();
   }
 
   get slug(): Slug {
     return this.props.slug;
-  }
-
-  set slug(slug: Slug) {
-    this.props.slug = slug;
-    this.touch();
   }
 
   get gender(): Gender {
@@ -101,6 +99,15 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set email(email: string) {
     this.props.email = email;
+    this.touch();
+  }
+
+  get password(): string {
+    return this.props.password;
+  }
+
+  set password(password: string) {
+    this.props.password = password;
     this.touch();
   }
 

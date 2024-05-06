@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import { Env } from './env';
+import { EnvService } from '@/infrastructure/env/env.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,10 +18,15 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      tagsSorter: 'alpha',
+      operationsSorter: 'method',
+    },
+  });
 
-  const configService: ConfigService<Env, true> = app.get(ConfigService);
-  const port = configService.get('PORT', { infer: true });
+  const envService = app.get(EnvService);
+  const port = envService.get('PORT');
   await app.listen(port);
   console.log(`Server is running! Swagger documentation: http://localhost:${port}/api/`);
 }

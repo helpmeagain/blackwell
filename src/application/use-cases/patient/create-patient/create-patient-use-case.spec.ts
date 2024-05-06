@@ -1,14 +1,17 @@
 import { MedicalRecord } from '@/domain/entities/medical-record';
 import { CreatePatientUseCase } from './create-patient-use-case';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
+import { FakeHasher } from 'test/cryptography/fake-hasher';
 
 let inMemoryRepository: InMemoryPatientRepository;
+let fakeHasher: FakeHasher;
 let sut: CreatePatientUseCase;
 
 describe('Create Patient', () => {
   beforeEach(() => {
     inMemoryRepository = new InMemoryPatientRepository();
-    sut = new CreatePatientUseCase(inMemoryRepository);
+    fakeHasher = new FakeHasher();
+    sut = new CreatePatientUseCase(inMemoryRepository, fakeHasher);
   });
 
   it('should be able to create a patient', async () => {
@@ -19,6 +22,7 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       phoneNumber: '+1234567890',
       email: 'jonhdoe@email.com',
+      password: 'password',
     });
 
     expect(result.isRight()).toBe(true);
@@ -36,6 +40,7 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       phoneNumber: '+1234567890',
       email: 'jonhdoe@email.com',
+      password: 'password',
     });
 
     expect(result.isRight()).toBe(true);
@@ -46,18 +51,5 @@ describe('Create Patient', () => {
         result.value.patient.id,
       );
     }
-  });
-
-  it('should not be able to create a patient with invalid email', async () => {
-    const result = await sut.execute({
-      name: 'John',
-      surname: 'Doe',
-      gender: 'male',
-      birthDate: new Date(),
-      phoneNumber: '+1234567890',
-      email: 'jonhdoeemail.com',
-    });
-
-    expect(result.isLeft()).toBe(true);
   });
 });

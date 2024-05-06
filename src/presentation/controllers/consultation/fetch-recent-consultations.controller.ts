@@ -1,6 +1,5 @@
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '@/infrastructure/auth/jwt-auth.guard';
+import { Controller, Get, Query } from '@nestjs/common';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
 import { z } from 'zod';
@@ -16,7 +15,6 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema);
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>;
 
 @Controller('consultations')
-@UseGuards(JwtAuthGuard)
 export class FetchRecentConsultationsController {
   constructor(private prisma: PrismaService) {}
 

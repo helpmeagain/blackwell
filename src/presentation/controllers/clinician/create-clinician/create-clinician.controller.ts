@@ -1,5 +1,5 @@
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -8,11 +8,13 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-// import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
 import { clinicianPresenter } from '@/presentation/presenters/clinician-presenter';
+import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
+import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
+import { Public } from '@/infrastructure/auth/public';
 
 const createClinicianSchema = z.object({
   name: z.string(),
@@ -33,6 +35,7 @@ export class CreateClinicianController {
   constructor(private createClinician: NestCreateClinicianUseCase) {}
 
   @Post()
+  @Public()
   @ApiTags('Clinicians')
   @ApiOperation({ summary: 'Create a clinician' })
   @ApiBody({ schema: requestBodyForOpenAPI })
@@ -41,7 +44,7 @@ export class CreateClinicianController {
   @ApiConflictResponse({ description: 'Conflict' })
   @UsePipes(new ZodValidationPipe(createClinicianSchema))
   async handle(@Body() body: CreateClinicianSchema) {
-    const { name, surname, gender, occupation, phoneNumber, email } = body;
+    const { name, surname, gender, occupation, phoneNumber, email, password } = body;
 
     const result = await this.createClinician.execute({
       name,
@@ -50,12 +53,24 @@ export class CreateClinicianController {
       occupation,
       phoneNumber,
       email,
+      password,
     });
 
     if (result.isLeft()) {
-      throw new Error('Clinician not created');
+      const error = result.value;
+      switch (error.constructor) {
+        case UserAlreadyExists:
+          throw new ConflictException(error.message);
+        default:
+          throw new BadRequest(error.message);
+      }
     }
 
-    return { clinician: clinicianPresenter.toHTTP(result.value.clinician) };
+    const { clinician } = result.value;
+
+    return {
+      message: 'Clinician created successfully',
+      clinician: clinicianPresenter.toHTTP(clinician, password),
+    };
   }
 }

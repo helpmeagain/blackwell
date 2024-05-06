@@ -1,4 +1,3 @@
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
 import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
 import {
@@ -9,16 +8,29 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
+import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
+import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
+import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
+import { patientPresenter } from '@/presentation/presenters/patient-presenter';
+import { Public } from '@/infrastructure/auth/public';
 
 const createPatientSchema = z.object({
   name: z.string(),
   surname: z.string(),
-  slug: z.string(),
   gender: z.enum(['male', 'female', 'non-binary', 'other']),
-  birthDate: z.string().datetime(),
+  birthDate: z
+    .string()
+    .datetime()
+    .refine(
+      (value) => {
+        const birthDate = new Date(value);
+        const currentDate = new Date();
+        return birthDate < currentDate;
+      },
+      { message: 'Birth date must be in the past' },
+    ),
   phoneNumber: z.string(),
   email: z.string().email(),
   password: z.string(),
@@ -29,9 +41,10 @@ const requestBodyForOpenAPI = zodToOpenAPI(createPatientSchema);
 
 @Controller('patients')
 export class CreatePatientController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createPatient: NestCreatePatientUseCase) {}
 
   @Post()
+  @Public()
   @ApiTags('Patients')
   @ApiOperation({ summary: 'Create a patient' })
   @ApiBody({ schema: requestBodyForOpenAPI })
@@ -40,36 +53,33 @@ export class CreatePatientController {
   @ApiConflictResponse({ description: 'Conflict' })
   @UsePipes(new ZodValidationPipe(createPatientSchema))
   async handle(@Body() body: CreatePatientSchema) {
-    const { name, surname, slug, gender, birthDate, phoneNumber, email, password } = body;
+    const { name, surname, gender, birthDate, phoneNumber, email, password } = body;
 
-    const [patientWithSameEmail, patientWithSameSlug] = await Promise.all([
-      this.prisma.patient.findUnique({ where: { email } }),
-      this.prisma.patient.findUnique({ where: { slug } }),
-    ]);
-
-    if (patientWithSameEmail) {
-      throw new ConflictException('Patient with same email already exists');
-    }
-
-    if (patientWithSameSlug) {
-      throw new ConflictException('Patient with same slug already exists');
-    }
-
-    const hashedPassword = await hash(password, 8);
-
-    const result = await this.prisma.patient.create({
-      data: {
-        name,
-        surname,
-        slug,
-        gender,
-        birthDate,
-        phoneNumber,
-        email,
-        password: hashedPassword,
-      },
+    const result = await this.createPatient.execute({
+      name,
+      surname,
+      gender,
+      birthDate: new Date(birthDate),
+      phoneNumber,
+      email,
+      password,
     });
 
-    return { result };
+    if (result.isLeft()) {
+      const error = result.value;
+      switch (error.constructor) {
+        case UserAlreadyExists:
+          throw new ConflictException(error.message);
+        default:
+          throw new BadRequest(error.message);
+      }
+    }
+
+    const { patient } = result.value;
+
+    return {
+      message: 'Patient created successfully',
+      patient: patientPresenter.toHTTP(patient, password),
+    };
   }
 }

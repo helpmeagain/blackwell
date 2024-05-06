@@ -1,8 +1,9 @@
 import { Either, left, right } from '@error/either';
-import { BadRequest } from '@error/errors/bad-request';
 import { Patient } from '@entities/patient';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { Gender } from '@/domain/common/types/gender-type';
+import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
+import { HashGenerator } from '@/application/cryptography/hash-generator';
 
 interface createPatientRequest {
   name: string;
@@ -11,21 +12,28 @@ interface createPatientRequest {
   birthDate: Date;
   phoneNumber: string;
   email: string;
+  password: string;
 }
 
-type createConsultationResponse = Either<BadRequest, { patient: Patient }>;
+type createConsultationResponse = Either<UserAlreadyExists, { patient: Patient }>;
 
 export class CreatePatientUseCase {
-  constructor(private readonly repository: PatientRepository) {}
+  constructor(
+    private readonly repository: PatientRepository,
+    private readonly hashGenerator: HashGenerator,
+  ) {}
 
-  async execute({
-    name,
-    surname,
-    gender,
-    birthDate,
-    phoneNumber,
-    email,
-  }: createPatientRequest): Promise<createConsultationResponse> {
+  async execute(req: createPatientRequest): Promise<createConsultationResponse> {
+    const { name, surname, gender, birthDate, phoneNumber, email, password } = req;
+
+    const patientWithEmailAlreadyExists = await this.repository.findByEmail(email);
+
+    if (patientWithEmailAlreadyExists) {
+      return left(new UserAlreadyExists('email', email));
+    }
+
+    const hashedPassword = await this.hashGenerator.hash(password);
+
     const patient = Patient.create({
       name,
       surname,
@@ -33,24 +41,14 @@ export class CreatePatientUseCase {
       birthDate,
       phoneNumber,
       email,
+      password: hashedPassword,
     });
 
-    if (!['male', 'female', 'non-binary', 'other'].includes(gender)) {
-      return left(new BadRequest());
-    }
-
-    if (!(birthDate instanceof Date) || isNaN(birthDate.getTime())) {
-      return left(new BadRequest());
-    }
-
-    const phoneNumberRegex = /^\+[1-9]\d{1,14}$/;
-    if (!phoneNumberRegex.test(phoneNumber)) {
-      return left(new BadRequest());
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return left(new BadRequest());
+    const patientWithSlugAlreadyExists = await this.repository.findBySlug(
+      patient.slug.value,
+    );
+    if (patientWithSlugAlreadyExists) {
+      patient.slug.value = patient.slug.value + Math.floor(Math.random() * 100);
     }
 
     await this.repository.create(patient);

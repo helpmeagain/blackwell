@@ -1,7 +1,8 @@
 import { Clinician } from '@/domain/entities/clinician';
+import { maskPassword } from './mask-password';
 
 export class clinicianPresenter {
-  static toHTTP(clinician: Clinician) {
+  static toHTTP(clinician: Clinician, password: string) {
     return {
       id: clinician.id.toString(),
       name: clinician.name,
@@ -11,6 +12,7 @@ export class clinicianPresenter {
       occupation: clinician.occupation,
       phoneNumber: clinician.phoneNumber,
       email: clinician.email,
+      password: maskPassword(password),
     };
   }
 }
