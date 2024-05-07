@@ -13,6 +13,7 @@ interface editPatientByIdRequest {
   birthDate: Date;
   phoneNumber: string;
   email: string;
+  password: string;
 }
 
 type editPatientByIdResponse = Either<
@@ -23,15 +24,9 @@ type editPatientByIdResponse = Either<
 export class EditPatientByIdUseCase {
   constructor(private readonly repository: PatientRepository) {}
 
-  async execute({
-    patientId,
-    name,
-    surname,
-    gender,
-    birthDate,
-    phoneNumber,
-    email,
-  }: editPatientByIdRequest): Promise<editPatientByIdResponse> {
+  async execute(req: editPatientByIdRequest): Promise<editPatientByIdResponse> {
+    const { patientId, name, surname, gender, birthDate, phoneNumber, email, password } =
+      req;
     const patient = await this.repository.findById(patientId);
 
     if (!patient) {
@@ -48,6 +43,7 @@ export class EditPatientByIdUseCase {
     patient.birthDate = birthDate;
     patient.phoneNumber = phoneNumber;
     patient.email = email;
+    patient.password = password;
     await this.repository.save(patient);
 
     return right({ patient });

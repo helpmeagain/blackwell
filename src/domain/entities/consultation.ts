@@ -30,6 +30,10 @@ export class Consultation extends AggregateRoot<consultationProps> {
     return consultation;
   }
 
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
   get clinicianId() {
     return this.props.clinicianId;
   }
@@ -42,20 +46,13 @@ export class Consultation extends AggregateRoot<consultationProps> {
     return this.props.room;
   }
 
-  get createdAt() {
-    return this.props.createdAt;
-  }
-
-  get updatedAt() {
-    return this.props.updatedAt;
+  set room(room: number) {
+    this.props.room = room;
+    this.touch();
   }
 
   get appointmentDate() {
     return this.props.appointmentDate;
-  }
-
-  private touch() {
-    this.props.updatedAt = new Date();
   }
 
   set appointmentDate(appointmentDate: Date) {
@@ -63,8 +60,11 @@ export class Consultation extends AggregateRoot<consultationProps> {
     this.touch();
   }
 
-  set room(room: number) {
-    this.props.room = room;
-    this.touch();
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
   }
 }

@@ -11,6 +11,7 @@ export interface ClinicianProps {
   gender: Gender;
   phoneNumber: string;
   email: string;
+  password: string;
   occupation: string;
   createdAt: Date;
   updatedAt?: Date | null;
@@ -40,8 +41,20 @@ export class Clinician extends BaseEntity<ClinicianProps> {
     return this.props.name;
   }
 
+  set name(name: string) {
+    this.props.name = name;
+    this.props.slug = Slug.createFromText(name + ' ' + this.surname);
+    this.touch();
+  }
+
   get surname() {
     return this.props.surname;
+  }
+
+  set surname(surname: string) {
+    this.props.surname = surname;
+    this.props.slug = Slug.createFromText(this.name + ' ' + this.surname);
+    this.touch();
   }
 
   get slug() {
@@ -52,31 +65,13 @@ export class Clinician extends BaseEntity<ClinicianProps> {
     return this.props.gender;
   }
 
-  get phoneNumber(): string {
-    return this.props.phoneNumber;
-  }
-
-  get email(): string {
-    return this.props.email;
-  }
-
-  get occupation() {
-    return this.props.occupation;
-  }
-
-  set name(name: string) {
-    this.props.name = name;
-    this.touch();
-  }
-
-  set surname(surname: string) {
-    this.props.surname = surname;
-    this.touch();
-  }
-
   set gender(gender: Gender) {
     this.props.gender = gender;
     this.touch();
+  }
+
+  get phoneNumber(): string {
+    return this.props.phoneNumber;
   }
 
   set phoneNumber(phoneNumber: string) {
@@ -84,9 +79,26 @@ export class Clinician extends BaseEntity<ClinicianProps> {
     this.touch();
   }
 
+  get email(): string {
+    return this.props.email;
+  }
+
   set email(email: string) {
     this.props.email = email;
     this.touch();
+  }
+
+  get password(): string {
+    return this.props.password;
+  }
+
+  set password(password: string) {
+    this.props.password = password;
+    this.touch();
+  }
+
+  get occupation() {
+    return this.props.occupation;
   }
 
   set occupation(occupation: string) {

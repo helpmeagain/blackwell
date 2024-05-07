@@ -18,13 +18,14 @@ A medical clinic API for managing medical services.
 )
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-grey?style=for-the-badge&logo=githubactions&logoColor=white)
 
-## Installation
+## Local installation
+
+<details>
+<summary><strong>Install manually</strong></summary>
 
 ### Prerequisites
 - Install [node.js](https://nodejs.org/en).
-- Install [pnpm](https://pnpm.io/pt/installation).
-- Install [docker](https://www.docker.com/products/docker-desktop/).
-- Install [postgres docker image](https://hub.docker.com/_/postgres).
+- Install [pnpm](https://pnpm.io/pt/installation) (optional).
 
 ### Local setup
     
@@ -48,18 +49,27 @@ npm install
 pnpm install
 ```
 
-4. Generate JWT - RS256 Keys
+4. Install dependencies:
+```bash
+# Using npm
+npm prisma generate
+
+# Using pnpm
+pnpm prisma generate
+```
+
+5. Generate JWT - RS256 Keys:
 ```bash
 # Generate private and public key
 openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
 openssl rsa -pubout -in private_key.pem -out public_key.pem
 
-# Generate bas64 versions of the key
+# Generate base64 versions of the key
 openssl base64 -in private_key.pem -out private_key_base64.txt
 openssl base64 -in public_key.pem -out public_key_base64.txt
 ```
 
-5. Create a `.ent` file. You can follow the [example](./.env.exemple)
+6. Create a `.env` file (you can follow the [example](./.env.exemple)):
 ```bash
 DATABASE_URL="postgres://your-user-name:your-password@your-hostname:5432/your-database-name"
 JWT_PRIVATE_KEY="your-jwt-private-key-in-base64"
@@ -67,11 +77,69 @@ JWT_PUBLIC_KEY="your-jwt-public-key-in-base64"
 PORT=8080
 ```
 
-6. Run the application
+6. Build the application:
 ```bash
 # Using npm
-npm start
+npm build
 
 # Using pnpm
-pnpm start
+pnpm build
 ```
+
+7. Run the application:
+```bash
+# Using npm
+npm start:prod
+
+# Using pnpm
+pnpm start:prod
+```
+
+8. Access the application in the localhost
+
+</details>
+
+<details>
+<summary><strong>Install with docker compose</strong></summary>
+
+### Prerequisites
+
+- Install [docker](https://www.docker.com/products/docker-desktop/).
+
+### Docker setup
+To run this project locally, follow these steps:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+```
+
+2. Navigate to the project directory:
+```bash
+cd <project-directory>
+```
+
+3. Generate JWT - RS256 Keys:
+```bash
+# Generate private and public key
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+
+# Generate base64 versions of the key
+openssl base64 -in private_key.pem -out private_key_base64.txt
+openssl base64 -in public_key.pem -out public_key_base64.txt
+```
+
+4. Create a `.env` file (you can follow the [example](./.env.exemple)):
+```bash
+JWT_PRIVATE_KEY="your-jwt-private-key-in-base64"
+JWT_PUBLIC_KEY="your-jwt-public-key-in-base64"
+```
+
+5. Run the docker compose:
+```bash
+docker-compose up --build -d
+```
+
+6. Access the application in the localhost
+
+</details>

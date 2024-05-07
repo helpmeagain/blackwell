@@ -22,12 +22,12 @@ describe('Edit a clinician By Id', () => {
       gender: 'male',
       phoneNumber: '123456789',
       email: 'johndoe@email.com',
+      password: '123456',
       occupation: 'Doctor',
     });
 
     expect(result.isRight()).toBe(true);
-    if (result.isRight()) {
-      expect(result.value.clinician.name).toEqual('John');
-    }
+    expect(inMemoryRepository.items[0].name).toEqual('John');
+    expect(inMemoryRepository.items[0].email).toEqual('johndoe@email.com');
   });
 });

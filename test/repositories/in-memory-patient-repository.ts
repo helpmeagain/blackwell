@@ -5,6 +5,16 @@ import { Patient } from '@/domain/entities/patient';
 export class InMemoryPatientRepository implements PatientRepository {
   public items: Patient[] = [];
 
+  async findByEmail(email: string) {
+    const patient = this.items.find((item) => item.email === email);
+
+    if (!patient) {
+      return null;
+    }
+
+    return patient;
+  }
+
   async findById(id: string) {
     const patient = this.items.find((item) => item.id.toString() === id);
 

@@ -30,20 +30,20 @@ export class MedicalRecord extends BaseEntity<MedicalRecordProps> {
     return this.props.consultationsIds;
   }
 
-  get diagnosis() {
-    return this.props.diagnosis as string;
-  }
-
-  get comorbidity() {
-    return this.props.comorbidity as string;
-  }
-
   set consultationsIds(consultationsIds: ConsultationIdList) {
     this.props.consultationsIds = consultationsIds;
   }
 
+  get diagnosis() {
+    return this.props.diagnosis as string;
+  }
+
   set diagnosis(diagnosis: string) {
     this.props.diagnosis = diagnosis;
+  }
+
+  get comorbidity() {
+    return this.props.comorbidity as string;
   }
 
   set comorbidity(comorbidity: string) {
