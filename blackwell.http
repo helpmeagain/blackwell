@@ -33,7 +33,12 @@ Content-Type: {{contentType}}
 
 ###
 # @name get_clinician_by_id
-GET {{host}}/clinicians/{{clinicianId}}
+GET {{host}}/clinicians/id/{{clinicianId}}
+Authorization: Bearer {{authTokenClinician}}
+
+###
+# @name get_clinician_by_slug
+GET {{host}}/clinicians/slug/john-doe
 Authorization: Bearer {{authTokenClinician}}
 
 ###
