@@ -42,6 +42,11 @@ GET {{host}}/clinicians/slug/john-doe
 Authorization: Bearer {{authTokenClinician}}
 
 ###
+# @name delete_clinician_by_id
+DELETE {{host}}/clinicians/{{clinicianId}}
+Authorization: Bearer {{authTokenClinician}}
+
+###
 # @name create_patient
 POST {{host}}/patients
 Content-Type: {{contentType}}
