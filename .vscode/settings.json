@@ -4,6 +4,7 @@
     "explorer.fileNesting.patterns": {
         "package.json": ".eslint*, prettier*, tsconfig*, vite*, pnpm-lock*, yarn.lock*, bun.lockb, nest*, package-lock.json",
         ".gitignore": ".gitattributes",
+        "docker-compose.yml": "*.dockerfile, .dockerignore", 
         ".env.local": ".env*",
         ".env": ".env*",
         "README*": "LICENSE*, License*, NOTICE*, notice*"

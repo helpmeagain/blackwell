@@ -1,15 +1,43 @@
-name: blackwell-postgres
+name: blackwell
 
 services:
   postgres:
     container_name: blackwell-pg
-    image: postgres
+    image: postgres:alpine3.19
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker-password
       POSTGRES_DB: blackwell
-      PGDATA: /data/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
     volumes:
-      - /.data/pg:/data/postgres
+      - 'db:/var/lib/postgresql/data'
+    networks:
+      - blackwell-network
+    
+  blackwell-api:
+    container_name: blackwell-api
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=postgresql://postgres:docker-password@postgres:5432/blackwell?schema=public
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
+      - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+      - PORT=8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - blackwell-network
+
+networks:
+  blackwell-network:
+    driver: bridge
+
+volumes:
+  db:
