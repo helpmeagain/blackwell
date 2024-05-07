@@ -1,7 +1,7 @@
 import { Clinician } from '@/domain/entities/clinician';
 import { maskPassword } from './mask-password';
 
-export class clinicianPresenter {
+export class CreateClinicianPresenter {
   static toHTTP(clinician: Clinician, password: string) {
     return {
       id: clinician.id.toString(),

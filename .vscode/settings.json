@@ -28,6 +28,7 @@
         "infrastructure": "interface",
         "persistence": "database",
         "adapter": "generator",
+        "presenters": "images",
         "events": "",
         "common": ""
     },

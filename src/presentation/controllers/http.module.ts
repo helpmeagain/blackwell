@@ -11,6 +11,8 @@ import { NestAuthenticateClinicianUseCase } from '@/infrastructure/adapter/authe
 import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
 import { AuthenticatePatientController } from './authenticate/patient/authenticate-patient.controller';
 import { NestAuthenticatePatientUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-patient-use-case';
+import { NestGetClinicianByIdUseCase } from '@/infrastructure/adapter/clinician/nest-get-clinician-by-id';
+import { GetByIdClinicianController } from './clinician/get-clinician-by-id/get-clinician-by-id.controller';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -18,6 +20,7 @@ import { NestAuthenticatePatientUseCase } from '@/infrastructure/adapter/authent
     CreateClinicianController,
     AuthenticateClinicianController,
     AuthenticatePatientController,
+    GetByIdClinicianController,
     CreateConsultationController,
     CreatePatientController,
     FetchRecentConsultationsController,
@@ -25,6 +28,7 @@ import { NestAuthenticatePatientUseCase } from '@/infrastructure/adapter/authent
   providers: [
     NestCreateClinicianUseCase,
     NestAuthenticateClinicianUseCase,
+    NestGetClinicianByIdUseCase,
     NestAuthenticatePatientUseCase,
     NestCreatePatientUseCase,
   ],

@@ -14,7 +14,6 @@ Content-Type: {{contentType}}
 {
   "name": "John",
   "surname": "Doe",
-  "slug": "john-doe",
   "gender": "male",
   "occupation": "doctor",
   "phoneNumber": "123456789",
@@ -31,6 +30,11 @@ Content-Type: {{contentType}}
   "email": "jonhdoe@email.com",
   "password": "12345"
 }
+
+###
+# @name get_clinician_by_id
+GET {{host}}/clinicians/{{clinicianId}}
+Authorization: Bearer {{authTokenClinician}}
 
 ###
 # @name create_patient
