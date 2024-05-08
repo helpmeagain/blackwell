@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CreateClinicianController } from './clinician/create-clinician/create-clinician.controller';
 import { AuthenticateClinicianController } from './authenticate/clinician/authenticate-clinician.controller';
 import { CreateConsultationController } from './consultation/create-consultation.controller';
-import { CreatePatientController } from './patient/create-patient.controller';
+import { CreatePatientController } from './patient/create-patient/create-patient.controller';
 import { FetchRecentConsultationsController } from './consultation/fetch-recent-consultations.controller';
 import { PersistenceModule } from '@/infrastructure/persistence/persistence.module';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
@@ -19,6 +19,8 @@ import { DeleteClinicianController } from './clinician/delete-clinician/delete-c
 import { NestDeleteClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-delete-clinician-by-id';
 import { NestEditClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-edit-clinician-by-id';
 import { EditClinicianController } from './clinician/edit-clinician/edit-clinician.controller';
+import { GetBySlugPatientController } from './patient/get-patient-by-slug/get-patient-by-slug.controller';
+import { NestGetPatientBySlugUseCase } from '@/infrastructure/adapter/patient/nest-get-patient-by-slug';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -33,6 +35,7 @@ import { EditClinicianController } from './clinician/edit-clinician/edit-clinici
     EditClinicianController,
     DeleteClinicianController,
     // Patient
+    GetBySlugPatientController,
     CreatePatientController,
     // Consultation
     CreateConsultationController,
@@ -49,6 +52,7 @@ import { EditClinicianController } from './clinician/edit-clinician/edit-clinici
     NestEditClinicianUseCase,
     NestDeleteClinicianUseCase,
     // Patient
+    NestGetPatientBySlugUseCase,
     NestCreatePatientUseCase,
   ],
 })

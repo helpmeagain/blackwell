@@ -13,7 +13,7 @@ import { zodToOpenAPI } from 'nestjs-zod';
 import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
-import { patientPresenter } from '@/presentation/presenters/patient-presenter';
+import { CreatePatientPresenter } from '@/presentation/presenters/create-patient-presenter';
 import { Public } from '@/infrastructure/auth/public';
 
 const createPatientSchema = z.object({
@@ -79,7 +79,7 @@ export class CreatePatientController {
 
     return {
       message: 'Patient created successfully',
-      patient: patientPresenter.toHTTP(patient, password),
+      patient: CreatePatientPresenter.toHTTP(patient, password),
     };
   }
 }
