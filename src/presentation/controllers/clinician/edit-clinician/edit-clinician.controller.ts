@@ -1,22 +1,30 @@
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  NotFoundException,
+  Param,
+  Put,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiConflictResponse,
-  ApiCreatedResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
-import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
+import { NestEditClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-edit-clinician-by-id';
 import { CreateClinicianPresenter } from '@/presentation/presenters/create-clinician-presenter';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
-import { Public } from '@/infrastructure/auth/public';
+import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
-const createClinicianSchema = z.object({
+const editClinicianSchema = z.object({
   name: z.string(),
   surname: z.string(),
   gender: z.enum(['male', 'female', 'non-binary', 'other']),
@@ -26,26 +34,30 @@ const createClinicianSchema = z.object({
   password: z.string(),
 });
 
-type CreateClinicianSchema = z.infer<typeof createClinicianSchema>;
-const requestBodyForOpenAPI = zodToOpenAPI(createClinicianSchema);
+const bodyValidationPipe = new ZodValidationPipe(editClinicianSchema);
+type EditClinicianSchema = z.infer<typeof editClinicianSchema>;
+const requestBodyForOpenAPI = zodToOpenAPI(editClinicianSchema);
 
-@Controller('clinicians')
-export class CreateClinicianController {
-  constructor(private createClinician: NestCreateClinicianUseCase) {}
+@Controller('clinicians/:id')
+export class EditClinicianController {
+  constructor(private editClinician: NestEditClinicianUseCase) {}
 
-  @Post()
-  @Public()
+  @Put()
+  @ApiBearerAuth()
   @ApiTags('Clinicians')
-  @ApiOperation({ summary: 'Create a clinician' })
+  @ApiOperation({ summary: 'Edit a clinician' })
   @ApiBody({ schema: requestBodyForOpenAPI })
-  @ApiCreatedResponse({ description: 'Clinician created' })
+  @ApiOkResponse({ description: 'Clinician edited' })
   @ApiBadRequestResponse({ description: 'Invalid information' })
   @ApiConflictResponse({ description: 'Conflict' })
-  @UsePipes(new ZodValidationPipe(createClinicianSchema))
-  async handle(@Body() body: CreateClinicianSchema) {
+  async handle(
+    @Body(bodyValidationPipe) body: EditClinicianSchema,
+    @Param('id') id: string,
+  ) {
     const { name, surname, gender, occupation, phoneNumber, email, password } = body;
 
-    const result = await this.createClinician.execute({
+    const result = await this.editClinician.execute({
+      clinicianId: id,
       name,
       surname,
       gender,
@@ -60,6 +72,8 @@ export class CreateClinicianController {
       switch (error.constructor) {
         case UserAlreadyExists:
           throw new ConflictException(error.message);
+        case ResourceNotFound:
+          throw new NotFoundException(error.message);
         default:
           throw new BadRequest(error.message);
       }
@@ -68,7 +82,7 @@ export class CreateClinicianController {
     const { clinician } = result.value;
 
     return {
-      message: 'Clinician created successfully',
+      message: 'Clinician edited successfully',
       clinician: CreateClinicianPresenter.toHTTP(clinician, password),
     };
   }

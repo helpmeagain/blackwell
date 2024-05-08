@@ -17,27 +17,38 @@ import { GetBySlugClinicianController } from './clinician/get-clinician-by-slug/
 import { NestGetClinicianBySlugUseCase } from '@/infrastructure/adapter/clinician/nest-get-clinician-by-slug';
 import { DeleteClinicianController } from './clinician/delete-clinician/delete-clinician.controller';
 import { NestDeleteClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-delete-clinician-by-id';
+import { NestEditClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-edit-clinician-by-id';
+import { EditClinicianController } from './clinician/edit-clinician/edit-clinician.controller';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
   controllers: [
-    CreateClinicianController,
+    // Auth
     AuthenticateClinicianController,
     AuthenticatePatientController,
+    // Clinician
     GetByIdClinicianController,
     GetBySlugClinicianController,
+    CreateClinicianController,
+    EditClinicianController,
     DeleteClinicianController,
-    CreateConsultationController,
+    // Patient
     CreatePatientController,
+    // Consultation
+    CreateConsultationController,
     FetchRecentConsultationsController,
   ],
   providers: [
-    NestCreateClinicianUseCase,
+    // Auth
     NestAuthenticateClinicianUseCase,
+    NestAuthenticatePatientUseCase,
+    // Clinician
     NestGetClinicianByIdUseCase,
     NestGetClinicianBySlugUseCase,
+    NestCreateClinicianUseCase,
+    NestEditClinicianUseCase,
     NestDeleteClinicianUseCase,
-    NestAuthenticatePatientUseCase,
+    // Patient
     NestCreatePatientUseCase,
   ],
 })
