@@ -62,7 +62,8 @@ export class PrismaPatientRepository implements PatientRepository {
     throw new Error('not implemented');
   }
 
-  delete(patient: Patient): Promise<void> {
-    throw new Error('not implemented');
+  async delete(patient: Patient): Promise<void> {
+    const data = PrismaPatientMapper.toPersistence(patient);
+    await this.prisma.patient.delete({ where: { id: data.id } });
   }
 }

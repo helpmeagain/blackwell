@@ -23,6 +23,8 @@ import { GetBySlugPatientController } from './patient/get-patient-by-slug/get-pa
 import { NestGetPatientBySlugUseCase } from '@/infrastructure/adapter/patient/nest-get-patient-by-slug';
 import { GetByIdPatientController } from './patient/get-patient-by-id/get-patient-by-id';
 import { NestGetPatientByIdUseCase } from '@/infrastructure/adapter/patient/nest-get-patient-by-id';
+import { DeletePatientController } from './patient/delete-patient/delete-patient.controller';
+import { NestDeletePatientByIdUseCase } from '@/infrastructure/adapter/patient/nest-delete-patient';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -40,6 +42,7 @@ import { NestGetPatientByIdUseCase } from '@/infrastructure/adapter/patient/nest
     GetByIdPatientController,
     GetBySlugPatientController,
     CreatePatientController,
+    DeletePatientController,
     // Consultation
     CreateConsultationController,
     FetchRecentConsultationsController,
@@ -58,6 +61,7 @@ import { NestGetPatientByIdUseCase } from '@/infrastructure/adapter/patient/nest
     NestGetPatientByIdUseCase,
     NestGetPatientBySlugUseCase,
     NestCreatePatientUseCase,
+    NestDeletePatientByIdUseCase,
   ],
 })
 export class HttpModule {}
