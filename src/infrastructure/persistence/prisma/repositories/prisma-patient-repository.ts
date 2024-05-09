@@ -54,8 +54,9 @@ export class PrismaPatientRepository implements PatientRepository {
     await this.prisma.patient.create({ data });
   }
 
-  save(patient: Patient): Promise<void> {
-    throw new Error('not implemented');
+  async save(patient: Patient): Promise<void> {
+    const data = PrismaPatientMapper.toPersistence(patient);
+    await this.prisma.patient.update({ where: { id: data.id }, data });
   }
 
   saveMedicalRecord(medicalRecord: MedicalRecord): Promise<void> {
