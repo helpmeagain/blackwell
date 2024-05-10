@@ -53,8 +53,8 @@ export class CreatePatientUseCase {
       patient.slug.value = patient.slug.value + Math.floor(Math.random() * 100);
     }
 
-    await this.repository.create(patient);
     await this.repository.createRecord(patient.id.toString(), patient.medicalRecord);
+    await this.repository.create(patient);
     return right({ patient });
   }
 }

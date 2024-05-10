@@ -75,8 +75,8 @@ model MedicalRecord {
   id               String   @id @default(uuid())
   patientId        String   @unique @map("patient_id")
   consultationsIds String[] @map("consultations_ids")
-  diagnosis        String
-  comorbidity      String
+  diagnosis        String?
+  comorbidity      String?
 
   Consultation Consultation[]
   Patient      Patient?       @relation("record")
