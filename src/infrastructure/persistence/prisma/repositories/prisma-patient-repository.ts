@@ -45,7 +45,7 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaPatientMapper.toDomain(patient);
   }
 
-  findMedicalRecordById(medicalRecordId: string): Promise<MedicalRecord | null> {
+  findRecordById(medicalRecordId: string): Promise<MedicalRecord | null> {
     throw new Error('not implemented');
   }
 
@@ -59,7 +59,7 @@ export class PrismaPatientRepository implements PatientRepository {
     await this.prisma.patient.update({ where: { id: data.id }, data });
   }
 
-  saveMedicalRecord(medicalRecord: MedicalRecord): Promise<void> {
+  saveRecord(medicalRecord: MedicalRecord): Promise<void> {
     throw new Error('not implemented');
   }
 

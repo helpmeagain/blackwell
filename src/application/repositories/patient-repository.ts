@@ -5,12 +5,15 @@ export abstract class PatientRepository {
   abstract findBySlug: (slug: string) => Promise<Patient | null>;
   abstract findByEmail: (email: string) => Promise<Patient | null>;
   abstract findById: (id: string) => Promise<Patient | null>;
-  abstract findMedicalRecordById: (
-    medicalRecordId: string,
-  ) => Promise<MedicalRecord | null>;
-
   abstract create: (patient: Patient) => Promise<void>;
   abstract save: (patient: Patient) => Promise<void>;
-  abstract saveMedicalRecord: (medicalRecord: MedicalRecord) => Promise<void>;
   abstract delete: (consultation: Patient) => Promise<void>;
+
+  abstract findRecordById: (recordId: string) => Promise<MedicalRecord | null>;
+  abstract createRecord: (
+    patientId: string,
+    record: MedicalRecord,
+  ) => Promise<void | null>;
+
+  abstract saveRecord: (record: MedicalRecord) => Promise<void>;
 }
