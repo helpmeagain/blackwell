@@ -5,6 +5,7 @@ import { AuthenticateModule } from './authenticate/authenticate.module';
 import { ClinicianModule } from './clinician/clinician.module';
 import { PatientModule } from './patient/patient.module';
 import { ConsultationModule } from './consultation/consultation.module';
+import { MedicalRecordModule } from './medical-record/medical-record.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ConsultationModule } from './consultation/consultation.module';
     AuthenticateModule,
     ClinicianModule,
     ConsultationModule,
+    MedicalRecordModule,
     PatientModule,
   ],
 })

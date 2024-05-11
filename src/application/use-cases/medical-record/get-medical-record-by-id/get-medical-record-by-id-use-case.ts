@@ -24,7 +24,6 @@ export class GetMedicalRecordByIdUseCase {
       return left(new ResourceNotFound());
     }
 
-    await this.repository.saveRecord(medicalRecord);
     return right({ medicalRecord });
   }
 }

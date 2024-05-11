@@ -61,8 +61,16 @@ export class PrismaPatientRepository implements PatientRepository {
     await this.prisma.patient.delete({ where: { id: data.id } });
   }
 
-  findRecordById(medicalRecordId: string): Promise<MedicalRecord | null> {
-    throw new Error('not implemented');
+  async findRecordById(medicalRecordId: string): Promise<MedicalRecord | null> {
+    const medicalRecord = await this.prisma.medicalRecord.findUnique({
+      where: { id: medicalRecordId },
+    });
+
+    if (!medicalRecord) {
+      return null;
+    }
+
+    return PrismaMedicalRecordMapper.toDomain(medicalRecord);
   }
 
   saveRecord(medicalRecord: MedicalRecord): Promise<void> {
