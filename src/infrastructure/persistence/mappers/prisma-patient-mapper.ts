@@ -6,10 +6,6 @@ import { Patient as PrismaPatient, Prisma } from '@prisma/client';
 
 export class PrismaPatientMapper {
   static toDomain(raw: PrismaPatient): Patient {
-    if (!raw.medicalRecordId) {
-      throw new Error('Medical record is required');
-    }
-
     const patient = Patient.create(
       {
         name: raw.name,
@@ -27,7 +23,7 @@ export class PrismaPatientMapper {
 
     const medicalRecord = MedicalRecord.create(
       { patientId: patient.id },
-      new UniqueEntityId(raw.medicalRecordId),
+      raw.medicalRecordId ? new UniqueEntityId(raw.medicalRecordId) : undefined,
     );
     patient.medicalRecord = medicalRecord;
 
