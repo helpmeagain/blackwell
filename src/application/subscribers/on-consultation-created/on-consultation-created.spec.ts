@@ -23,9 +23,11 @@ let createNotificationSpy: MockInstance<
 
 describe('On consultation created', () => {
   beforeEach(() => {
-    inMemoryConsultationRepository = new InMemoryConsultationRepository();
     inMemoryNotificationRepository = new InMemoryNotificationRepository();
     inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryConsultationRepository = new InMemoryConsultationRepository(
+      inMemoryPatientRepository,
+    );
 
     createNotification = new CreateNotificationUseCase(inMemoryNotificationRepository);
 

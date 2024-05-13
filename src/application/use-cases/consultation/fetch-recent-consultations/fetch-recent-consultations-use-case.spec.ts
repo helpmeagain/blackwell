@@ -1,13 +1,16 @@
 import { FetchRecentConsultationUseCase } from './fetch-recent-consultations-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { makeConsultation } from 'test/factories/make-consultation';
+import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 
 let inMemoryRepository: InMemoryConsultationRepository;
+let inMemoryPatientRepository: InMemoryPatientRepository;
 let sut: FetchRecentConsultationUseCase;
 
 describe('Fetch recent result', () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryConsultationRepository();
+    inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryRepository = new InMemoryConsultationRepository(inMemoryPatientRepository);
     sut = new FetchRecentConsultationUseCase(inMemoryRepository);
   });
 

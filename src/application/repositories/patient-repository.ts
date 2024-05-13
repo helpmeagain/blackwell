@@ -1,3 +1,4 @@
+import { Consultation } from '@/domain/entities/consultation';
 import { MedicalRecord } from '@/domain/entities/medical-record';
 import { Patient } from '@entities/patient';
 
@@ -16,4 +17,8 @@ export abstract class PatientRepository {
   ) => Promise<void | null>;
 
   abstract saveRecord: (record: MedicalRecord) => Promise<void>;
+  abstract saveConsultationOnRecord: (consultation: Consultation) => Promise<void | null>;
+  abstract removeConsultationOnRecord: (
+    consultation: Consultation,
+  ) => Promise<void | null>;
 }

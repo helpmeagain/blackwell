@@ -6,8 +6,6 @@ import { type ConsultationRepository } from '@application/repositories/consultat
 
 interface deleteConsultationByIdRequest {
   consultationId: string;
-  patientId: string;
-  clinicianId: string;
 }
 
 type deleteConsultationByIdResponse = Either<
@@ -23,27 +21,18 @@ export class DeleteConsultationByIdUseCase {
 
   async execute({
     consultationId,
-    patientId,
-    clinicianId,
   }: deleteConsultationByIdRequest): Promise<deleteConsultationByIdResponse> {
-    const patient = await this.patientRepository.findById(patientId);
-
-    if (!patient) {
-      return left(new ResourceNotFound());
-    }
-
     const consultation = await this.consultationRepository.findById(consultationId);
 
     if (!consultation) {
       return left(new ResourceNotFound());
     }
 
-    if (clinicianId !== consultation.clinicianId.toString()) {
-      return left(new NotAllowed());
-    }
+    const patient = await this.patientRepository.findById(
+      consultation.patientId.toString(),
+    );
 
-    patient.medicalRecord.consultationsIds.remove(consultation.id);
-    await this.patientRepository.save(patient);
+    patient?.medicalRecord.consultationsIds.remove(consultation.id);
     await this.consultationRepository.delete(consultation);
     return right({});
   }

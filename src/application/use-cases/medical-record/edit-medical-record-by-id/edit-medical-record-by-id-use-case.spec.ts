@@ -32,7 +32,9 @@ describe('Edit a medical record', () => {
     const newPatient = makePatient();
     await inMemoryPatientRepository.create(newPatient);
 
-    inMemoryConsultationRepository = new InMemoryConsultationRepository();
+    inMemoryConsultationRepository = new InMemoryConsultationRepository(
+      inMemoryPatientRepository,
+    );
     const consultation = new CreateConsultationUseCase(
       inMemoryConsultationRepository,
       inMemoryPatientRepository,

@@ -4,6 +4,7 @@ import { Consultation } from '@entities/consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 import { type ConsultationRepository } from '@/application/repositories/consultation-repository';
 import { PatientRepository } from '@/application/repositories/patient-repository';
+import { ConsultationIdList } from '@/domain/entities/consultation-list';
 
 interface createConsultationRequest {
   clinicianId: string;
@@ -42,10 +43,9 @@ export class CreateConsultationUseCase {
       appointmentDate,
     });
 
-    patient.medicalRecord.consultationsIds.add(consultation.id);
+    patient.medicalRecord.consultationsIds = new ConsultationIdList([consultation.id]);
 
     await this.consultationRepository.create(consultation);
-    await this.patientRepository.save(patient);
     return right({ consultation });
   }
 }
