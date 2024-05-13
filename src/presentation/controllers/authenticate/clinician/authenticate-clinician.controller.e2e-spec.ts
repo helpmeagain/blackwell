@@ -1,40 +1,34 @@
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 import { AppModule } from '@/presentation/app.module';
 import { INestApplication } from '@nestjs/common';
+import { ClinicianFactory } from 'test/factories/persistence-factories/make-clinician-database';
 import { Test } from '@nestjs/testing';
 import { hash } from 'bcryptjs';
 import request from 'supertest';
+import { PersistenceModule } from '@/infrastructure/persistence/persistence.module';
 
 describe('Authenticate clinician [E2E]', () => {
   let app: INestApplication;
-  let prisma: PrismaService;
+  let clinicianFactory: ClinicianFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, PersistenceModule],
+      providers: [ClinicianFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();
-    prisma = moduleRef.get(PrismaService);
+    clinicianFactory = moduleRef.get(ClinicianFactory);
     await app.init();
   });
 
   test('[POST] /clinicians', async () => {
-    await prisma.clinician.create({
-      data: {
-        name: 'John',
-        surname: 'Doe',
-        slug: 'john-doe',
-        gender: 'male',
-        occupation: 'doctor',
-        phoneNumber: '123456789',
-        email: 'jonhdoe@email.com',
-        password: await hash('12345', 8),
-      },
+    await clinicianFactory.makeDatabaseClinician({
+      email: 'johndoe@example.com',
+      password: await hash('12345', 8),
     });
 
     const result = await request(app.getHttpServer()).post('/auth/clinician').send({
-      email: 'jonhdoe@email.com',
+      email: 'johndoe@example.com',
       password: '12345',
     });
 
