@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CryptographyModule } from '@/infrastructure/cryptography/cryptography.module';
 import { PersistenceModule } from '@/infrastructure/persistence/persistence.module';
-import { GetByIdPatientController } from './get-patient-by-id/get-patient-by-id';
+import { GetByIdPatientController } from './get-patient-by-id/get-patient-by-id.controller';
 import { GetBySlugPatientController } from './get-patient-by-slug/get-patient-by-slug.controller';
 import { CreatePatientController } from './create-patient/create-patient.controller';
 import { EditPatientController } from './edit-patient/edit-patient.controller';

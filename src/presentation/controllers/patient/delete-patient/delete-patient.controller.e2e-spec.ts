@@ -2,47 +2,47 @@ import { PersistenceModule } from '@/infrastructure/persistence/persistence.modu
 import { AppModule } from '@/presentation/app.module';
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ClinicianFactory } from 'test/factories/persistence-factories/make-clinician-database';
+import { PatientFactory } from 'test/factories/persistence-factories/make-patient-database';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 
-describe('Delete clinician by id [E2E]', () => {
+describe('Delete patient by id [E2E]', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
-  let clinicianFactory: ClinicianFactory;
+  let patientFactory: PatientFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, PersistenceModule],
-      providers: [ClinicianFactory],
+      providers: [PatientFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();
-    jwt = moduleRef.get(JwtService);
     prisma = moduleRef.get(PrismaService);
-    clinicianFactory = moduleRef.get(ClinicianFactory);
+    jwt = moduleRef.get(JwtService);
+    patientFactory = moduleRef.get(PatientFactory);
     await app.init();
   });
 
-  test('[DELETE] /clinicians/:id', async () => {
-    const clinician = await clinicianFactory.makeDatabaseClinician({});
-    const token = jwt.sign({ sub: clinician.id.toString() });
+  test('[DELETE] /patients/:id', async () => {
+    const patient = await patientFactory.makeDatabasePatient({});
+    const token = jwt.sign({ sub: patient.id.toString() });
 
     const result = await request(app.getHttpServer())
-      .delete(`/clinicians/${clinician.id.toString()}`)
+      .delete(`/patients/${patient.id.toString()}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
     expect(result.statusCode).toBe(204);
 
-    const clinicianOnDatabase = await prisma.clinician.findUnique({
+    const patientOnDatabase = await prisma.patient.findUnique({
       where: {
-        email: clinician.email,
+        email: patient.email,
       },
     });
 
-    expect(clinicianOnDatabase).toBeNull();
+    expect(patientOnDatabase).toBeNull();
   });
 });

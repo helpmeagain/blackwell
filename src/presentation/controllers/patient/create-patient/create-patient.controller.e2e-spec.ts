@@ -38,6 +38,13 @@ describe('Create patient [E2E]', () => {
       },
     });
 
+    const medicalRecordOnDatabase = await prisma.medicalRecord.findUnique({
+      where: {
+        patientId: result.body.patient.id,
+      },
+    });
+
     expect(patientOnDatabase).toBeTruthy();
+    expect(medicalRecordOnDatabase).toBeTruthy();
   });
 });
