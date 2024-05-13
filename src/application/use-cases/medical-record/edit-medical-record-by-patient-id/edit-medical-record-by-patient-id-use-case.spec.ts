@@ -1,5 +1,5 @@
 import { makePatient } from 'test/factories/make-patient';
-import { EditMedicalRecordByIdUseCase } from './edit-medical-record-by-id-use-case';
+import { EditMedicalRecordByIdUseCase } from './edit-medical-record-by-patient-id-use-case';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { CreateConsultationUseCase } from '../../consultation/create-consultation/create-consultation-use-case';

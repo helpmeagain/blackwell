@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaPatientMapper } from '../../mappers/prisma-patient-mapper';
 import { PrismaMedicalRecordMapper } from '../../mappers/prisma-medical-record-mapper';
+import { Consultation } from '@/domain/entities/consultation';
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
@@ -86,8 +87,15 @@ export class PrismaPatientRepository implements PatientRepository {
     if (!patient) {
       return null;
     }
-
     const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
     await this.prisma.medicalRecord.create({ data });
+  }
+
+  async saveConsultationOnRecord(consultation: Consultation): Promise<void | null> {
+    throw new Error('not implemented');
+  }
+
+  async removeConsultationOnRecord(consultation: Consultation): Promise<void | null> {
+    throw new Error('not implemented');
   }
 }
