@@ -16,7 +16,7 @@ export abstract class PatientRepository {
     record: MedicalRecord,
   ) => Promise<void | null>;
 
-  abstract saveRecord: (record: MedicalRecord) => Promise<void>;
+  abstract saveRecord: (record: MedicalRecord) => Promise<void | null>;
   abstract saveConsultationOnRecord: (consultation: Consultation) => Promise<void | null>;
   abstract removeConsultationOnRecord: (
     consultation: Consultation,
