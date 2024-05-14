@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
-import { PrismaPatientMapper } from '@/infrastructure/persistence/mappers/prisma-patient-mapper';
+import { PrismaPatientMapper } from '@/infrastructure/persistence/prisma/mappers/prisma-patient-mapper';
 import { Patient, PatientProps } from '@/domain/entities/patient';
 import { makePatient } from '../make-patient';
-import { PrismaMedicalRecordMapper } from '@/infrastructure/persistence/mappers/prisma-medical-record-mapper';
+import { PrismaMedicalRecordMapper } from '@/infrastructure/persistence/prisma/mappers/prisma-medical-record-mapper';
 
 @Injectable()
 export class PatientFactory {

@@ -3,8 +3,8 @@ import { MedicalRecord } from '@/domain/entities/medical-record';
 import { Patient } from '@/domain/entities/patient';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { PrismaPatientMapper } from '../../mappers/prisma-patient-mapper';
-import { PrismaMedicalRecordMapper } from '../../mappers/prisma-medical-record-mapper';
+import { PrismaPatientMapper } from '../mappers/prisma-patient-mapper';
+import { PrismaMedicalRecordMapper } from '../mappers/prisma-medical-record-mapper';
 import { Consultation } from '@/domain/entities/consultation';
 
 @Injectable()

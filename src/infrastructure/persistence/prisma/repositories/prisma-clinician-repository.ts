@@ -2,7 +2,7 @@ import { ClinicianRepository } from '@/application/repositories/clinician-reposi
 import { Clinician } from '@/domain/entities/clinician';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { PrismaClinicianMapper } from '../../mappers/prisma-clinician-mapper';
+import { PrismaClinicianMapper } from '../mappers/prisma-clinician-mapper';
 
 @Injectable()
 export class PrismaClinicianRepository implements ClinicianRepository {

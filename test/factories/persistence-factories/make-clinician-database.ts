@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
-import { PrismaClinicianMapper } from '@/infrastructure/persistence/mappers/prisma-clinician-mapper';
+import { PrismaClinicianMapper } from '@/infrastructure/persistence/prisma/mappers/prisma-clinician-mapper';
 import { Clinician, ClinicianProps } from '@/domain/entities/clinician';
 import { makeClinician } from '../make-clinician';
 
