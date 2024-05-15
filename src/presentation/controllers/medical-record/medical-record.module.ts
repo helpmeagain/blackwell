@@ -5,10 +5,20 @@ import { GetMedicalRecordByIdController } from './get-medical-record-by-id/get-m
 import { NestGetMedicalRecordByIdUseCase } from '@/infrastructure/adapter/medical-record/nest-get-medical-record-by-id-use-case';
 import { EditMedicalRecordByPatientIdController } from './edit-medical-record-by-patient-id/edit-medical-record-by-patient-id.controller';
 import { NestEditMedicalRecordByIdUseCase } from '@/infrastructure/adapter/medical-record/nest-edit-medical-record-by-patient-id-use-case';
+import { NestGetMedicalRecordByPatientIdUseCase } from '@/infrastructure/adapter/medical-record/nest-get-medical-record-by-patient-id-use-case';
+import { GetMedicalRecordByPatientIdController } from './get-medical-record-by-patient-id/get-medical-record-by-patient-id.controller';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
-  controllers: [GetMedicalRecordByIdController, EditMedicalRecordByPatientIdController],
-  providers: [NestGetMedicalRecordByIdUseCase, NestEditMedicalRecordByIdUseCase],
+  controllers: [
+    GetMedicalRecordByPatientIdController,
+    GetMedicalRecordByIdController,
+    EditMedicalRecordByPatientIdController,
+  ],
+  providers: [
+    NestGetMedicalRecordByPatientIdUseCase,
+    NestGetMedicalRecordByIdUseCase,
+    NestEditMedicalRecordByIdUseCase,
+  ],
 })
 export class MedicalRecordModule {}

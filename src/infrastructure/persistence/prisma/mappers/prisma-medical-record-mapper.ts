@@ -27,6 +27,9 @@ export class PrismaMedicalRecordMapper {
     return {
       id: medicalRecord.id.toString(),
       patientId: medicalRecord.patientId.toString(),
+      // consultationId: medicalRecord.consultationsIds.currentItems.map((id) =>
+      //   id.toString(),
+      // ),
       diagnosis: medicalRecord.diagnosis,
       comorbidity: medicalRecord.comorbidity,
     };
