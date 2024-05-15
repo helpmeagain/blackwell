@@ -1,12 +1,12 @@
 import { makePatient } from 'test/factories/make-patient';
-import { EditMedicalRecordByPatientIdUseCase } from './edit-medical-record-by-patient-id-use-case';
+import { EditMedicalRecordByIdUseCase } from './edit-medical-record-by-id-use-case';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { makeConsultation } from 'test/factories/make-consultation';
 
 let inMemoryPatientRepository: InMemoryPatientRepository;
 let inMemoryConsultationRepository: InMemoryConsultationRepository;
-let sut: EditMedicalRecordByPatientIdUseCase;
+let sut: EditMedicalRecordByIdUseCase;
 
 describe('Edit a medical record', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('Edit a medical record', () => {
     inMemoryConsultationRepository = new InMemoryConsultationRepository(
       inMemoryPatientRepository,
     );
-    sut = new EditMedicalRecordByPatientIdUseCase(inMemoryPatientRepository);
+    sut = new EditMedicalRecordByIdUseCase(inMemoryPatientRepository);
   });
 
   it('should be able to edit a medical record by id', async () => {
@@ -22,7 +22,7 @@ describe('Edit a medical record', () => {
     await inMemoryPatientRepository.create(newPatient);
 
     const result = await sut.execute({
-      patientId: newPatient.id.toString(),
+      medicalRecordId: newPatient.medicalRecord.id.toString(),
       diagnosis: 'diagnosis',
       comorbidity: 'comorbidity',
     });
@@ -42,7 +42,7 @@ describe('Edit a medical record', () => {
     await inMemoryConsultationRepository.create(newConsultation);
 
     const patientResult = await sut.execute({
-      patientId: newPatient.id.toString(),
+      medicalRecordId: newPatient.medicalRecord.id.toString(),
       diagnosis: 'diagnosis',
       comorbidity: 'comorbidity',
     });

@@ -5,7 +5,7 @@ import { MedicalRecord } from '@entities/medical-record';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 
 interface editMedicalRecordByIdRequest {
-  patientId: string;
+  medicalRecordId: string;
   diagnosis: string;
   comorbidity: string;
 }
@@ -15,24 +15,23 @@ type editMedicalRecordByIdResponse = Either<
   { medicalRecord: MedicalRecord }
 >;
 
-export class EditMedicalRecordByPatientIdUseCase {
+export class EditMedicalRecordByIdUseCase {
   constructor(private readonly repository: PatientRepository) {}
 
-  async execute({
-    patientId,
-    diagnosis,
-    comorbidity,
-  }: editMedicalRecordByIdRequest): Promise<editMedicalRecordByIdResponse> {
-    const patient = await this.repository.findById(patientId);
+  async execute(
+    req: editMedicalRecordByIdRequest,
+  ): Promise<editMedicalRecordByIdResponse> {
+    const { medicalRecordId, diagnosis, comorbidity } = req;
+    const medicalRecord = await this.repository.findRecordById(medicalRecordId);
 
-    if (!patient) {
-      return left(new ResourceNotFound());
+    if (!medicalRecord) {
+      return left(new ResourceNotFound('Medical Record'));
     }
 
-    patient.medicalRecord.diagnosis = diagnosis;
-    patient.medicalRecord.comorbidity = comorbidity;
+    medicalRecord.diagnosis = diagnosis;
+    medicalRecord.comorbidity = comorbidity;
 
-    await this.repository.saveRecord(patient.medicalRecord);
-    return right({ medicalRecord: patient.medicalRecord });
+    await this.repository.saveRecord(medicalRecord);
+    return right({ medicalRecord });
   }
 }

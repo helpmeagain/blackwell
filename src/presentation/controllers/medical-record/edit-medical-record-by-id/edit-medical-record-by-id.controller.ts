@@ -10,10 +10,10 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { ReturnMedicalRecordPresenter } from '@/presentation/presenters/return-medical-record-presenter';
-import { NestEditMedicalRecordByPatientIdUseCase } from '@/infrastructure/adapter/medical-record/nest-edit-medical-record-by-patient-id-use-case';
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
 import { zodToOpenAPI } from 'nestjs-zod';
+import { NestEditMedicalRecordByIdUseCase } from '@/infrastructure/adapter/medical-record/nest-edit-medical-record-by-id-use-case';
 
 const editMedicalRecordSchema = z.object({
   diagnosis: z.string(),
@@ -24,24 +24,24 @@ const bodyValidationPipe = new ZodValidationPipe(editMedicalRecordSchema);
 type EditMedicalRecordSchema = z.infer<typeof editMedicalRecordSchema>;
 const requestBodyForOpenAPI = zodToOpenAPI(editMedicalRecordSchema);
 
-@Controller('medical-records/by-patient-id/:patientId')
-export class EditMedicalRecordByPatientIdController {
-  constructor(private editMedicalRecordById: NestEditMedicalRecordByPatientIdUseCase) {}
+@Controller('medical-records/:id')
+export class EditMedicalRecordByIdController {
+  constructor(private editMedicalRecordById: NestEditMedicalRecordByIdUseCase) {}
 
   @Put()
   @ApiTags('Medical Record')
-  @ApiOperation({ summary: 'Edit a medical record by patient id' })
+  @ApiOperation({ summary: 'Edit a medical record by id' })
   @ApiBearerAuth()
   @ApiBody({ schema: requestBodyForOpenAPI })
   @ApiOkResponse({ description: 'Return medical record by id' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(
     @Body(bodyValidationPipe) body: EditMedicalRecordSchema,
-    @Param('patientId') patientId: string,
+    @Param('id') id: string,
   ) {
     const { diagnosis, comorbidity } = body;
     const result = await this.editMedicalRecordById.execute({
-      patientId,
+      medicalRecordId: id,
       diagnosis,
       comorbidity,
     });
