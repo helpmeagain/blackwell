@@ -12,8 +12,10 @@ let sut: EditConsultationByIdUseCase;
 
 describe('Edit a consultation By Id', () => {
   beforeEach(() => {
-    inConsultationMemoryRepository = new InMemoryConsultationRepository();
     inPatientMemoryRepository = new InMemoryPatientRepository();
+    inConsultationMemoryRepository = new InMemoryConsultationRepository(
+      inPatientMemoryRepository,
+    );
     sut = new EditConsultationByIdUseCase(
       inConsultationMemoryRepository,
       inPatientMemoryRepository,

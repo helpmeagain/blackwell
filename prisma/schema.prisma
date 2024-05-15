@@ -62,7 +62,7 @@ model Consultation {
   updatedAt       DateTime? @updatedAt @map("updated_at")
   clinicianId     String    @map("clinician_id")
   patientId       String    @map("patient_id")
-  medicalRecordId String
+  medicalRecordId String    @map("medical_record_id")
 
   clinician     Clinician     @relation(fields: [clinicianId], references: [id])
   patient       Patient       @relation(fields: [patientId], references: [id])
@@ -72,11 +72,11 @@ model Consultation {
 }
 
 model MedicalRecord {
-  id               String   @id @default(uuid())
-  patientId        String   @unique @map("patient_id")
-  consultationsIds String[] @map("consultations_ids")
-  diagnosis        String
-  comorbidity      String
+  id             String   @id @default(uuid())
+  patientId      String   @unique @map("patient_id")
+  consultationId String[] @map("consultations_ids")
+  diagnosis      String?
+  comorbidity    String?
 
   Consultation Consultation[]
   Patient      Patient?       @relation("record")

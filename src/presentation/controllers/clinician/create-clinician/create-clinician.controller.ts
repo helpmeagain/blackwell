@@ -11,7 +11,7 @@ import {
 import { z } from 'zod';
 import { zodToOpenAPI } from 'nestjs-zod';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
-import { clinicianPresenter } from '@/presentation/presenters/clinician-presenter';
+import { CreateClinicianPresenter } from '@/presentation/presenters/create-clinician-presenter';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { Public } from '@/infrastructure/auth/public';
@@ -19,7 +19,6 @@ import { Public } from '@/infrastructure/auth/public';
 const createClinicianSchema = z.object({
   name: z.string(),
   surname: z.string(),
-  slug: z.string(),
   gender: z.enum(['male', 'female', 'non-binary', 'other']),
   occupation: z.string(),
   phoneNumber: z.string(),
@@ -70,7 +69,7 @@ export class CreateClinicianController {
 
     return {
       message: 'Clinician created successfully',
-      clinician: clinicianPresenter.toHTTP(clinician, password),
+      clinician: CreateClinicianPresenter.toHTTP(clinician, password),
     };
   }
 }

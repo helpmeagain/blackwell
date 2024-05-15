@@ -118,28 +118,11 @@ git clone <repository-url>
 cd <project-directory>
 ```
 
-3. Generate JWT - RS256 Keys:
-```bash
-# Generate private and public key
-openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
-openssl rsa -pubout -in private_key.pem -out public_key.pem
-
-# Generate base64 versions of the key
-openssl base64 -in private_key.pem -out private_key_base64.txt
-openssl base64 -in public_key.pem -out public_key_base64.txt
-```
-
-4. Create a `.env` file (you can follow the [example](./.env.exemple)):
-```bash
-JWT_PRIVATE_KEY="your-jwt-private-key-in-base64"
-JWT_PUBLIC_KEY="your-jwt-public-key-in-base64"
-```
-
-5. Run the docker compose:
+3. Run the docker compose:
 ```bash
 docker-compose up --build -d
 ```
 
-6. Access the application in the localhost
+4. Access the application in the localhost
 
 </details>

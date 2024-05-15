@@ -6,8 +6,8 @@ import { ConsultationIdList } from './consultation-list';
 interface MedicalRecordProps {
   patientId: UniqueEntityId;
   consultationsIds: ConsultationIdList;
-  diagnosis?: string;
-  comorbidity?: string;
+  diagnosis?: string | null;
+  comorbidity?: string | null;
 }
 
 export class MedicalRecord extends BaseEntity<MedicalRecordProps> {

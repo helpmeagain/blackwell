@@ -33,8 +33,6 @@ export class Patient extends AggregateRoot<PatientProps> {
       id,
     );
 
-    // Transform into domain event?
-    patient.medicalRecord = MedicalRecord.create({ patientId: patient.id });
     return patient;
   }
 
