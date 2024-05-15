@@ -10,8 +10,10 @@ let sut: CreateConsultationUseCase;
 
 describe('Schedule Consultation', () => {
   beforeEach(() => {
-    inConsultationMemoryRepository = new InMemoryConsultationRepository();
     inPatientMemoryRepository = new InMemoryPatientRepository();
+    inConsultationMemoryRepository = new InMemoryConsultationRepository(
+      inPatientMemoryRepository,
+    );
     sut = new CreateConsultationUseCase(
       inConsultationMemoryRepository,
       inPatientMemoryRepository,

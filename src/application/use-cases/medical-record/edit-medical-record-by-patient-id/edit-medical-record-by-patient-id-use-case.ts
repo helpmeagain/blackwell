@@ -32,7 +32,7 @@ export class EditMedicalRecordByIdUseCase {
     patient.medicalRecord.diagnosis = diagnosis;
     patient.medicalRecord.comorbidity = comorbidity;
 
-    await this.repository.save(patient);
+    await this.repository.saveRecord(patient.medicalRecord);
     return right({ medicalRecord: patient.medicalRecord });
   }
 }

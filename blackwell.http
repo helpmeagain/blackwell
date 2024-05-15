@@ -14,7 +14,6 @@ Content-Type: {{contentType}}
 {
   "name": "John",
   "surname": "Doe",
-  "slug": "john-doe",
   "gender": "male",
   "occupation": "doctor",
   "phoneNumber": "123456789",
@@ -31,6 +30,36 @@ Content-Type: {{contentType}}
   "email": "jonhdoe@email.com",
   "password": "12345"
 }
+
+###
+# @name get_clinician_by_id
+GET {{host}}/clinicians/id/{{clinicianId}}
+Authorization: Bearer {{authTokenClinician}}
+
+###
+# @name get_clinician_by_slug
+GET {{host}}/clinicians/slug/john-doe
+Authorization: Bearer {{authTokenClinician}}
+
+###
+# @name edit_clinician
+PUT {{host}}/clinicians/{{clinicianId}}
+Content-Type: {{contentType}}
+
+{
+  "name": "John",
+  "surname": "Doe",
+  "gender": "male",
+  "occupation": "doctor",
+  "phoneNumber": "123456789",
+  "email": "jonhdoewilliam@email.com",
+  "password": "12345"
+}
+
+###
+# @name delete_clinician_by_id
+DELETE {{host}}/clinicians/{{clinicianId}}
+Authorization: Bearer {{authTokenClinician}}
 
 ###
 # @name create_patient

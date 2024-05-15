@@ -2,13 +2,16 @@ import { GetConsultationByIdUseCase } from './get-consultation-by-id-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { makeConsultation } from 'test/factories/make-consultation';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
+import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 
 let inMemoryRepository: InMemoryConsultationRepository;
+let inMemoryPatientRepository: InMemoryPatientRepository;
 let sut: GetConsultationByIdUseCase;
 
 describe('Get Consultation By Id', () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryConsultationRepository();
+    inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryRepository = new InMemoryConsultationRepository(inMemoryPatientRepository);
     sut = new GetConsultationByIdUseCase(inMemoryRepository);
   });
 
