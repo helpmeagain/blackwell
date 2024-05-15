@@ -29,6 +29,7 @@ describe('Schedule Consultation', () => {
     const result = await sut.execute({
       clinicianId: '1',
       patientId: newPatient.id.toString(),
+      medicalRecordId: newPatient.medicalRecord.id.toString(),
       room: 1,
       appointmentDate: tomorrow,
     });
@@ -52,6 +53,7 @@ describe('Schedule Consultation', () => {
     const result = await sut.execute({
       clinicianId: '1',
       patientId: '1',
+      medicalRecordId: '1',
       room: 1,
       appointmentDate: tomorrow,
     });

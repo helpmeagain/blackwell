@@ -9,6 +9,7 @@ import { ConsultationIdList } from '@/domain/entities/consultation-list';
 interface createConsultationRequest {
   clinicianId: string;
   patientId: string;
+  medicalRecordId: string;
   room: number;
   appointmentDate: Date;
 }
@@ -24,12 +25,8 @@ export class CreateConsultationUseCase {
     private readonly patientRepository: PatientRepository,
   ) {}
 
-  async execute({
-    clinicianId,
-    patientId,
-    room,
-    appointmentDate,
-  }: createConsultationRequest): Promise<createConsultationResponse> {
+  async execute(req: createConsultationRequest): Promise<createConsultationResponse> {
+    const { clinicianId, patientId, medicalRecordId, room, appointmentDate } = req;
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {
@@ -39,6 +36,7 @@ export class CreateConsultationUseCase {
     const consultation = Consultation.create({
       clinicianId: new UniqueEntityId(clinicianId),
       patientId: new UniqueEntityId(patientId),
+      medicalRecordId: new UniqueEntityId(medicalRecordId),
       room,
       appointmentDate,
     });
