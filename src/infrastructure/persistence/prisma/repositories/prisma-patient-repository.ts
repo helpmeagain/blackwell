@@ -112,6 +112,23 @@ export class PrismaPatientRepository implements PatientRepository {
   }
 
   async removeConsultationOnRecord(consultation: Consultation): Promise<void | null> {
-    throw new Error('not implemented');
+    const data = PrismaConsultationMapper.toPersistence(consultation);
+    const medicalRecord = await this.findRecordById(data.medicalRecordId);
+
+    if (!medicalRecord) {
+      return null;
+    }
+
+    await this.prisma.medicalRecord.update({
+      where: { id: medicalRecord.id.toString() },
+      data: {
+        consultationId: {
+          set: medicalRecord.consultationsIds
+            .getItems()
+            .filter((id) => id.toString() !== data.id)
+            .map((id) => id.toString()),
+        },
+      },
+    });
   }
 }
