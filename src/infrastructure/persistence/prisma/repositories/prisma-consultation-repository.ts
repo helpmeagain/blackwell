@@ -35,8 +35,9 @@ export class PrismaConsultationRepository implements ConsultationRepository {
     await this.prisma.consultation.create({ data });
   }
 
-  save(consultation: Consultation): Promise<void> {
-    throw new Error('not implemented');
+  async save(consultation: Consultation): Promise<void> {
+    const data = PrismaConsultationMapper.toPersistence(consultation);
+    await this.prisma.consultation.update({ where: { id: data.id }, data });
   }
 
   async delete(consultation: Consultation): Promise<void> {
