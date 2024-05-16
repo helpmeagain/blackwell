@@ -9,6 +9,8 @@ import { NestGetConsultationByIdUseCase } from '@/infrastructure/adapter/consult
 import { GetByIdConsultationsController } from './get-consultation-by-id/get-consultation-by-id.controller';
 import { EditConsultationController } from './edit-consultation/edit-consultation.controller';
 import { NestEditConsultationByIdUseCase } from '@/infrastructure/adapter/consultation/nest-edit-consultation-by-id-use-case';
+import { NestFetchRecentConsultationUseCase } from '@/infrastructure/adapter/consultation/nest-fetch-recent-consultations-use-case';
+import { FetchRecentConsultationsController } from './fetch-recent-consultations/fetch-recent-consultations.controller';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { NestEditConsultationByIdUseCase } from '@/infrastructure/adapter/consul
     DeleteConsultationController,
     GetByIdConsultationsController,
     EditConsultationController,
+    FetchRecentConsultationsController,
   ],
   providers: [
     NestCreateConsultationUseCase,
     NestDeleteConsultationByIdUseCase,
     NestGetConsultationByIdUseCase,
     NestEditConsultationByIdUseCase,
+    NestFetchRecentConsultationUseCase,
   ],
 })
 export class ConsultationModule {}

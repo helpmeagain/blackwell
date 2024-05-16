@@ -25,8 +25,13 @@ export class PrismaConsultationRepository implements ConsultationRepository {
     return PrismaConsultationMapper.toDomain(consultation);
   }
 
-  findManyRecent(params: PaginationParams): Promise<Consultation[]> {
-    throw new Error('not implemented');
+  async findManyRecent({ page }: PaginationParams): Promise<Consultation[]> {
+    const consultations = await this.prisma.consultation.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 20,
+      skip: (page - 1) * 20,
+    });
+    return consultations.map(PrismaConsultationMapper.toDomain);
   }
 
   async create(consultation: Consultation): Promise<void> {
