@@ -23,12 +23,12 @@ describe('Get patient by slug [E2E]', () => {
     await app.init();
   });
 
-  test('[GET] /patients/slug/:slug', async () => {
+  test('[GET] /patients/by-slug/:slug', async () => {
     const patient = await patientFactory.makeDatabasePatient({});
     const token = jwt.sign({ sub: patient.id.toString() });
 
     const result = await request(app.getHttpServer())
-      .get(`/patients/slug/${patient.slug.value}`)
+      .get(`/patients/by-slug/${patient.slug.value}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

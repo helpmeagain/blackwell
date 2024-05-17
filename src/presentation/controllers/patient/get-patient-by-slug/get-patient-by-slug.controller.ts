@@ -11,7 +11,7 @@ import { ReturnPatientPresenter } from '@/presentation/presenters/return-patient
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
-@Controller('patients/slug/:slug')
+@Controller('patients/by-slug/:slug')
 export class GetBySlugPatientController {
   constructor(private getBySlugPatient: NestGetPatientBySlugUseCase) {}
 

@@ -7,6 +7,7 @@ import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -27,6 +28,7 @@ export class FetchRecentConsultationsController {
 
   @Get()
   @ApiTags('Consultations')
+  @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiOperation({ summary: 'Fetch consultations' })
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Fetch consultations' })
