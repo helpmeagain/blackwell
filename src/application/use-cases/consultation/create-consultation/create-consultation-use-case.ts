@@ -5,6 +5,7 @@ import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-en
 import { type ConsultationRepository } from '@/application/repositories/consultation-repository';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { ConsultationIdList } from '@/domain/entities/consultation-list';
+import { ClinicianRepository } from '@/application/repositories/clinician-repository';
 
 interface createConsultationRequest {
   clinicianId: string;
@@ -22,23 +23,28 @@ export class CreateConsultationUseCase {
   constructor(
     private readonly consultationRepository: ConsultationRepository,
     private readonly patientRepository: PatientRepository,
+    private readonly clinicianRepository: ClinicianRepository,
   ) {}
 
-  async execute({
-    clinicianId,
-    patientId,
-    room,
-    appointmentDate,
-  }: createConsultationRequest): Promise<createConsultationResponse> {
-    const patient = await this.patientRepository.findById(patientId);
+  async execute(req: createConsultationRequest): Promise<createConsultationResponse> {
+    const { clinicianId, patientId, room, appointmentDate } = req;
+    const [patient, clinician] = await Promise.all([
+      this.patientRepository.findById(patientId),
+      this.clinicianRepository.findById(clinicianId),
+    ]);
 
     if (!patient) {
-      return left(new ResourceNotFound());
+      return left(new ResourceNotFound('Patient'));
+    }
+
+    if (!clinician) {
+      return left(new ResourceNotFound('Clinician'));
     }
 
     const consultation = Consultation.create({
       clinicianId: new UniqueEntityId(clinicianId),
       patientId: new UniqueEntityId(patientId),
+      medicalRecordId: new UniqueEntityId(patient.medicalRecord.id.toString()),
       room,
       appointmentDate,
     });

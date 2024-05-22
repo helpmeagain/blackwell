@@ -15,7 +15,7 @@ type editMedicalRecordByIdResponse = Either<
   { medicalRecord: MedicalRecord }
 >;
 
-export class EditMedicalRecordByIdUseCase {
+export class EditMedicalRecordByPatientIdUseCase {
   constructor(private readonly repository: PatientRepository) {}
 
   async execute({

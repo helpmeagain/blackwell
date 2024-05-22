@@ -7,7 +7,6 @@ import { PatientRepository } from '@/application/repositories/patient-repository
 
 interface editConsultationByIdRequest {
   consultationId: string;
-  clinicianId: string;
   appointmentDate: Date;
   room: number;
 }
@@ -25,7 +24,6 @@ export class EditConsultationByIdUseCase {
 
   async execute({
     consultationId,
-    clinicianId,
     appointmentDate,
     room,
   }: editConsultationByIdRequest): Promise<editConsultationByIdResponse> {
@@ -33,10 +31,6 @@ export class EditConsultationByIdUseCase {
 
     if (!consultation) {
       return left(new ResourceNotFound());
-    }
-
-    if (clinicianId !== consultation.clinicianId.toString()) {
-      return left(new NotAllowed());
     }
 
     const patient = await this.patientRecordRepository.findById(

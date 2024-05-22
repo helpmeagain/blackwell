@@ -10,7 +10,7 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { ReturnMedicalRecordPresenter } from '@/presentation/presenters/return-medical-record-presenter';
-import { NestEditMedicalRecordByIdUseCase } from '@/infrastructure/adapter/medical-record/nest-edit-medical-record-by-patient-id-use-case';
+import { NestEditMedicalRecordByPatientIdUseCase } from '@/infrastructure/adapter/medical-record/nest-edit-medical-record-by-patient-id-use-case';
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
 import { zodToOpenAPI } from 'nestjs-zod';
@@ -26,7 +26,7 @@ const requestBodyForOpenAPI = zodToOpenAPI(editMedicalRecordSchema);
 
 @Controller('medical-records/by-patient-id/:patientId')
 export class EditMedicalRecordByPatientIdController {
-  constructor(private editMedicalRecordById: NestEditMedicalRecordByIdUseCase) {}
+  constructor(private editMedicalRecordById: NestEditMedicalRecordByPatientIdUseCase) {}
 
   @Put()
   @ApiTags('Medical Record')

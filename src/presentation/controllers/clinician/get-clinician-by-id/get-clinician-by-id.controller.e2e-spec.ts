@@ -23,12 +23,12 @@ describe('Get clinician by id [E2E]', () => {
     await app.init();
   });
 
-  test('[GET] /clinicians/id/:id', async () => {
+  test('[GET] /clinicians/by-id/:id', async () => {
     const clinician = await clinicianFactory.makeDatabaseClinician({});
     const token = jwt.sign({ sub: clinician.id.toString() });
 
     const result = await request(app.getHttpServer())
-      .get(`/clinicians/id/${clinician.id.toString()}`)
+      .get(`/clinicians/by-id/${clinician.id.toString()}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

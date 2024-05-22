@@ -3,9 +3,12 @@ import { CreateConsultationUseCase } from './create-consultation-use-case';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
+import { InMemoryClinicianRepository } from 'test/repositories/in-memory-clinician-repository';
+import { makeClinician } from 'test/factories/make-clinician';
 
 let inConsultationMemoryRepository: InMemoryConsultationRepository;
 let inPatientMemoryRepository: InMemoryPatientRepository;
+let inClinicianMemoryRepository: InMemoryClinicianRepository;
 let sut: CreateConsultationUseCase;
 
 describe('Schedule Consultation', () => {
@@ -14,20 +17,24 @@ describe('Schedule Consultation', () => {
     inConsultationMemoryRepository = new InMemoryConsultationRepository(
       inPatientMemoryRepository,
     );
+    inClinicianMemoryRepository = new InMemoryClinicianRepository();
     sut = new CreateConsultationUseCase(
       inConsultationMemoryRepository,
       inPatientMemoryRepository,
+      inClinicianMemoryRepository,
     );
   });
 
   it('should be able to schedule a consultation for a patient', async () => {
-    const newPatient = makePatient({});
+    const newPatient = makePatient();
+    const newClinician = makeClinician();
     inPatientMemoryRepository.items.push(newPatient);
+    inClinicianMemoryRepository.items.push(newClinician);
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const result = await sut.execute({
-      clinicianId: '1',
+      clinicianId: newClinician.id.toString(),
       patientId: newPatient.id.toString(),
       room: 1,
       appointmentDate: tomorrow,

@@ -1,4 +1,5 @@
 // import { ConsultationIdList } from '@/domain/entities/consultation-list';
+import { ConsultationIdList } from '@/domain/entities/consultation-list';
 import { MedicalRecord } from '@/domain/entities/medical-record';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 import { MedicalRecord as PrismaMedicalRecord, Prisma } from '@prisma/client';
@@ -8,9 +9,9 @@ export class PrismaMedicalRecordMapper {
     const medicalRecord = MedicalRecord.create(
       {
         patientId: new UniqueEntityId(raw.patientId),
-        // consultationsIds: new ConsultationIdList(
-        //   raw.consultationsIds.map((id) => new UniqueEntityId(id)),
-        // ),
+        consultationsIds: new ConsultationIdList(
+          raw.consultationId.map((id) => new UniqueEntityId(id)),
+        ),
         diagnosis: raw.diagnosis,
         comorbidity: raw.comorbidity,
       },
@@ -26,6 +27,9 @@ export class PrismaMedicalRecordMapper {
     return {
       id: medicalRecord.id.toString(),
       patientId: medicalRecord.patientId.toString(),
+      // consultationId: medicalRecord.consultationsIds.currentItems.map((id) =>
+      //   id.toString(),
+      // ),
       diagnosis: medicalRecord.diagnosis,
       comorbidity: medicalRecord.comorbidity,
     };
