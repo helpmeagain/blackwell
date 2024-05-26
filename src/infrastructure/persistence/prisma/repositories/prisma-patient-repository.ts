@@ -75,6 +75,18 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaMedicalRecordMapper.toDomain(medicalRecord);
   }
 
+  async findRecordByPatientId(patientId: string): Promise<MedicalRecord | null> {
+    const medicalRecord = await this.prisma.medicalRecord.findUnique({
+      where: { patientId },
+    });
+
+    if (!medicalRecord) {
+      return null;
+    }
+
+    return PrismaMedicalRecordMapper.toDomain(medicalRecord);
+  }
+
   async saveRecord(medicalRecord: MedicalRecord): Promise<void | null> {
     const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
     await this.prisma.medicalRecord.update({ where: { id: data.id }, data });

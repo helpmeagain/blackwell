@@ -46,6 +46,18 @@ export class InMemoryPatientRepository implements PatientRepository {
     return patient.medicalRecord;
   }
 
+  async findRecordByPatientId(id: string) {
+    const patient = this.items.find(
+      (item) => item.medicalRecord.patientId.toString() === id,
+    );
+
+    if (!patient) {
+      return null;
+    }
+
+    return patient.medicalRecord;
+  }
+
   async create(patient: Patient) {
     this.items.push(patient);
   }

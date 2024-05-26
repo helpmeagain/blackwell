@@ -18,13 +18,11 @@ export class GetMedicalRecordByPatientIdUseCase {
   async execute({
     patientId,
   }: getMedicalRecordByPatientIdRequest): Promise<getMedicalRecordByPatientIdResponse> {
-    const patient = await this.repository.findById(patientId);
+    const medicalRecord = await this.repository.findRecordByPatientId(patientId);
 
-    if (!patient) {
+    if (!medicalRecord) {
       return left(new ResourceNotFound());
     }
-
-    const medicalRecord = patient.medicalRecord;
 
     return right({ medicalRecord });
   }
