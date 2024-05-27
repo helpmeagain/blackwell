@@ -23,10 +23,10 @@ export class Consultation extends AggregateRoot<consultationProps> {
       id,
     );
 
-    // const isNewConsultation = !id;
-    // if (isNewConsultation) {
-    //   consultation.addDomainEvent(new ConsultationCreatedEvent(consultation));
-    // }
+    const isNewConsultation = !id;
+    if (isNewConsultation) {
+      consultation.addDomainEvent(new ConsultationCreatedEvent(consultation));
+    }
 
     return consultation;
   }
