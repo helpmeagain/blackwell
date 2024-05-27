@@ -15,7 +15,7 @@ type editMedicalRecordByIdResponse = Either<
   { medicalRecord: MedicalRecord }
 >;
 
-export class EditMedicalRecordByIdUseCase {
+export class EditMedicalRecordByPatientIdUseCase {
   constructor(private readonly repository: PatientRepository) {}
 
   async execute({
@@ -23,16 +23,16 @@ export class EditMedicalRecordByIdUseCase {
     diagnosis,
     comorbidity,
   }: editMedicalRecordByIdRequest): Promise<editMedicalRecordByIdResponse> {
-    const patient = await this.repository.findById(patientId);
+    const medicalRecord = await this.repository.findRecordByPatientId(patientId);
 
-    if (!patient) {
+    if (!medicalRecord) {
       return left(new ResourceNotFound());
     }
 
-    patient.medicalRecord.diagnosis = diagnosis;
-    patient.medicalRecord.comorbidity = comorbidity;
+    medicalRecord.diagnosis = diagnosis;
+    medicalRecord.comorbidity = comorbidity;
 
-    await this.repository.saveRecord(patient.medicalRecord);
-    return right({ medicalRecord: patient.medicalRecord });
+    await this.repository.saveRecord(medicalRecord);
+    return right({ medicalRecord });
   }
 }

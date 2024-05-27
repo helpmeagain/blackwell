@@ -1,17 +1,20 @@
 import { makePatient } from 'test/factories/make-patient';
-import { EditMedicalRecordByIdUseCase } from './edit-medical-record-by-patient-id-use-case';
+import { EditMedicalRecordByPatientIdUseCase } from './edit-medical-record-by-patient-id-use-case';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
-import { CreateConsultationUseCase } from '../../consultation/create-consultation/create-consultation-use-case';
+import { makeConsultation } from 'test/factories/make-consultation';
 
 let inMemoryPatientRepository: InMemoryPatientRepository;
 let inMemoryConsultationRepository: InMemoryConsultationRepository;
-let sut: EditMedicalRecordByIdUseCase;
+let sut: EditMedicalRecordByPatientIdUseCase;
 
 describe('Edit a medical record', () => {
   beforeEach(() => {
     inMemoryPatientRepository = new InMemoryPatientRepository();
-    sut = new EditMedicalRecordByIdUseCase(inMemoryPatientRepository);
+    inMemoryConsultationRepository = new InMemoryConsultationRepository(
+      inMemoryPatientRepository,
+    );
+    sut = new EditMedicalRecordByPatientIdUseCase(inMemoryPatientRepository);
   });
 
   it('should be able to edit a medical record by id', async () => {
@@ -32,19 +35,11 @@ describe('Edit a medical record', () => {
     const newPatient = makePatient();
     await inMemoryPatientRepository.create(newPatient);
 
-    inMemoryConsultationRepository = new InMemoryConsultationRepository(
-      inMemoryPatientRepository,
-    );
-    const consultation = new CreateConsultationUseCase(
-      inMemoryConsultationRepository,
-      inMemoryPatientRepository,
-    );
-    const consultationResult = await consultation.execute({
-      clinicianId: '1',
-      patientId: newPatient.id.toString(),
-      room: 1,
-      appointmentDate: new Date(),
+    const newConsultation = makeConsultation({
+      patientId: newPatient.id,
+      medicalRecordId: newPatient.medicalRecord.id,
     });
+    await inMemoryConsultationRepository.create(newConsultation);
 
     const patientResult = await sut.execute({
       patientId: newPatient.id.toString(),
@@ -53,15 +48,12 @@ describe('Edit a medical record', () => {
     });
 
     expect(patientResult.isRight()).toBe(true);
-    expect(consultationResult.isRight()).toBe(true);
-    if (patientResult.isRight() && consultationResult.isRight()) {
-      expect(patientResult.value.medicalRecord.diagnosis).toBe('diagnosis');
-      expect(
-        patientResult.value.medicalRecord.consultationsIds.currentItems,
-      ).toHaveLength(1);
-      expect(patientResult.value.medicalRecord.consultationsIds.currentItems).toEqual(
-        inMemoryConsultationRepository.items.map((consultation) => consultation.id),
-      );
-    }
+    expect(inMemoryPatientRepository.items[0].medicalRecord.diagnosis).toBe('diagnosis');
+    expect(
+      inMemoryPatientRepository.items[0].medicalRecord.consultationsIds.currentItems,
+    ).toHaveLength(1);
+    expect(
+      inMemoryPatientRepository.items[0].medicalRecord.consultationsIds.currentItems[0],
+    ).toEqual(newConsultation.id);
   });
 });

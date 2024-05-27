@@ -6,6 +6,7 @@ import { PrismaService } from '../prisma.service';
 import { PrismaPatientMapper } from '../mappers/prisma-patient-mapper';
 import { PrismaMedicalRecordMapper } from '../mappers/prisma-medical-record-mapper';
 import { Consultation } from '@/domain/entities/consultation';
+import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
@@ -74,6 +75,18 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaMedicalRecordMapper.toDomain(medicalRecord);
   }
 
+  async findRecordByPatientId(patientId: string): Promise<MedicalRecord | null> {
+    const medicalRecord = await this.prisma.medicalRecord.findUnique({
+      where: { patientId },
+    });
+
+    if (!medicalRecord) {
+      return null;
+    }
+
+    return PrismaMedicalRecordMapper.toDomain(medicalRecord);
+  }
+
   async saveRecord(medicalRecord: MedicalRecord): Promise<void | null> {
     const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
     await this.prisma.medicalRecord.update({ where: { id: data.id }, data });
@@ -93,10 +106,41 @@ export class PrismaPatientRepository implements PatientRepository {
   }
 
   async saveConsultationOnRecord(consultation: Consultation): Promise<void | null> {
-    throw new Error('not implemented');
+    const data = PrismaConsultationMapper.toPersistence(consultation);
+    const patient = await this.findById(data.patientId);
+
+    if (!patient || !patient.medicalRecord) {
+      return null;
+    }
+
+    await this.prisma.medicalRecord.update({
+      where: { id: patient.medicalRecord.id.toString() },
+      data: {
+        consultationId: {
+          push: data.id,
+        },
+      },
+    });
   }
 
   async removeConsultationOnRecord(consultation: Consultation): Promise<void | null> {
-    throw new Error('not implemented');
+    const data = PrismaConsultationMapper.toPersistence(consultation);
+    const medicalRecord = await this.findRecordById(data.medicalRecordId);
+
+    if (!medicalRecord) {
+      return null;
+    }
+
+    await this.prisma.medicalRecord.update({
+      where: { id: medicalRecord.id.toString() },
+      data: {
+        consultationId: {
+          set: medicalRecord.consultationsIds
+            .getItems()
+            .filter((id) => id.toString() !== data.id)
+            .map((id) => id.toString()),
+        },
+      },
+    });
   }
 }

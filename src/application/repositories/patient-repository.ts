@@ -11,6 +11,7 @@ export abstract class PatientRepository {
   abstract delete: (consultation: Patient) => Promise<void>;
 
   abstract findRecordById: (recordId: string) => Promise<MedicalRecord | null>;
+  abstract findRecordByPatientId: (patientId: string) => Promise<MedicalRecord | null>;
   abstract createRecord: (
     patientId: string,
     record: MedicalRecord,

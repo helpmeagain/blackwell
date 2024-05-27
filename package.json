@@ -1,10 +1,11 @@
 {
   "name": "blackwell",
   "version": "0.0.1",
-  "description": "",
+  "description": "API for a medical clinic using clean architecture",
   "main": "index.js",
   "author": "Felipe Marques",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/felipecomarques/blackwell",
   "private": true,
   "scripts": {
     "build": "nest build",

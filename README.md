@@ -18,13 +18,19 @@ A medical clinic API for managing medical services.
 )
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-grey?style=for-the-badge&logo=githubactions&logoColor=white)
 
+## Documentation
+
+- [API Reference](./docs/api-reference.md)
+
 ## Local installation
 
 <details>
 <summary><strong>Install manually</strong></summary>
 
+
 ### Prerequisites
 - Install [node.js](https://nodejs.org/en).
+- Install [postgres](https://www.postgresql.org/).
 - Install [pnpm](https://pnpm.io/pt/installation) (optional).
 
 ### Local setup
@@ -49,7 +55,13 @@ npm install
 pnpm install
 ```
 
-4. Install dependencies:
+4. Open postgres server and copy the URL in a `.env` file (you can follow the [example](./.env.exemple)):
+
+```bash
+DATABASE_URL="postgres://your-user-name:your-password@your-hostname:5432/your-database-name"
+```
+
+5. Generate files for Prisma data model:
 ```bash
 # Using npm
 npm prisma generate
@@ -58,7 +70,7 @@ npm prisma generate
 pnpm prisma generate
 ```
 
-5. Generate JWT - RS256 Keys:
+6. Generate JWT - RS256 Keys:
 ```bash
 # Generate private and public key
 openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
@@ -69,15 +81,13 @@ openssl base64 -in private_key.pem -out private_key_base64.txt
 openssl base64 -in public_key.pem -out public_key_base64.txt
 ```
 
-6. Create a `.env` file (you can follow the [example](./.env.exemple)):
+7. Copy and paste the JWT - RS256 (base64) in the `.env` file (you can follow the [example](./.env.exemple)):
 ```bash
-DATABASE_URL="postgres://your-user-name:your-password@your-hostname:5432/your-database-name"
 JWT_PRIVATE_KEY="your-jwt-private-key-in-base64"
 JWT_PUBLIC_KEY="your-jwt-public-key-in-base64"
-PORT=8080
 ```
 
-6. Build the application:
+8. Build the application:
 ```bash
 # Using npm
 npm build
@@ -86,7 +96,7 @@ npm build
 pnpm build
 ```
 
-7. Run the application:
+9. Run the application:
 ```bash
 # Using npm
 npm start:prod
@@ -95,7 +105,7 @@ npm start:prod
 pnpm start:prod
 ```
 
-8. Access the application in the localhost
+10. Access the application in the localhost
 
 </details>
 
