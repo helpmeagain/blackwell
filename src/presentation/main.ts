@@ -8,6 +8,10 @@ async function bootstrap() {
     logger: ['error', 'warn'],
   });
 
+  app.enableCors({
+    origin: '*',
+  });
+
   const swaggerService = app.get(SwaggerService);
   swaggerService.createDocument(app);
 
