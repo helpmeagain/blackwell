@@ -14,7 +14,6 @@ export class SwaggerService {
         'https://github.com/felipecomarques/blackwell/blob/main/LICENSE.txt',
       )
       .setExternalDoc('Source code', homepage)
-      .addServer('http://localhost:8080')
       .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(app, config);

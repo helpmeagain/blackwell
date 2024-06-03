@@ -4,8 +4,7 @@ import { envSchema } from '../infrastructure/env/env';
 import { AuthModule } from '@/infrastructure/auth/auth.module';
 import { HttpModule } from './controllers/http.module';
 import { EnvModule } from '@/infrastructure/env/env.module';
-import { SwaggerModule } from '@nestjs/swagger';
-import { SwaggerService } from './docs/swagger.service';
+import { SwaggerModule } from './docs/swagger.module';
 
 @Module({
   imports: [
@@ -18,6 +17,5 @@ import { SwaggerService } from './docs/swagger.service';
     EnvModule,
     SwaggerModule,
   ],
-  providers: [SwaggerService],
 })
 export class AppModule {}
