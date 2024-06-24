@@ -1,7 +1,7 @@
 # Blackwell API Reference
 
 - Swagger: Execute the API and open the `/api` route.
-- Insomnia: Import the [JSON file](./insomnia-blackwell-requests.json) into Insomnia You will need to update the environment variables.
+- Insomnia: Import the [JSON file](./insomnia-blackwell-requests.json) into Insomnia. You will need to update the environment variables.
 - HTTP Request: Open the [HTTP file](./http-blackwell-requests.http). You will need to update the environment variables.
 
 ## Routes

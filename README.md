@@ -25,13 +25,85 @@ A medical clinic API for managing medical services.
 ## Local installation
 
 <details>
-<summary><strong>Install manually</strong></summary>
+<summary><strong>Install with docker compose (recommended)</strong></summary>
 
+### Prerequisites
+
+- Install [docker](https://www.docker.com/products/docker-desktop/).
+
+### Docker setup
+To run this project locally, follow these steps:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+```
+
+2. Navigate to the project directory:
+```bash
+cd <project-directory>
+```
+
+3. Run the docker compose:
+```bash
+docker-compose up --build -d
+```
+
+4. Access the application in the localhost
+
+</details>
+
+<details>
+<summary><strong>Install with script</strong></summary>
 
 ### Prerequisites
 - Install [node.js](https://nodejs.org/en).
 - Install [postgres](https://www.postgresql.org/).
-- Install [pnpm](https://pnpm.io/pt/installation) (optional).
+
+### Local setup
+    
+To run this project locally, follow these steps:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+```
+
+2. Navigate to the project directory:
+```bash
+cd <project-directory>
+```
+
+3. Run the script:
+```bash
+docs/scripts/setup.sh
+```
+
+4. Insert the database URL when prompted:
+```bash
+Enter your PostgreSQL URL: postgres://your-user-name:your-password@your-hostname:5432/your-database-name
+```
+
+5. Start the server
+```bash
+# Using npm
+npm start:prod
+
+# Using pnpm
+pnpm start:prod
+
+# Using yarn
+yarn start:prod
+```
+
+6. Access the application in the localhost
+
+</details>
+
+<details>
+<summary><strong>Install manually</strong></summary>
+
+### Prerequisites
+- Install [node.js](https://nodejs.org/en).
+- Install [postgres](https://www.postgresql.org/).
 
 ### Local setup
     
@@ -53,6 +125,9 @@ npm install
 
 # Using pnpm
 pnpm install
+
+# Using yarn
+yarn install
 ```
 
 4. Open postgres server and copy the URL in a `.env` file (you can follow the [example](./.env.exemple)):
@@ -64,7 +139,7 @@ DATABASE_URL="postgres://your-user-name:your-password@your-hostname:5432/your-da
 5. Generate files for Prisma data model:
 ```bash
 # Using npm
-npm prisma generate
+npx prisma generate
 
 # Using pnpm
 pnpm prisma generate
@@ -106,33 +181,5 @@ pnpm start:prod
 ```
 
 10. Access the application in the localhost
-
-</details>
-
-<details>
-<summary><strong>Install with docker compose</strong></summary>
-
-### Prerequisites
-
-- Install [docker](https://www.docker.com/products/docker-desktop/).
-
-### Docker setup
-To run this project locally, follow these steps:
-1. Clone the repository:
-```bash
-git clone <repository-url>
-```
-
-2. Navigate to the project directory:
-```bash
-cd <project-directory>
-```
-
-3. Run the docker compose:
-```bash
-docker-compose up --build -d
-```
-
-4. Access the application in the localhost
 
 </details>
