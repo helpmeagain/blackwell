@@ -13,6 +13,7 @@ describe('Create Patient', () => {
   it('should be able to create a patient', async () => {
     const result = await sut.execute({
       recipientId: '1',
+      recipientType: 'CLIENT',
       title: 'A new title!',
       message: 'A new message',
     });

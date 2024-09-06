@@ -5,6 +5,7 @@ import { AuthModule } from '@/infrastructure/auth/auth.module';
 import { HttpModule } from './controllers/http.module';
 import { EnvModule } from '@/infrastructure/env/env.module';
 import { SwaggerModule } from './docs/swagger.module';
+import { EventModule } from '@/infrastructure/event/event.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SwaggerModule } from './docs/swagger.module';
     HttpModule,
     EnvModule,
     SwaggerModule,
+    EventModule,
   ],
 })
 export class AppModule {}
