@@ -1,11 +1,7 @@
 import { makeConsultation } from 'test/factories/make-consultation';
 import { OnConsultationCreated } from './on-consultation-created';
 import { InMemoryConsultationRepository } from 'test/repositories/in-memory-consultation-repository';
-import {
-  CreateNotificationUseCase,
-  createNotificationRequest,
-  createNotificationResponse,
-} from '@/application/use-cases/notification/create-notification/create-notification-use-case';
+import { CreateNotificationUseCase } from '@/application/use-cases/notification/create-notification/create-notification-use-case';
 import { InMemoryNotificationRepository } from 'test/repositories/in-memory-notification-repository';
 import { MockInstance } from 'vitest';
 import { waitFor } from 'test/utils/wait-for';
@@ -16,10 +12,7 @@ let inMemoryPatientRepository: InMemoryPatientRepository;
 let inMemoryConsultationRepository: InMemoryConsultationRepository;
 let inMemoryNotificationRepository: InMemoryNotificationRepository;
 let createNotification: CreateNotificationUseCase;
-let createNotificationSpy: MockInstance<
-  [createNotificationRequest],
-  Promise<createNotificationResponse>
->;
+let createNotificationSpy: MockInstance<typeof createNotification.execute>;
 
 describe('On consultation created', () => {
   beforeEach(() => {
@@ -28,7 +21,6 @@ describe('On consultation created', () => {
     inMemoryConsultationRepository = new InMemoryConsultationRepository(
       inMemoryPatientRepository,
     );
-
     createNotification = new CreateNotificationUseCase(inMemoryNotificationRepository);
 
     createNotificationSpy = vi.spyOn(createNotification, 'execute');
