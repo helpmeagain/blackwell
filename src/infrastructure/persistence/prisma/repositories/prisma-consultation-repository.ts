@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 import { PrismaService } from '../prisma.service';
 import { PatientRepository } from '@/application/repositories/patient-repository';
+import { DomainEvents } from '@/domain/common/events/domain-events';
 
 @Injectable()
 export class PrismaConsultationRepository implements ConsultationRepository {
@@ -38,11 +39,13 @@ export class PrismaConsultationRepository implements ConsultationRepository {
     const data = PrismaConsultationMapper.toPersistence(consultation);
     await this.patientRepository.saveConsultationOnRecord(consultation);
     await this.prisma.consultation.create({ data });
+    DomainEvents.dispatchEventsForAggregate(consultation.id);
   }
 
   async save(consultation: Consultation): Promise<void> {
     const data = PrismaConsultationMapper.toPersistence(consultation);
     await this.prisma.consultation.update({ where: { id: data.id }, data });
+    DomainEvents.dispatchEventsForAggregate(consultation.id);
   }
 
   async delete(consultation: Consultation): Promise<void> {

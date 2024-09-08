@@ -27,6 +27,7 @@ export class OnConsultationCreated implements EventHandler {
     if (patient) {
       await this.createNotification.execute({
         recipientId: patient.id.toString(),
+        recipientType: 'CLIENT',
         title: `New consultation has been created!`,
         message: `The consultation is scheduled for ${consultation.appointmentDate.toLocaleString()}.`,
       });

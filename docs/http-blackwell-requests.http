@@ -1,6 +1,4 @@
-@hostname = http://localhost
-@port = 8080
-@host = {{hostname}}:{{port}}
+@host = http://localhost:8080
 @contentType = application/json
 @authTokenClinician = {{authenticate_clinician.response.body.access_token}}
 @clinicianId = {{create_clinician.response.body.clinician.id}}
@@ -18,7 +16,7 @@ Content-Type: {{contentType}}
   "occupation": "doctor",
   "phoneNumber": "123456789",
   "email": "jonhdoe@email.com",
-  "password": "12345"
+  "password": "123456789"
 }
 
 ### 
@@ -28,22 +26,23 @@ Content-Type: {{contentType}}
 
 {
   "email": "jonhdoe@email.com",
-  "password": "12345"
+  "password": "123456789"
 }
 
 ###
 # @name get_clinician_by_id
-GET {{host}}/clinicians/id/{{clinicianId}}
+GET {{host}}/clinicians/by-id/{{clinicianId}}
 Authorization: Bearer {{authTokenClinician}}
 
 ###
 # @name get_clinician_by_slug
-GET {{host}}/clinicians/slug/john-doe
+GET {{host}}/clinicians/by-slug/john-doe
 Authorization: Bearer {{authTokenClinician}}
 
 ###
 # @name edit_clinician
 PUT {{host}}/clinicians/{{clinicianId}}
+Authorization: Bearer {{authTokenClinician}}
 Content-Type: {{contentType}}
 
 {
@@ -53,7 +52,7 @@ Content-Type: {{contentType}}
   "occupation": "doctor",
   "phoneNumber": "123456789",
   "email": "jonhdoewilliam@email.com",
-  "password": "12345"
+  "password": "123456789"
 }
 
 ###
