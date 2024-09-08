@@ -32,7 +32,7 @@ describe('On consultation created', () => {
     createNotification = new CreateNotificationUseCase(inMemoryNotificationRepository);
 
     createNotificationSpy = vi.spyOn(createNotification, 'execute');
-    new OnConsultationCreated(inMemoryPatientRepository, createNotification); // eslint-disable-line
+    new OnConsultationCreated(inMemoryPatientRepository, createNotification);
   });
 
   it('should send a new notification when a consultation is created', async () => {
