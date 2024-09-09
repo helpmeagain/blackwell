@@ -5,7 +5,7 @@ import { DomainEvents } from './domain-events';
 
 class CustomAggregateCreated implements DomainEvent {
   public ocurredAt: Date;
-  private aggregate: CustomAggregate; // eslint-disable-line
+  private aggregate: CustomAggregate;
 
   constructor(aggregate: CustomAggregate) {
     this.ocurredAt = new Date();

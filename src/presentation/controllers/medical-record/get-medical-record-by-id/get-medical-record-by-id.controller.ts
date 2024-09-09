@@ -9,7 +9,7 @@ import {
 import { NestGetMedicalRecordByIdUseCase } from '@/infrastructure/adapter/medical-record/nest-get-medical-record-by-id-use-case';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { ReturnMedicalRecordPresenter } from '@/presentation/presenters/return-medical-record-presenter';
+import { ReturnMedicalRecordPresenter } from '@/presentation/utils/presenters/return-medical-record-presenter';
 
 @Controller('medical-records/:id')
 export class GetMedicalRecordByIdController {

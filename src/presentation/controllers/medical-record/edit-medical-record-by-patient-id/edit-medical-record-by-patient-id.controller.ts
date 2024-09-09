@@ -9,20 +9,13 @@ import {
 } from '@nestjs/swagger';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { ReturnMedicalRecordPresenter } from '@/presentation/presenters/return-medical-record-presenter';
+import { ReturnMedicalRecordPresenter } from '@/presentation/utils/presenters/return-medical-record-presenter';
 import { NestEditMedicalRecordByPatientIdUseCase } from '@/infrastructure/adapter/medical-record/nest-edit-medical-record-by-patient-id-use-case';
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { zodToOpenAPI } from 'nestjs-zod';
-
-const editMedicalRecordSchema = z.object({
-  diagnosis: z.string(),
-  comorbidity: z.string(),
-});
-
-const bodyValidationPipe = new ZodValidationPipe(editMedicalRecordSchema);
-type EditMedicalRecordSchema = z.infer<typeof editMedicalRecordSchema>;
-const requestBodyForOpenAPI = zodToOpenAPI(editMedicalRecordSchema);
+import {
+  BodyType,
+  swaggerBody,
+  validationBody,
+} from './edit-medical-record-by-patient-id-schema';
 
 @Controller('medical-records/by-patient-id/:patientId')
 export class EditMedicalRecordByPatientIdController {
@@ -32,11 +25,11 @@ export class EditMedicalRecordByPatientIdController {
   @ApiTags('Medical Record')
   @ApiOperation({ summary: 'Edit a medical record by patient id' })
   @ApiBearerAuth()
-  @ApiBody({ schema: requestBodyForOpenAPI })
+  @ApiBody({ schema: swaggerBody })
   @ApiOkResponse({ description: 'Return medical record by id' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(
-    @Body(bodyValidationPipe) body: EditMedicalRecordSchema,
+    @Body(validationBody) body: typeof BodyType,
     @Param('patientId') patientId: string,
   ) {
     const { diagnosis, comorbidity } = body;
