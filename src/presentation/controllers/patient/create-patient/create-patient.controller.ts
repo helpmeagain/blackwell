@@ -1,5 +1,4 @@
-import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { Body, ConflictException, Controller, Post, UsePipes } from '@nestjs/common';
+import { Body, ConflictException, Controller, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -8,36 +7,12 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { z } from 'zod';
-import { zodToOpenAPI } from 'nestjs-zod';
+import { BodyType, swaggerBody, validationBody } from './create-patient-schema';
 import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
-import { CreatePatientPresenter } from '@/presentation/presenters/create-patient-presenter';
+import { CreatePatientPresenter } from '@/presentation/utils/presenters/create-patient-presenter';
 import { Public } from '@/infrastructure/auth/public';
-
-const createPatientSchema = z.object({
-  name: z.string(),
-  surname: z.string(),
-  gender: z.enum(['male', 'female', 'non-binary', 'other']),
-  birthDate: z
-    .string()
-    .datetime()
-    .refine(
-      (value) => {
-        const birthDate = new Date(value);
-        const currentDate = new Date();
-        return birthDate < currentDate;
-      },
-      { message: 'Birth date must be in the past' },
-    ),
-  phoneNumber: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-});
-
-type CreatePatientSchema = z.infer<typeof createPatientSchema>;
-const requestBodyForOpenAPI = zodToOpenAPI(createPatientSchema);
 
 @Controller('patients')
 export class CreatePatientController {
@@ -47,12 +22,12 @@ export class CreatePatientController {
   @Public()
   @ApiTags('Patients')
   @ApiOperation({ summary: 'Create a patient' })
-  @ApiBody({ schema: requestBodyForOpenAPI })
+  @ApiBody({ schema: swaggerBody })
   @ApiCreatedResponse({ description: 'Patient created' })
   @ApiBadRequestResponse({ description: 'Invalid information' })
   @ApiConflictResponse({ description: 'Conflict' })
-  @UsePipes(new ZodValidationPipe(createPatientSchema))
-  async handle(@Body() body: CreatePatientSchema) {
+  // @UsePipes(validationBody)
+  async handle(@Body(validationBody) body: typeof BodyType) {
     const { name, surname, gender, birthDate, phoneNumber, email, password } = body;
 
     const result = await this.createPatient.execute({

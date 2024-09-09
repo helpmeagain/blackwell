@@ -9,7 +9,7 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { NestGetConsultationByIdUseCase } from '@/infrastructure/adapter/consultation/nest-get-consultation-by-id-use-case';
-import { CreateConsultationPresenter } from '@/presentation/presenters/create-consultation-presenter';
+import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 
 @Controller('consultations/:id')
 export class GetByIdConsultationsController {
