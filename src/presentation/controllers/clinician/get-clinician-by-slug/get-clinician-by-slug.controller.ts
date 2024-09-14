@@ -7,7 +7,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { NestGetClinicianBySlugUseCase } from '@/infrastructure/adapter/clinician/nest-get-clinician-by-slug';
-import { ReturnClinicianPresenter } from '@/presentation/presenters/return-clinician-presenter';
+import { ReturnClinicianPresenter } from '@/presentation/utils/presenters/return-clinician-presenter';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 

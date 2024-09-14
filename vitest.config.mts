@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [
     tsConfigPaths(),
     swc.vite({
-      module: { type: 'es6' },
+      module: { type: 'nodenext' },
     }),
   ],
 });

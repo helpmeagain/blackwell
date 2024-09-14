@@ -7,20 +7,21 @@ import { PrismaPatientRepository } from './prisma/repositories/prisma-patient-re
 import { ClinicianRepository } from '@/application/repositories/clinician-repository';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { ConsultationRepository } from '@/application/repositories/consultation-repository';
+import { NotificationRepository } from '@/application/repositories/notification-repository';
 
 @Module({
   providers: [
     PrismaService,
     { provide: ClinicianRepository, useClass: PrismaClinicianRepository },
     { provide: ConsultationRepository, useClass: PrismaConsultationRepository },
-    PrismaNotificationRepository,
+    { provide: NotificationRepository, useClass: PrismaNotificationRepository },
     { provide: PatientRepository, useClass: PrismaPatientRepository },
   ],
   exports: [
     PrismaService,
     ClinicianRepository,
     ConsultationRepository,
-    PrismaNotificationRepository,
+    NotificationRepository,
     PatientRepository,
   ],
 })

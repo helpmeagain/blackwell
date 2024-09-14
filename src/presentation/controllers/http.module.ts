@@ -6,6 +6,7 @@ import { ClinicianModule } from './clinician/clinician.module';
 import { PatientModule } from './patient/patient.module';
 import { ConsultationModule } from './consultation/consultation.module';
 import { MedicalRecordModule } from './medical-record/medical-record.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MedicalRecordModule } from './medical-record/medical-record.module';
     ConsultationModule,
     MedicalRecordModule,
     PatientModule,
+    NotificationModule,
   ],
 })
 export class HttpModule {}

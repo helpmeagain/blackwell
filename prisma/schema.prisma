@@ -83,3 +83,15 @@ model MedicalRecord {
 
   @@map("medical_records")
 }
+
+model Notification {
+  id            String    @id @default(uuid())
+  recipientId   String    @map("recipient_id")
+  title         String
+  content       String
+  readAt        DateTime? @map("read_at")
+  recipientType UserRole  @map("recipient_type")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  @@map("notifications")
+}

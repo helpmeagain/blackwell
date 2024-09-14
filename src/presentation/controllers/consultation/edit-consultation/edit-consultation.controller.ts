@@ -10,19 +10,8 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { NestEditConsultationByIdUseCase } from '@/infrastructure/adapter/consultation/nest-edit-consultation-by-id-use-case';
-import { z } from 'zod';
-import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
-import { zodToOpenAPI } from 'nestjs-zod';
-import { CreateConsultationPresenter } from '@/presentation/presenters/create-consultation-presenter';
-
-const editClinicianSchema = z.object({
-  room: z.number().int(),
-  appointmentDate: z.string().datetime(),
-});
-
-const bodyValidationPipe = new ZodValidationPipe(editClinicianSchema);
-type EditClinicianSchema = z.infer<typeof editClinicianSchema>;
-const requestBodyForOpenAPI = zodToOpenAPI(editClinicianSchema);
+import { BodyType, swaggerBody, validationBody } from './edit-consultation-schema';
+import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 
 @Controller('consultations/:id')
 export class EditConsultationController {
@@ -31,14 +20,11 @@ export class EditConsultationController {
   @Put()
   @ApiBearerAuth()
   @ApiTags('Consultations')
-  @ApiBody({ schema: requestBodyForOpenAPI })
+  @ApiBody({ schema: swaggerBody })
   @ApiOperation({ summary: 'Edit a consultations by id' })
   @ApiOkResponse({ description: 'Edit consultations successfully' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(
-    @Body(bodyValidationPipe) body: EditClinicianSchema,
-    @Param('id') id: string,
-  ) {
+  async handle(@Body(validationBody) body: typeof BodyType, @Param('id') id: string) {
     const { room, appointmentDate } = body;
 
     const result = await this.editByIdConsultations.execute({

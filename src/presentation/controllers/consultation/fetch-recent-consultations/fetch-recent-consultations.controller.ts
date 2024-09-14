@@ -1,8 +1,8 @@
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
-import { ZodValidationPipe } from '@/presentation/pipes/zod-validation-pipe';
+// import { ZodValidationPipe } from '@/presentation/utils/zod-validation-pipe';
 import { NestFetchRecentConsultationUseCase } from '@/infrastructure/adapter/consultation/nest-fetch-recent-consultations-use-case';
-import { z } from 'zod';
-import { CreateConsultationPresenter } from '@/presentation/presenters/create-consultation-presenter';
+// import { z } from 'zod';
+import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -11,16 +11,17 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { BodyType, validationBody } from './fetch-recent-consultations-schema';
 
-const pageQueryParamSchema = z
-  .string()
-  .optional()
-  .default('1')
-  .transform(Number)
-  .pipe(z.number().min(1));
+// const pageQueryParamSchema = z
+//   .string()
+//   .optional()
+//   .default('1')
+//   .transform(Number)
+//   .pipe(z.number().min(1));
 
-const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema);
-type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>;
+// const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema);
+// type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>;
 
 @Controller('/consultations')
 export class FetchRecentConsultationsController {
@@ -33,7 +34,7 @@ export class FetchRecentConsultationsController {
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Fetch consultations' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(@Query('page', queryValidationPipe) page: PageQueryParamSchema) {
+  async handle(@Query('page', validationBody) page: typeof BodyType) {
     const result = await this.fetchRecentConsultations.execute({
       page,
     });
