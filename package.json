@@ -1,6 +1,6 @@
 {
   "name": "blackwell",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "description": "API for a medical clinic using clean architecture",
   "main": "index.js",
   "author": "Felipe Marques",
@@ -18,7 +18,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "vitest run --config ./vitest.config.e2e.mts",
     "lint": "eslint src",
-    "lint:fix": "eslint src --ext .ts --fix"
+    "lint:fix": "eslint src --ext .ts --fix",
+    "tsc:check": "tsc --noEmit"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.1.1",

@@ -30,17 +30,16 @@ describe('Get notification by id [E2E]', () => {
     await app.init();
   });
 
-  test('[PATCH] /:notificationId/patient/:patientId/read', async () => {
+  test('[PATCH] notification/read/:notificationId', async () => {
     const patient = await patientFactory.makeDatabasePatient();
     const notification = await notificationFactory.makeDatabaseNotification({
       recipientId: patient.id,
     });
     const token = jwt.sign({ sub: patient.id.toString() });
     const notificationId = notification.id.toString();
-    const patientId = patient.id.toString();
 
     const result = await request(app.getHttpServer())
-      .patch(`/notification/${notificationId}/patient/${patientId}/read`)
+      .patch(`/notification/${notificationId}/read`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
