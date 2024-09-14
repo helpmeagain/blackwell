@@ -39,7 +39,7 @@ describe('Get notification by id [E2E]', () => {
     const notificationId = notification.id.toString();
 
     const result = await request(app.getHttpServer())
-      .patch(`/notification/${notificationId}/read`)
+      .patch(`/notification/read/${notificationId}/`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
