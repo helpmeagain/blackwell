@@ -14,12 +14,19 @@ enum UserRole {
   CLIENT
 }
 
+enum Gender {
+  male
+  female
+  nonbinary
+  other
+}
+
 model Clinician {
   id          String    @id @default(uuid())
   name        String
   surname     String
   slug        String    @unique
-  gender      String
+  gender      Gender
   occupation  String
   phoneNumber String    @map("phone_number")
   email       String    @unique
@@ -38,7 +45,7 @@ model Patient {
   name            String
   surname         String
   slug            String    @unique
-  gender          String
+  gender          Gender
   birthDate       DateTime  @map("birth_date")
   phoneNumber     String    @map("phone_number")
   medicalRecordId String?   @unique @map("medical_record_id")

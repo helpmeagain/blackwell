@@ -7,9 +7,7 @@ const createClinicianSchema = z
   .object({
     name: z.string().openapi({ example: 'John' }),
     surname: z.string().openapi({ example: 'Doe' }),
-    gender: z
-      .enum(['male', 'female', 'non-binary', 'other'])
-      .openapi({ example: 'male' }),
+    gender: z.enum(['male', 'female', 'nonbinary', 'other']).openapi({ example: 'male' }),
     occupation: z.string().openapi({ example: 'Cardiologist' }),
     phoneNumber: z.string().openapi({ example: '9999999999' }),
     email: z.string().email().openapi({ example: 'johndoe@email.com' }),

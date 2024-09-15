@@ -8,7 +8,7 @@ const editPatientSchema = z
     name: z.string().openapi({ example: 'Jane' }),
     surname: z.string().openapi({ example: 'Doe' }),
     gender: z
-      .enum(['male', 'female', 'non-binary', 'other'])
+      .enum(['male', 'female', 'nonbinary', 'other'])
       .openapi({ example: 'female' }),
     birthDate: z
       .string()

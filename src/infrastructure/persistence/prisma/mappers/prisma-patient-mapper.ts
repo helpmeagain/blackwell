@@ -1,4 +1,3 @@
-import { Gender } from '@/domain/common/types/gender-type';
 import { MedicalRecord } from '@/domain/entities/medical-record';
 import { Patient } from '@/domain/entities/patient';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
@@ -10,7 +9,7 @@ export class PrismaPatientMapper {
       {
         name: raw.name,
         surname: raw.surname,
-        gender: raw.gender as Gender,
+        gender: raw.gender,
         phoneNumber: raw.phoneNumber,
         email: raw.email,
         password: raw.password,

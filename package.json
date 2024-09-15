@@ -18,8 +18,10 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "vitest run --config ./vitest.config.e2e.mts",
     "lint": "eslint src",
-    "lint:fix": "eslint src --ext .ts --fix",
-    "tsc:check": "tsc --noEmit"
+    "lint:fix": "eslint src --fix",
+    "tsc:check": "tsc --noEmit",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "npx prisma studio"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.1.1",
