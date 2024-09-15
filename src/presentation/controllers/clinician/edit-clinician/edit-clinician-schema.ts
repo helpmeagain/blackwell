@@ -11,7 +11,16 @@ const editClinicianSchema = z
     occupation: z.string().openapi({ example: 'Dermatology ' }),
     phoneNumber: z.string().openapi({ example: '9999999999' }),
     email: z.string().email().openapi({ example: 'johndoe@email.com' }),
-    password: z.string().openapi({ example: '12345' }),
+    password: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters long' })
+      .refine((value) => /[a-z]/.test(value), {
+        message: 'Password must contain at least one lowercase letter',
+      })
+      .refine((value) => /[A-Z]/.test(value), {
+        message: 'Password must contain at least one uppercase letter',
+      })
+      .openapi({ example: 'Password' }),
   })
   .openapi('Clinician');
 
