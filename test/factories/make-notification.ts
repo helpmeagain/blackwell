@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { fakerPT_BR as faker } from '@faker-js/faker';
 import { Notification, NotificationProps } from '@/domain/entities/generic/notification';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
