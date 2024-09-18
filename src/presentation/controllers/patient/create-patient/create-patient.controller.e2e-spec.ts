@@ -27,7 +27,7 @@ describe('Create patient [E2E]', () => {
       birthDate: '2000-01-01T12:00:00.000Z',
       phoneNumber: '123456789',
       email: 'jonhdoe@email.com',
-      password: '12345',
+      password: '12345678qwertY',
     });
 
     expect(result.statusCode).toBe(201);

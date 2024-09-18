@@ -27,7 +27,7 @@ describe('Create clinician [E2E]', () => {
       occupation: 'doctor',
       phoneNumber: '123456789',
       email: 'jonhdoe@email.com',
-      password: '12345',
+      password: '12345678qwertY',
     });
 
     expect(result.statusCode).toBe(201);

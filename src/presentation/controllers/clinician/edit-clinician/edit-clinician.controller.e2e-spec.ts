@@ -40,7 +40,7 @@ describe('Edit clinician [E2E]', () => {
         occupation: 'ExampleJob',
         phoneNumber: '123456789',
         email: 'exampleEdit@email.com',
-        password: '12345',
+        password: '12345678qwertY',
       });
     expect(result.statusCode).toBe(200);
 
