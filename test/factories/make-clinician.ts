@@ -17,7 +17,9 @@ export function makeClinician(
       gender: mockGender,
       occupation: faker.person.jobTitle(),
       phoneNumber: faker.phone.number(),
-      email: faker.internet.email({ firstName: mockName, lastName: mockSurName }),
+      email: faker.internet
+        .email({ firstName: mockName, lastName: mockSurName })
+        .toLowerCase(),
       password: faker.internet.password(),
       ...override,
     },
