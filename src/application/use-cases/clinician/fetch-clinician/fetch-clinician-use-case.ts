@@ -3,7 +3,7 @@ import { Clinician } from '@entities/clinician';
 import { type ClinicianRepository } from '@application/repositories/clinician-repository';
 
 interface fetchClinicianRequest {
-  page: number;
+  page?: number;
   orderBy?: {
     field: string;
     direction?: 'asc' | 'desc';
@@ -16,7 +16,7 @@ export class FetchClinicianUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
 
   async execute({
-    page,
+    page = 1,
     orderBy = { field: 'createdAt', direction: 'desc' },
   }: fetchClinicianRequest): Promise<fetchClinicianResponse> {
     const clinicians = await this.repository.findMany({

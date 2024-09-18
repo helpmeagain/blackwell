@@ -12,6 +12,7 @@ export class ReturnClinicianPresenter {
       phoneNumber: clinician.phoneNumber,
       email: clinician.email,
       password: '*********',
+      createdAt: clinician.createdAt,
     };
   }
 }
