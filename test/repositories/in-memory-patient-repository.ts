@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/application/common/pagination-params';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { Consultation } from '@/domain/entities/consultation';
 import { MedicalRecord } from '@/domain/entities/medical-record';
@@ -56,6 +57,35 @@ export class InMemoryPatientRepository implements PatientRepository {
     }
 
     return patient.medicalRecord;
+  }
+
+  async findMany({ page, orderBy }: PaginationParams): Promise<Patient[]> {
+    const startIndex = (page - 1) * 20;
+    const endIndex = startIndex + 20;
+
+    const sortedItems = [...this.items];
+    if (orderBy) {
+      sortedItems.sort((a, b) => {
+        const fieldA = a[orderBy.field as keyof Patient];
+        const fieldB = b[orderBy.field as keyof Patient];
+
+        if (typeof fieldA === 'string' && typeof fieldB === 'string') {
+          return orderBy.direction === 'asc'
+            ? fieldA.localeCompare(fieldB)
+            : fieldB.localeCompare(fieldA);
+        }
+
+        if (fieldA instanceof Date && fieldB instanceof Date) {
+          return orderBy.direction === 'asc'
+            ? fieldA.getTime() - fieldB.getTime()
+            : fieldB.getTime() - fieldA.getTime();
+        }
+
+        return 0;
+      });
+    }
+
+    return sortedItems.slice(startIndex, endIndex);
   }
 
   async create(patient: Patient) {

@@ -7,6 +7,7 @@ import { PrismaPatientMapper } from '../mappers/prisma-patient-mapper';
 import { PrismaMedicalRecordMapper } from '../mappers/prisma-medical-record-mapper';
 import { Consultation } from '@/domain/entities/consultation';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
+import { PaginationParams } from '@/application/common/pagination-params';
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
@@ -46,6 +47,16 @@ export class PrismaPatientRepository implements PatientRepository {
     }
 
     return PrismaPatientMapper.toDomain(patient);
+  }
+
+  async findMany({ page, orderBy }: PaginationParams): Promise<Patient[]> {
+    const patient = await this.prisma.patient.findMany({
+      orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : { createdAt: 'desc' },
+      take: 20,
+      skip: (page - 1) * 20,
+    });
+
+    return patient.map(PrismaPatientMapper.toDomain);
   }
 
   async create(patient: Patient): Promise<void> {

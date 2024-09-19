@@ -117,4 +117,8 @@ export class Patient extends AggregateRoot<PatientProps> {
     this.props.medicalRecord = medicalRecord;
     this.touch();
   }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
 }
