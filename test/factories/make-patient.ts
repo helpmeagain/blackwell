@@ -1,7 +1,7 @@
 import { fakerPT_BR as faker } from '@faker-js/faker';
 import { Patient, PatientProps } from '@entities/patient';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 
 export function makePatient(override: Partial<PatientProps> = {}, id?: UniqueEntityId) {
   const mockGender = faker.person.sexType();
@@ -24,8 +24,8 @@ export function makePatient(override: Partial<PatientProps> = {}, id?: UniqueEnt
     id,
   );
 
-  const medicalRecord = MedicalRecord.create({ patientId: patient.id });
-  patient.medicalRecord = medicalRecord;
+  const medicalRecord = UniversalMedicalRecord.create({ patientId: patient.id });
+  patient.universalMedicalRecord = medicalRecord;
 
   return patient;
 }

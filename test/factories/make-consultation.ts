@@ -10,7 +10,7 @@ export function makeConsultation(
     {
       clinicianId: new UniqueEntityId(),
       patientId: new UniqueEntityId(),
-      medicalRecordId: new UniqueEntityId(),
+      universalMedicalRecordId: new UniqueEntityId(),
       room: faker.number.int(50),
       appointmentDate: faker.date.soon({ days: 14 }),
       ...override,

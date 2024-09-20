@@ -4,7 +4,7 @@ import { PatientRepository } from '@/application/repositories/patient-repository
 import { Gender } from '@/domain/common/types/gender-type';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { HashGenerator } from '@/application/cryptography/hash-generator';
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 
 interface createPatientRequest {
   name: string;
@@ -45,7 +45,7 @@ export class CreatePatientUseCase {
       password: hashedPassword,
     });
 
-    patient.medicalRecord = MedicalRecord.create({ patientId: patient.id });
+    patient.universalMedicalRecord = UniversalMedicalRecord.create({ patientId: patient.id });
     const patientWithSlugAlreadyExists = await this.repository.findBySlug(
       patient.slug.value,
     );
@@ -53,7 +53,7 @@ export class CreatePatientUseCase {
       patient.slug.value = patient.slug.value + Math.floor(Math.random() * 100);
     }
 
-    await this.repository.createRecord(patient.id.toString(), patient.medicalRecord);
+    await this.repository.createRecord(patient.id.toString(), patient.universalMedicalRecord);
     await this.repository.create(patient);
     return right({ patient });
   }

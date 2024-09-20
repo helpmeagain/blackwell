@@ -40,10 +40,10 @@ describe('Delete a consultation By Id', () => {
     expect(result.isRight()).toBe(true);
     expect(inMemoryConsultationRepository.items).toHaveLength(0);
     expect(
-      inMemoryPatientRepository.items[0].medicalRecord.consultationsIds.currentItems,
+      inMemoryPatientRepository.items[0].universalMedicalRecord.consultationsIds.currentItems,
     ).toHaveLength(0);
     expect(
-      inMemoryPatientRepository.items[0].medicalRecord.consultationsIds.getRemovedItems()[0],
+      inMemoryPatientRepository.items[0].universalMedicalRecord.consultationsIds.getRemovedItems()[0],
     ).toBe(newConsultation.id);
   });
 });

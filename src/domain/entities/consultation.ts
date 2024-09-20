@@ -6,7 +6,7 @@ import { ConsultationCreatedEvent } from '../events/consultation-created-event';
 export interface consultationProps {
   clinicianId: UniqueEntityId;
   patientId: UniqueEntityId;
-  medicalRecordId: UniqueEntityId;
+  universalMedicalRecordId: UniqueEntityId;
   room: number;
   appointmentDate: Date;
   createdAt: Date;
@@ -43,8 +43,8 @@ export class Consultation extends AggregateRoot<consultationProps> {
     return this.props.patientId;
   }
 
-  get medicalRecordId() {
-    return this.props.medicalRecordId;
+  get universalMedicalRecordId() {
+    return this.props.universalMedicalRecordId;
   }
 
   get room() {

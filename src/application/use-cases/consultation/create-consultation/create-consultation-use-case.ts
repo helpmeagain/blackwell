@@ -44,12 +44,16 @@ export class CreateConsultationUseCase {
     const consultation = Consultation.create({
       clinicianId: new UniqueEntityId(clinicianId),
       patientId: new UniqueEntityId(patientId),
-      medicalRecordId: new UniqueEntityId(patient.medicalRecord.id.toString()),
+      universalMedicalRecordId: new UniqueEntityId(
+        patient.universalMedicalRecord.id.toString(),
+      ),
       room,
       appointmentDate,
     });
 
-    patient.medicalRecord.consultationsIds = new ConsultationIdList([consultation.id]);
+    patient.universalMedicalRecord.consultationsIds = new ConsultationIdList([
+      consultation.id,
+    ]);
 
     await this.consultationRepository.create(consultation);
     return right({ consultation });

@@ -47,7 +47,7 @@ describe('Edit a consultation By Id', () => {
         result.value?.consultation.room,
       );
       expect(
-        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems,
+        inPatientMemoryRepository.items[0].universalMedicalRecord.consultationsIds.currentItems,
       ).toContainEqual(newConsultation.id);
     }
   });

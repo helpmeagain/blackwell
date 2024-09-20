@@ -1,12 +1,15 @@
 // import { ConsultationIdList } from '@/domain/entities/consultation-list';
 import { ConsultationIdList } from '@/domain/entities/consultation-list';
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
-import { MedicalRecord as PrismaMedicalRecord, Prisma } from '@prisma/client';
+import {
+  UniversalMedicalRecord as PrismaUniversalMedicalRecord,
+  Prisma,
+} from '@prisma/client';
 
 export class PrismaMedicalRecordMapper {
-  static toDomain(raw: PrismaMedicalRecord): MedicalRecord {
-    const medicalRecord = MedicalRecord.create(
+  static toDomain(raw: PrismaUniversalMedicalRecord): UniversalMedicalRecord {
+    const universalMedicalRecord = UniversalMedicalRecord.create(
       {
         patientId: new UniqueEntityId(raw.patientId),
         consultationsIds: new ConsultationIdList(
@@ -18,20 +21,20 @@ export class PrismaMedicalRecordMapper {
       new UniqueEntityId(raw.id),
     );
 
-    return medicalRecord;
+    return universalMedicalRecord;
   }
 
   static toPersistence(
-    medicalRecord: MedicalRecord,
-  ): Prisma.MedicalRecordUncheckedCreateInput {
+    universalMedicalRecord: UniversalMedicalRecord,
+  ): Prisma.UniversalMedicalRecordUncheckedCreateInput {
     return {
-      id: medicalRecord.id.toString(),
-      patientId: medicalRecord.patientId.toString(),
+      id: universalMedicalRecord.id.toString(),
+      patientId: universalMedicalRecord.patientId.toString(),
       // consultationId: medicalRecord.consultationsIds.currentItems.map((id) =>
       //   id.toString(),
       // ),
-      diagnosis: medicalRecord.diagnosis,
-      comorbidity: medicalRecord.comorbidity,
+      diagnosis: universalMedicalRecord.diagnosis,
+      comorbidity: universalMedicalRecord.comorbidity,
     };
   }
 }

@@ -5,7 +5,7 @@ import { AuthenticateModule } from './authenticate/authenticate.module';
 import { ClinicianModule } from './clinician/clinician.module';
 import { PatientModule } from './patient/patient.module';
 import { ConsultationModule } from './consultation/consultation.module';
-import { MedicalRecordModule } from './medical-record/medical-record.module';
+import { UniversalMedicalRecordModule } from './universal-medical-record/universal-medical-record.module';
 import { NotificationModule } from './notification/notification.module';
 
 @Module({
@@ -15,7 +15,7 @@ import { NotificationModule } from './notification/notification.module';
     AuthenticateModule,
     ClinicianModule,
     ConsultationModule,
-    MedicalRecordModule,
+    UniversalMedicalRecordModule,
     PatientModule,
     NotificationModule,
   ],

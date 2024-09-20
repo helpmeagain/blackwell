@@ -45,10 +45,10 @@ describe('Schedule Consultation', () => {
     if (result.isRight()) {
       expect(result.value.consultation.patientId).toEqual(newPatient.id);
       expect(
-        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems,
+        inPatientMemoryRepository.items[0].universalMedicalRecord.consultationsIds.currentItems,
       ).toHaveLength(1);
       expect(
-        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems[0],
+        inPatientMemoryRepository.items[0].universalMedicalRecord.consultationsIds.currentItems[0],
       ).toEqual(inConsultationMemoryRepository.items[0].id);
     }
   });

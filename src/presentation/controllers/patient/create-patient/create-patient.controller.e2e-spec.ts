@@ -38,7 +38,7 @@ describe('Create patient [E2E]', () => {
       },
     });
 
-    const medicalRecordOnDatabase = await prisma.medicalRecord.findUnique({
+    const medicalRecordOnDatabase = await prisma.universalMedicalRecord.findUnique({
       where: {
         patientId: result.body.patient.id,
       },

@@ -1,4 +1,4 @@
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { CreatePatientUseCase } from './create-patient-use-case';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
@@ -45,9 +45,9 @@ describe('Create Patient', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.patient.medicalRecord).toBeInstanceOf(MedicalRecord);
-      expect(result.value.patient.medicalRecord.id).toBeTruthy();
-      expect(result.value.patient.medicalRecord.patientId).toEqual(
+      expect(result.value.patient.universalMedicalRecord).toBeInstanceOf(UniversalMedicalRecord);
+      expect(result.value.patient.universalMedicalRecord.id).toBeTruthy();
+      expect(result.value.patient.universalMedicalRecord.patientId).toEqual(
         result.value.patient.id,
       );
     }

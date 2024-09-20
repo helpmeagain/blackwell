@@ -12,8 +12,8 @@ export class PatientFactory {
   async makeDatabasePatient(data: Partial<PatientProps> = {}): Promise<Patient> {
     const patient = makePatient(data);
 
-    await this.prisma.medicalRecord.create({
-      data: PrismaMedicalRecordMapper.toPersistence(patient.medicalRecord),
+    await this.prisma.universalMedicalRecord.create({
+      data: PrismaMedicalRecordMapper.toPersistence(patient.universalMedicalRecord),
     });
     await this.prisma.patient.create({
       data: PrismaPatientMapper.toPersistence(patient),

@@ -1,7 +1,7 @@
 import { PaginationParams } from '@/application/common/pagination-params';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { Consultation } from '@/domain/entities/consultation';
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { Patient } from '@/domain/entities/patient';
 
 export class InMemoryPatientRepository implements PatientRepository {
@@ -38,25 +38,27 @@ export class InMemoryPatientRepository implements PatientRepository {
   }
 
   async findRecordById(id: string) {
-    const patient = this.items.find((item) => item.medicalRecord.id.toString() === id);
-
-    if (!patient) {
-      return null;
-    }
-
-    return patient.medicalRecord;
-  }
-
-  async findRecordByPatientId(id: string) {
     const patient = this.items.find(
-      (item) => item.medicalRecord.patientId.toString() === id,
+      (item) => item.universalMedicalRecord.id.toString() === id,
     );
 
     if (!patient) {
       return null;
     }
 
-    return patient.medicalRecord;
+    return patient.universalMedicalRecord;
+  }
+
+  async findRecordByPatientId(id: string) {
+    const patient = this.items.find(
+      (item) => item.universalMedicalRecord.patientId.toString() === id,
+    );
+
+    if (!patient) {
+      return null;
+    }
+
+    return patient.universalMedicalRecord;
   }
 
   async findMany({ page, orderBy }: PaginationParams): Promise<Patient[]> {
@@ -97,21 +99,21 @@ export class InMemoryPatientRepository implements PatientRepository {
     this.items[index] = patient;
   }
 
-  async createRecord(patientId: string, medicalRecord: MedicalRecord) {
+  async createRecord(patientId: string, medicalRecord: UniversalMedicalRecord) {
     const patient = this.items.find((item) => item.id.toString() === patientId);
 
     if (!patient) {
       return null;
     }
 
-    patient.medicalRecord = medicalRecord;
+    patient.universalMedicalRecord = medicalRecord;
   }
 
-  async saveRecord(medicalRecord: MedicalRecord) {
+  async saveRecord(medicalRecord: UniversalMedicalRecord) {
     const index = this.items.findIndex(
-      (item) => item.medicalRecord.id === medicalRecord.id,
+      (item) => item.universalMedicalRecord.id === medicalRecord.id,
     );
-    this.items[index].medicalRecord = medicalRecord;
+    this.items[index].universalMedicalRecord = medicalRecord;
   }
 
   async saveConsultationOnRecord(consultation: Consultation) {
@@ -121,7 +123,7 @@ export class InMemoryPatientRepository implements PatientRepository {
       return null;
     }
 
-    patient.medicalRecord.consultationsIds.add(consultation.id);
+    patient.universalMedicalRecord.consultationsIds.add(consultation.id);
   }
 
   async removeConsultationOnRecord(consultation: Consultation) {
@@ -131,7 +133,7 @@ export class InMemoryPatientRepository implements PatientRepository {
       return null;
     }
 
-    patient.medicalRecord.consultationsIds.remove(consultation.id);
+    patient.universalMedicalRecord.consultationsIds.remove(consultation.id);
   }
 
   async delete(patient: Patient) {

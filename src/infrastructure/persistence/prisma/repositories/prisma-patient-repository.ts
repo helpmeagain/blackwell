@@ -1,5 +1,5 @@
 import { PatientRepository } from '@/application/repositories/patient-repository';
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { Patient } from '@/domain/entities/patient';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
@@ -74,8 +74,8 @@ export class PrismaPatientRepository implements PatientRepository {
     await this.prisma.patient.delete({ where: { id: data.id } });
   }
 
-  async findRecordById(medicalRecordId: string): Promise<MedicalRecord | null> {
-    const medicalRecord = await this.prisma.medicalRecord.findUnique({
+  async findRecordById(medicalRecordId: string): Promise<UniversalMedicalRecord | null> {
+    const medicalRecord = await this.prisma.universalMedicalRecord.findUnique({
       where: { id: medicalRecordId },
     });
 
@@ -86,8 +86,8 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaMedicalRecordMapper.toDomain(medicalRecord);
   }
 
-  async findRecordByPatientId(patientId: string): Promise<MedicalRecord | null> {
-    const medicalRecord = await this.prisma.medicalRecord.findUnique({
+  async findRecordByPatientId(patientId: string): Promise<UniversalMedicalRecord | null> {
+    const medicalRecord = await this.prisma.universalMedicalRecord.findUnique({
       where: { patientId },
     });
 
@@ -98,14 +98,14 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaMedicalRecordMapper.toDomain(medicalRecord);
   }
 
-  async saveRecord(medicalRecord: MedicalRecord): Promise<void | null> {
+  async saveRecord(medicalRecord: UniversalMedicalRecord): Promise<void | null> {
     const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
-    await this.prisma.medicalRecord.update({ where: { id: data.id }, data });
+    await this.prisma.universalMedicalRecord.update({ where: { id: data.id }, data });
   }
 
   async createRecord(
     patientId: string,
-    medicalRecord: MedicalRecord,
+    medicalRecord: UniversalMedicalRecord,
   ): Promise<void | null> {
     const patient = this.findById(patientId);
 
@@ -113,19 +113,19 @@ export class PrismaPatientRepository implements PatientRepository {
       return null;
     }
     const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
-    await this.prisma.medicalRecord.create({ data });
+    await this.prisma.universalMedicalRecord.create({ data });
   }
 
   async saveConsultationOnRecord(consultation: Consultation): Promise<void | null> {
     const data = PrismaConsultationMapper.toPersistence(consultation);
     const patient = await this.findById(data.patientId);
 
-    if (!patient || !patient.medicalRecord) {
+    if (!patient || !patient.universalMedicalRecord) {
       return null;
     }
 
-    await this.prisma.medicalRecord.update({
-      where: { id: patient.medicalRecord.id.toString() },
+    await this.prisma.universalMedicalRecord.update({
+      where: { id: patient.universalMedicalRecord.id.toString() },
       data: {
         consultationId: {
           push: data.id,
@@ -136,13 +136,13 @@ export class PrismaPatientRepository implements PatientRepository {
 
   async removeConsultationOnRecord(consultation: Consultation): Promise<void | null> {
     const data = PrismaConsultationMapper.toPersistence(consultation);
-    const medicalRecord = await this.findRecordById(data.medicalRecordId);
+    const medicalRecord = await this.findRecordById(data.universalMedicalRecordId);
 
     if (!medicalRecord) {
       return null;
     }
 
-    await this.prisma.medicalRecord.update({
+    await this.prisma.universalMedicalRecord.update({
       where: { id: medicalRecord.id.toString() },
       data: {
         consultationId: {

@@ -1,4 +1,4 @@
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { Patient } from '@/domain/entities/patient';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 import { Patient as PrismaPatient, Prisma } from '@prisma/client';
@@ -20,11 +20,13 @@ export class PrismaPatientMapper {
       new UniqueEntityId(raw.id),
     );
 
-    const medicalRecord = MedicalRecord.create(
+    const universalMedicalRecord = UniversalMedicalRecord.create(
       { patientId: patient.id },
-      raw.medicalRecordId ? new UniqueEntityId(raw.medicalRecordId) : undefined,
+      raw.universalMedicalRecordId
+        ? new UniqueEntityId(raw.universalMedicalRecordId)
+        : undefined,
     );
-    patient.medicalRecord = medicalRecord;
+    patient.universalMedicalRecord = universalMedicalRecord;
 
     return patient;
   }
@@ -37,7 +39,7 @@ export class PrismaPatientMapper {
       slug: patient.slug.value,
       gender: patient.gender,
       birthDate: patient.birthDate,
-      medicalRecordId: patient.medicalRecord.id.toString(),
+      universalMedicalRecordId: patient.universalMedicalRecord.id.toString(),
       phoneNumber: patient.phoneNumber,
       email: patient.email,
       password: patient.password,

@@ -39,19 +39,19 @@ describe('Fetch consultations', () => {
       consultationFactory.makeDatabaseConsultation({
         clinicianId: clinician.id,
         patientId: patient.id,
-        medicalRecordId: patient.medicalRecord.id,
+        universalMedicalRecordId: patient.universalMedicalRecord.id,
         room: 1,
       }),
       consultationFactory.makeDatabaseConsultation({
         clinicianId: clinician.id,
         patientId: patient.id,
-        medicalRecordId: patient.medicalRecord.id,
+        universalMedicalRecordId: patient.universalMedicalRecord.id,
         room: 2,
       }),
       consultationFactory.makeDatabaseConsultation({
         clinicianId: clinician.id,
         patientId: patient.id,
-        medicalRecordId: patient.medicalRecord.id,
+        universalMedicalRecordId: patient.universalMedicalRecord.id,
         room: 3,
       }),
     ]);
