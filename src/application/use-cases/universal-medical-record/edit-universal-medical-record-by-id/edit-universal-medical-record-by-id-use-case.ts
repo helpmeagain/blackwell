@@ -6,8 +6,16 @@ import { UniversalMedicalRecordRepository } from '@/application/repositories/uni
 
 interface editUniversalMedicalRecordByIdRequest {
   universalMedicalRecordId: string;
-  diagnosis: string;
-  comorbidity: string;
+  profession: string;
+  emergencyContactName: string;
+  emergencyContactNumber: string;
+  cpf: string;
+  allergies: string;
+  maritalStatus: string;
+  height: number;
+  weight: number;
+  diagnosis: string[];
+  medicationsInUse?: string;
 }
 
 type editUniversalMedicalRecordByIdResponse = Either<
@@ -21,7 +29,19 @@ export class EditUniversalMedicalRecordByIdUseCase {
   async execute(
     req: editUniversalMedicalRecordByIdRequest,
   ): Promise<editUniversalMedicalRecordByIdResponse> {
-    const { universalMedicalRecordId, diagnosis, comorbidity } = req;
+    const {
+      universalMedicalRecordId,
+      profession,
+      emergencyContactName,
+      emergencyContactNumber,
+      cpf,
+      allergies,
+      maritalStatus,
+      height,
+      weight,
+      diagnosis,
+      medicationsInUse,
+    } = req;
     const universalMedicalRecord = await this.repository.findById(
       universalMedicalRecordId,
     );
@@ -31,7 +51,15 @@ export class EditUniversalMedicalRecordByIdUseCase {
     }
 
     universalMedicalRecord.diagnosis = diagnosis;
-    universalMedicalRecord.comorbidity = comorbidity;
+    universalMedicalRecord.profession = profession;
+    universalMedicalRecord.emergencyContactName = emergencyContactName;
+    universalMedicalRecord.emergencyContactNumber = emergencyContactNumber;
+    universalMedicalRecord.cpf = cpf;
+    universalMedicalRecord.allergies = allergies;
+    universalMedicalRecord.maritalStatus = maritalStatus;
+    universalMedicalRecord.height = height;
+    universalMedicalRecord.weight = weight;
+    universalMedicalRecord.medicationsInUse = medicationsInUse;
 
     await this.repository.save(universalMedicalRecord);
     return right({ universalMedicalRecord });

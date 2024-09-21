@@ -33,13 +33,13 @@ describe('Get universal medical record by id [E2E]', () => {
       .send();
 
     expect(result.statusCode).toBe(200);
-    expect(result.body).toEqual({
+    expect(result.body).toMatchObject({
       universalMedicalRecord: expect.objectContaining({
         id: patient.universalMedicalRecord.id.toString(),
         patientId: patient.universalMedicalRecord.patientId.toString(),
         consultationsIds: [],
-        diagnosis: null,
-        comorbidity: null,
+        diagnosis: [],
+        cpf: null,
       }),
     });
   });

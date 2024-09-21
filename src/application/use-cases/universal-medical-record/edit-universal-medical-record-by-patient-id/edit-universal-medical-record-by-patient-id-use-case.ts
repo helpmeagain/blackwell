@@ -4,35 +4,62 @@ import { NotAllowed } from '@error/errors/not-allowed';
 import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 
-interface editUniversalMedicalRecordByIdRequest {
+interface editUniversalMedicalRecordByPatientIRequest {
   patientId: string;
-  diagnosis: string;
-  comorbidity: string;
+  profession: string;
+  emergencyContactName: string;
+  emergencyContactNumber: string;
+  cpf: string;
+  allergies: string;
+  maritalStatus: string;
+  height: number;
+  weight: number;
+  diagnosis: string[];
+  medicationsInUse?: string;
 }
 
 type editUniversalMedicalRecordByIdResponse = Either<
   ResourceNotFound | NotAllowed,
-  { medicalRecord: UniversalMedicalRecord }
+  { universalMedicalRecord: UniversalMedicalRecord }
 >;
 
 export class EditUniversalMedicalRecordByPatientIdUseCase {
   constructor(private readonly repository: UniversalMedicalRecordRepository) {}
 
-  async execute({
-    patientId,
-    diagnosis,
-    comorbidity,
-  }: editUniversalMedicalRecordByIdRequest): Promise<editUniversalMedicalRecordByIdResponse> {
-    const medicalRecord = await this.repository.findByPatientId(patientId);
+  async execute(
+    req: editUniversalMedicalRecordByPatientIRequest,
+  ): Promise<editUniversalMedicalRecordByIdResponse> {
+    const {
+      patientId,
+      profession,
+      emergencyContactName,
+      emergencyContactNumber,
+      cpf,
+      allergies,
+      maritalStatus,
+      height,
+      weight,
+      diagnosis,
+      medicationsInUse,
+    } = req;
+    const universalMedicalRecord = await this.repository.findByPatientId(patientId);
 
-    if (!medicalRecord) {
+    if (!universalMedicalRecord) {
       return left(new ResourceNotFound());
     }
 
-    medicalRecord.diagnosis = diagnosis;
-    medicalRecord.comorbidity = comorbidity;
+    universalMedicalRecord.diagnosis = diagnosis;
+    universalMedicalRecord.profession = profession;
+    universalMedicalRecord.emergencyContactName = emergencyContactName;
+    universalMedicalRecord.emergencyContactNumber = emergencyContactNumber;
+    universalMedicalRecord.cpf = cpf;
+    universalMedicalRecord.allergies = allergies;
+    universalMedicalRecord.maritalStatus = maritalStatus;
+    universalMedicalRecord.height = height;
+    universalMedicalRecord.weight = weight;
+    universalMedicalRecord.medicationsInUse = medicationsInUse;
 
-    await this.repository.save(medicalRecord);
-    return right({ medicalRecord });
+    await this.repository.save(universalMedicalRecord);
+    return right({ universalMedicalRecord });
   }
 }

@@ -32,13 +32,21 @@ describe('Edit a Universal medical record', () => {
 
     const result = await sut.execute({
       universalMedicalRecordId: newPatient.universalMedicalRecord.id.toString(),
-      diagnosis: 'diagnosis',
-      comorbidity: 'comorbidity',
+      diagnosis: ['diagnosis1', 'diagnosis2'],
+      profession: 'working',
+      emergencyContactName: 'emergencyContactName',
+      emergencyContactNumber: '123456789',
+      cpf: '99999999999',
+      allergies: 'allergies',
+      maritalStatus: 'single',
+      height: 180,
+      weight: 80,
+      medicationsInUse: 'medicationsInUse',
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.diagnosis).toBe(
-      'diagnosis',
+    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.cpf).toBe(
+      '99999999999',
     );
   });
 
@@ -57,13 +65,21 @@ describe('Edit a Universal medical record', () => {
 
     const patientResult = await sut.execute({
       universalMedicalRecordId: newPatient.universalMedicalRecord.id.toString(),
-      diagnosis: 'diagnosis',
-      comorbidity: 'comorbidity',
+      diagnosis: ['diagnosis1', 'diagnosis2'],
+      profession: 'working',
+      emergencyContactName: 'emergencyContactName',
+      emergencyContactNumber: '123456789',
+      cpf: '99999999999',
+      allergies: 'allergies',
+      maritalStatus: 'single',
+      height: 180,
+      weight: 80,
+      medicationsInUse: 'medicationsInUse',
     });
 
     expect(patientResult.isRight()).toBe(true);
-    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.diagnosis).toBe(
-      'diagnosis',
+    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.cpf).toBe(
+      '99999999999',
     );
     expect(
       inMemoryPatientRepository.items[0].universalMedicalRecord.consultationsIds

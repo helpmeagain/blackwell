@@ -36,8 +36,16 @@ describe('Edit universal medical record by id [E2E]', () => {
       )
       .set('Authorization', `Bearer ${token}`)
       .send({
-        diagnosis: 'some diagnosis',
-        comorbidity: 'some comorbidity',
+        diagnosis: ['diagnosis1', 'diagnosis2'],
+        profession: 'working',
+        emergencyContactName: 'emergencyContactName',
+        emergencyContactNumber: '123456789',
+        cpf: '99999999999',
+        allergies: 'allergies',
+        maritalStatus: 'single',
+        height: 180,
+        weight: 80,
+        medicationsInUse: 'medicationsInUse',
       });
 
     expect(result.statusCode).toBe(200);
@@ -46,6 +54,6 @@ describe('Edit universal medical record by id [E2E]', () => {
         id: patients.universalMedicalRecord.id.toString(),
       },
     });
-    expect(medicalRecordOnDatabase?.diagnosis).toBe('some diagnosis');
+    expect(medicalRecordOnDatabase?.allergies).toBe('allergies');
   });
 });

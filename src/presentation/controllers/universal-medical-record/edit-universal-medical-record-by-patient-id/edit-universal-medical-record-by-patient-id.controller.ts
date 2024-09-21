@@ -34,11 +34,31 @@ export class EditUniversalMedicalRecordByPatientIdController {
     @Body(validationBody) body: typeof BodyType,
     @Param('patientId') patientId: string,
   ) {
-    const { diagnosis, comorbidity } = body;
+    const {
+      diagnosis,
+      profession,
+      emergencyContactName,
+      emergencyContactNumber,
+      cpf,
+      allergies,
+      maritalStatus,
+      height,
+      weight,
+      medicationsInUse,
+    } = body;
+
     const result = await this.editMedicalRecordById.execute({
       patientId,
       diagnosis,
-      comorbidity,
+      profession,
+      emergencyContactName,
+      emergencyContactNumber,
+      cpf,
+      allergies,
+      maritalStatus,
+      height,
+      weight,
+      medicationsInUse,
     });
 
     if (result.isLeft()) {
@@ -51,8 +71,11 @@ export class EditUniversalMedicalRecordByPatientIdController {
       }
     }
 
-    const { medicalRecord } = result.value;
+    const { universalMedicalRecord } = result.value;
 
-    return { medicalRecord: ReturnUniversalMedicalRecordPresenter.toHTTP(medicalRecord) };
+    return {
+      universalMedicalRecord:
+        ReturnUniversalMedicalRecordPresenter.toHTTP(universalMedicalRecord),
+    };
   }
 }

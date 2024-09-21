@@ -6,50 +6,153 @@ import { ConsultationIdList } from './consultation-list';
 interface UniversalMedicalRecordProps {
   patientId: UniqueEntityId;
   consultationsIds: ConsultationIdList;
-  diagnosis?: string | null;
-  comorbidity?: string | null;
+  profession?: string | null;
+  emergencyContactName?: string | null;
+  emergencyContactNumber?: string | null;
+  cpf?: string | null;
+  allergies?: string | null;
+  maritalStatus?: string | null;
+  height?: number | null;
+  weight?: number | null;
+  diagnosis?: string[] | null;
+  medicationsInUse?: string | null;
+  createdAt: Date;
+  updatedAt?: Date | null;
 }
 
 export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordProps> {
   static create(
-    props: Optional<
-      UniversalMedicalRecordProps,
-      'consultationsIds' | 'diagnosis' | 'comorbidity'
-    >,
+    props: Optional<UniversalMedicalRecordProps, 'consultationsIds' | 'createdAt'>,
     id?: UniqueEntityId,
   ) {
     const record = new UniversalMedicalRecord(
-      { ...props, consultationsIds: props.consultationsIds ?? new ConsultationIdList() },
+      {
+        ...props,
+        consultationsIds: props.consultationsIds ?? new ConsultationIdList(),
+        createdAt: props.createdAt ?? new Date(),
+      },
       id,
     );
     return record;
   }
 
-  get patientId() {
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
+  get patientId(): UniqueEntityId {
     return this.props.patientId;
   }
 
-  get consultationsIds() {
+  set patientId(value: UniqueEntityId) {
+    this.props.patientId = value;
+    this.touch();
+  }
+
+  get consultationsIds(): ConsultationIdList {
     return this.props.consultationsIds;
   }
 
-  set consultationsIds(consultationsIds: ConsultationIdList) {
-    this.props.consultationsIds = consultationsIds;
+  set consultationsIds(value: ConsultationIdList) {
+    this.props.consultationsIds = value;
+    this.touch();
   }
 
-  get diagnosis() {
-    return this.props.diagnosis as string;
+  get profession(): string | undefined | null {
+    return this.props.profession;
   }
 
-  set diagnosis(diagnosis: string) {
-    this.props.diagnosis = diagnosis;
+  set profession(value: string | undefined | null) {
+    this.props.profession = value;
+    this.touch();
   }
 
-  get comorbidity() {
-    return this.props.comorbidity as string;
+  get emergencyContactName(): string | null | undefined {
+    return this.props.emergencyContactName;
   }
 
-  set comorbidity(comorbidity: string) {
-    this.props.comorbidity = comorbidity;
+  set emergencyContactName(value: string | null | undefined) {
+    this.props.emergencyContactName = value;
+    this.touch();
+  }
+
+  get emergencyContactNumber(): string | null | undefined {
+    return this.props.emergencyContactNumber;
+  }
+
+  set emergencyContactNumber(value: string | null | undefined) {
+    this.props.emergencyContactNumber = value;
+    this.touch();
+  }
+
+  get cpf(): string | null | undefined {
+    return this.props.cpf;
+  }
+
+  set cpf(value: string | null | undefined) {
+    this.props.cpf = value;
+    this.touch();
+  }
+
+  get allergies(): string | null | undefined {
+    return this.props.allergies;
+  }
+
+  set allergies(value: string) {
+    this.props.allergies = value;
+    this.touch();
+  }
+
+  get maritalStatus(): string | undefined | null {
+    return this.props.maritalStatus;
+  }
+
+  set maritalStatus(value: string | undefined) {
+    this.props.maritalStatus = value;
+    this.touch();
+  }
+
+  get height(): number | null | undefined {
+    return this.props.height;
+  }
+
+  set height(value: number | null | undefined) {
+    this.props.height = value;
+    this.touch();
+  }
+
+  get weight(): number | null | undefined {
+    return this.props.weight;
+  }
+
+  set weight(value: number | null | undefined) {
+    this.props.weight = value;
+    this.touch();
+  }
+
+  get diagnosis(): string[] | null | undefined {
+    return this.props.diagnosis;
+  }
+
+  set diagnosis(value: string[] | null | undefined) {
+    this.props.diagnosis = value;
+    this.touch();
+  }
+
+  get medicationsInUse(): string | null | undefined {
+    return this.props.medicationsInUse;
+  }
+
+  set medicationsInUse(value: string | null | undefined) {
+    this.props.medicationsInUse = value;
+    this.touch();
+  }
+
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date | null | undefined {
+    return this.props.updatedAt;
   }
 }

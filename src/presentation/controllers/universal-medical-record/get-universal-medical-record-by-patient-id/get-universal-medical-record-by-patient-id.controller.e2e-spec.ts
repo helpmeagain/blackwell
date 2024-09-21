@@ -38,8 +38,8 @@ describe('Get universal medical record by patient id [E2E]', () => {
         id: patient.universalMedicalRecord.id.toString(),
         patientId: patient.universalMedicalRecord.patientId.toString(),
         consultationsIds: [],
-        diagnosis: null,
-        comorbidity: null,
+        diagnosis: [],
+        cpf: null,
       }),
     });
   });

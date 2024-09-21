@@ -5,11 +5,19 @@ export class ReturnUniversalMedicalRecordPresenter {
     return {
       id: universalMedicalRecord.id.toString(),
       patientId: universalMedicalRecord.patientId.toString(),
-      diagnosis: universalMedicalRecord.diagnosis,
-      comorbidity: universalMedicalRecord.comorbidity,
       consultationsIds: universalMedicalRecord.consultationsIds.currentItems.map((id) =>
         id.toString(),
       ),
+      diagnosis: universalMedicalRecord.diagnosis,
+      profession: universalMedicalRecord.profession,
+      emergencyContactName: universalMedicalRecord.emergencyContactName,
+      emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
+      cpf: universalMedicalRecord.cpf,
+      allergies: universalMedicalRecord.allergies,
+      maritalStatus: universalMedicalRecord.maritalStatus,
+      height: universalMedicalRecord.height,
+      weight: universalMedicalRecord.weight,
+      medicationsInUse: universalMedicalRecord.medicationsInUse,
     };
   }
 }

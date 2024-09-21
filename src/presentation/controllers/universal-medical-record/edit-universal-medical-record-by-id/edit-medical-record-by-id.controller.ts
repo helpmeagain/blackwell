@@ -29,11 +29,30 @@ export class EditMedicalRecordByIdController {
   @ApiOkResponse({ description: 'Return universal medical record by id' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(@Body(validationBody) body: typeof BodyType, @Param('id') id: string) {
-    const { diagnosis, comorbidity } = body;
+    const {
+      diagnosis,
+      profession,
+      emergencyContactName,
+      emergencyContactNumber,
+      cpf,
+      allergies,
+      maritalStatus,
+      height,
+      weight,
+      medicationsInUse,
+    } = body;
     const result = await this.editMedicalRecordById.execute({
       universalMedicalRecordId: id,
       diagnosis,
-      comorbidity,
+      profession,
+      emergencyContactName,
+      emergencyContactNumber,
+      cpf,
+      allergies,
+      maritalStatus,
+      height,
+      weight,
+      medicationsInUse,
     });
 
     if (result.isLeft()) {

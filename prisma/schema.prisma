@@ -79,11 +79,21 @@ model Consultation {
 }
 
 model UniversalMedicalRecord {
-  id             String   @id @default(uuid())
-  patientId      String   @unique @map("patient_id")
-  consultationId String[] @map("consultations_ids")
-  diagnosis      String?
-  comorbidity    String?
+  id                     String    @id @default(uuid())
+  patientId              String    @unique @map("patient_id")
+  consultationId         String[]  @map("consultations_ids")
+  profession             String?
+  emergencyContactName   String?   @map("emergency-contact-name")
+  emergencyContactNumber String?   @map("emergency-contact-number")
+  cpf                    String?
+  allergies              String?
+  maritalStatus          String?   @map("marital-status")
+  height                 Float?
+  weight                 Float?
+  diagnosis              String[]
+  medicationsInUse       String?   @map("medications-in-use")
+  createdAt              DateTime  @default(now()) @map("created_at")
+  updatedAt              DateTime? @updatedAt @map("updated_at")
 
   Consultation Consultation[]
   Patient      Patient?       @relation("record")
