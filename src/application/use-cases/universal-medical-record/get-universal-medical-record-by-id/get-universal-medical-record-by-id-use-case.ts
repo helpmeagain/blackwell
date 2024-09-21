@@ -1,7 +1,7 @@
 import { Either, left, right } from '@error/either';
 import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
-import { PatientRepository } from '@/application/repositories/patient-repository';
+import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 
 interface getUniversalMedicalRecordByIdRequest {
   universalMedicalRecordId: string;
@@ -13,12 +13,12 @@ type getUniversalMedicalRecordByIdResponse = Either<
 >;
 
 export class GetUniversalMedicalRecordByIdUseCase {
-  constructor(private readonly repository: PatientRepository) {}
+  constructor(private readonly repository: UniversalMedicalRecordRepository) {}
 
   async execute({
     universalMedicalRecordId,
   }: getUniversalMedicalRecordByIdRequest): Promise<getUniversalMedicalRecordByIdResponse> {
-    const universalMedicalRecord = await this.repository.findRecordById(
+    const universalMedicalRecord = await this.repository.findById(
       universalMedicalRecordId,
     );
 

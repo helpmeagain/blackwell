@@ -2,16 +2,24 @@ import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-reco
 import { CreatePatientUseCase } from './create-patient-use-case';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
+import { InMemoryUniversalMedicalRecordRepository } from 'test/repositories/in-memory-universal-medical-record-repository';
 
-let inMemoryRepository: InMemoryPatientRepository;
+let inMemoryPatientRepository: InMemoryPatientRepository;
+let inMemoryUniversalMedicalRecordRepository: InMemoryUniversalMedicalRecordRepository;
 let fakeHasher: FakeHasher;
 let sut: CreatePatientUseCase;
 
 describe('Create Patient', () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryPatientRepository();
+    inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryUniversalMedicalRecordRepository =
+      new InMemoryUniversalMedicalRecordRepository();
     fakeHasher = new FakeHasher();
-    sut = new CreatePatientUseCase(inMemoryRepository, fakeHasher);
+    sut = new CreatePatientUseCase(
+      inMemoryPatientRepository,
+      inMemoryUniversalMedicalRecordRepository,
+      fakeHasher,
+    );
   });
 
   it('should be able to create a patient', async () => {
@@ -45,7 +53,9 @@ describe('Create Patient', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.patient.universalMedicalRecord).toBeInstanceOf(UniversalMedicalRecord);
+      expect(result.value.patient.universalMedicalRecord).toBeInstanceOf(
+        UniversalMedicalRecord,
+      );
       expect(result.value.patient.universalMedicalRecord.id).toBeTruthy();
       expect(result.value.patient.universalMedicalRecord.patientId).toEqual(
         result.value.patient.id,

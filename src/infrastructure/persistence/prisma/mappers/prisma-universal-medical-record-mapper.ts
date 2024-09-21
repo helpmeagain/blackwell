@@ -7,7 +7,7 @@ import {
   Prisma,
 } from '@prisma/client';
 
-export class PrismaMedicalRecordMapper {
+export class PrismaUniversalMedicalRecordMapper {
   static toDomain(raw: PrismaUniversalMedicalRecord): UniversalMedicalRecord {
     const universalMedicalRecord = UniversalMedicalRecord.create(
       {

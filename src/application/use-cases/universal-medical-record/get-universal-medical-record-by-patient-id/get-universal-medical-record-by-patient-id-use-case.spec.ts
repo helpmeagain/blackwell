@@ -2,19 +2,28 @@ import { GetUniversalMedicalRecordByPatientIdUseCase } from './get-universal-med
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { makePatient } from 'test/factories/make-patient';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
+import { InMemoryUniversalMedicalRecordRepository } from 'test/repositories/in-memory-universal-medical-record-repository';
 
-let inMemoryRepository: InMemoryPatientRepository;
+let inMemoryPatientRepository: InMemoryPatientRepository;
+let inMemoryUniversalMedicalRecordRepository: InMemoryUniversalMedicalRecordRepository;
 let sut: GetUniversalMedicalRecordByPatientIdUseCase;
 
 describe('Get Universal MedicalRecord By Patient Id', () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryPatientRepository();
-    sut = new GetUniversalMedicalRecordByPatientIdUseCase(inMemoryRepository);
+    inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryUniversalMedicalRecordRepository =
+      new InMemoryUniversalMedicalRecordRepository();
+    sut = new GetUniversalMedicalRecordByPatientIdUseCase(
+      inMemoryUniversalMedicalRecordRepository,
+    );
   });
 
-  it('should be able to get a universal medical record by id', async () => {
+  it('should be able to get a universal medical record by patient id', async () => {
     const newPatient = makePatient();
-    await inMemoryRepository.create(newPatient);
+    await inMemoryPatientRepository.create(newPatient);
+    await inMemoryUniversalMedicalRecordRepository.create(
+      newPatient.universalMedicalRecord,
+    );
 
     const result = await sut.execute({
       patientId: newPatient.id.toString(),
@@ -29,7 +38,7 @@ describe('Get Universal MedicalRecord By Patient Id', () => {
 
   it('should not be able to get a universal medical record if incorrect id', async () => {
     const newPatient = makePatient();
-    await inMemoryRepository.create(newPatient);
+    await inMemoryPatientRepository.create(newPatient);
 
     const result = await sut.execute({
       patientId: 'incorrect-id',

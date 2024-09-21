@@ -2,7 +2,7 @@ import { Either, left, right } from '@error/either';
 import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { NotAllowed } from '@error/errors/not-allowed';
 import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
-import { PatientRepository } from '@/application/repositories/patient-repository';
+import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 
 interface editUniversalMedicalRecordByIdRequest {
   patientId: string;
@@ -16,14 +16,14 @@ type editUniversalMedicalRecordByIdResponse = Either<
 >;
 
 export class EditUniversalMedicalRecordByPatientIdUseCase {
-  constructor(private readonly repository: PatientRepository) {}
+  constructor(private readonly repository: UniversalMedicalRecordRepository) {}
 
   async execute({
     patientId,
     diagnosis,
     comorbidity,
   }: editUniversalMedicalRecordByIdRequest): Promise<editUniversalMedicalRecordByIdResponse> {
-    const medicalRecord = await this.repository.findRecordByPatientId(patientId);
+    const medicalRecord = await this.repository.findByPatientId(patientId);
 
     if (!medicalRecord) {
       return left(new ResourceNotFound());
@@ -32,7 +32,7 @@ export class EditUniversalMedicalRecordByPatientIdUseCase {
     medicalRecord.diagnosis = diagnosis;
     medicalRecord.comorbidity = comorbidity;
 
-    await this.repository.saveRecord(medicalRecord);
+    await this.repository.save(medicalRecord);
     return right({ medicalRecord });
   }
 }

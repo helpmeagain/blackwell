@@ -7,8 +7,10 @@ import { MockInstance } from 'vitest';
 import { waitFor } from 'test/utils/wait-for';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
 import { makePatient } from 'test/factories/make-patient';
+import { InMemoryUniversalMedicalRecordRepository } from 'test/repositories/in-memory-universal-medical-record-repository';
 
 let inMemoryPatientRepository: InMemoryPatientRepository;
+let inMemoryUniversalMedicalRecordRepository: InMemoryUniversalMedicalRecordRepository;
 let inMemoryConsultationRepository: InMemoryConsultationRepository;
 let inMemoryNotificationRepository: InMemoryNotificationRepository;
 let createNotification: CreateNotificationUseCase;
@@ -18,8 +20,10 @@ describe('On consultation created', () => {
   beforeEach(() => {
     inMemoryNotificationRepository = new InMemoryNotificationRepository();
     inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryUniversalMedicalRecordRepository =
+      new InMemoryUniversalMedicalRecordRepository();
     inMemoryConsultationRepository = new InMemoryConsultationRepository(
-      inMemoryPatientRepository,
+      inMemoryUniversalMedicalRecordRepository,
     );
     createNotification = new CreateNotificationUseCase(inMemoryNotificationRepository);
 

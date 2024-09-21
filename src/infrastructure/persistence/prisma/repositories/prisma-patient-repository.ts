@@ -4,7 +4,7 @@ import { Patient } from '@/domain/entities/patient';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaPatientMapper } from '../mappers/prisma-patient-mapper';
-import { PrismaMedicalRecordMapper } from '../mappers/prisma-medical-record-mapper';
+import { PrismaUniversalMedicalRecordMapper } from '../mappers/prisma-universal-medical-record-mapper';
 import { Consultation } from '@/domain/entities/consultation';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 import { PaginationParams } from '@/application/common/pagination-params';
@@ -83,7 +83,7 @@ export class PrismaPatientRepository implements PatientRepository {
       return null;
     }
 
-    return PrismaMedicalRecordMapper.toDomain(medicalRecord);
+    return PrismaUniversalMedicalRecordMapper.toDomain(medicalRecord);
   }
 
   async findRecordByPatientId(patientId: string): Promise<UniversalMedicalRecord | null> {
@@ -95,11 +95,11 @@ export class PrismaPatientRepository implements PatientRepository {
       return null;
     }
 
-    return PrismaMedicalRecordMapper.toDomain(medicalRecord);
+    return PrismaUniversalMedicalRecordMapper.toDomain(medicalRecord);
   }
 
   async saveRecord(medicalRecord: UniversalMedicalRecord): Promise<void | null> {
-    const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
+    const data = PrismaUniversalMedicalRecordMapper.toPersistence(medicalRecord);
     await this.prisma.universalMedicalRecord.update({ where: { id: data.id }, data });
   }
 
@@ -112,7 +112,7 @@ export class PrismaPatientRepository implements PatientRepository {
     if (!patient) {
       return null;
     }
-    const data = PrismaMedicalRecordMapper.toPersistence(medicalRecord);
+    const data = PrismaUniversalMedicalRecordMapper.toPersistence(medicalRecord);
     await this.prisma.universalMedicalRecord.create({ data });
   }
 
