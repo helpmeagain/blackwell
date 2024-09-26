@@ -40,7 +40,7 @@ describe('Delete consultation by id [E2E]', () => {
     const consultation = await consultationFactory.makeDatabaseConsultation({
       clinicianId: clinician.id,
       patientId: patient.id,
-      medicalRecordId: patient.medicalRecord.id,
+      universalMedicalRecordId: patient.universalMedicalRecord.id,
     });
     const token = jwt.sign({ sub: clinician.id.toString() });
 

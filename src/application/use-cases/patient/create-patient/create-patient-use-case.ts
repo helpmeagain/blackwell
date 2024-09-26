@@ -4,7 +4,8 @@ import { PatientRepository } from '@/application/repositories/patient-repository
 import { Gender } from '@/domain/common/types/gender-type';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { HashGenerator } from '@/application/cryptography/hash-generator';
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
+import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 
 interface createPatientRequest {
   name: string;
@@ -20,14 +21,15 @@ type createConsultationResponse = Either<UserAlreadyExists, { patient: Patient }
 
 export class CreatePatientUseCase {
   constructor(
-    private readonly repository: PatientRepository,
+    private readonly patientRepository: PatientRepository,
+    private readonly universalMedicalRecordRepository: UniversalMedicalRecordRepository,
     private readonly hashGenerator: HashGenerator,
   ) {}
 
   async execute(req: createPatientRequest): Promise<createConsultationResponse> {
     const { name, surname, gender, birthDate, phoneNumber, email, password } = req;
 
-    const patientWithEmailAlreadyExists = await this.repository.findByEmail(email);
+    const patientWithEmailAlreadyExists = await this.patientRepository.findByEmail(email);
 
     if (patientWithEmailAlreadyExists) {
       return left(new UserAlreadyExists('email', email));
@@ -45,16 +47,18 @@ export class CreatePatientUseCase {
       password: hashedPassword,
     });
 
-    patient.medicalRecord = MedicalRecord.create({ patientId: patient.id });
-    const patientWithSlugAlreadyExists = await this.repository.findBySlug(
+    patient.universalMedicalRecord = UniversalMedicalRecord.create({
+      patientId: patient.id,
+    });
+    const patientWithSlugAlreadyExists = await this.patientRepository.findBySlug(
       patient.slug.value,
     );
     if (patientWithSlugAlreadyExists) {
       patient.slug.value = patient.slug.value + Math.floor(Math.random() * 100);
     }
 
-    await this.repository.createRecord(patient.id.toString(), patient.medicalRecord);
-    await this.repository.create(patient);
+    await this.universalMedicalRecordRepository.create(patient.universalMedicalRecord);
+    await this.patientRepository.create(patient);
     return right({ patient });
   }
 }

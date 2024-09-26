@@ -3,7 +3,7 @@ import { Optional } from '../common/types/optional-type';
 import { Gender } from '../common/types/gender-type';
 import { Slug } from '../value-objects/slug/slug';
 import { AggregateRoot } from '../common/aggregate-root';
-import { MedicalRecord } from './medical-record';
+import { UniversalMedicalRecord } from './universal-medical-record';
 
 export interface PatientProps {
   name: string;
@@ -14,7 +14,7 @@ export interface PatientProps {
   phoneNumber: string;
   email: string;
   password: string;
-  medicalRecord?: MedicalRecord;
+  universalMedicalRecord?: UniversalMedicalRecord;
   createdAt: Date;
   updatedAt?: Date | null;
 }
@@ -109,12 +109,16 @@ export class Patient extends AggregateRoot<PatientProps> {
     this.touch();
   }
 
-  get medicalRecord(): MedicalRecord {
-    return this.props.medicalRecord as MedicalRecord;
+  get universalMedicalRecord(): UniversalMedicalRecord {
+    return this.props.universalMedicalRecord as UniversalMedicalRecord;
   }
 
-  set medicalRecord(medicalRecord: MedicalRecord) {
-    this.props.medicalRecord = medicalRecord;
+  set universalMedicalRecord(universalMedicalRecord: UniversalMedicalRecord) {
+    this.props.universalMedicalRecord = universalMedicalRecord;
     this.touch();
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
   }
 }

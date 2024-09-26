@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { fakerPT_BR as faker } from '@faker-js/faker';
 import { Clinician, ClinicianProps } from '@entities/clinician';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
@@ -17,7 +17,9 @@ export function makeClinician(
       gender: mockGender,
       occupation: faker.person.jobTitle(),
       phoneNumber: faker.phone.number(),
-      email: faker.internet.email({ firstName: mockName, lastName: mockSurName }),
+      email: faker.internet
+        .email({ firstName: mockName, lastName: mockSurName })
+        .toLowerCase(),
       password: faker.internet.password(),
       ...override,
     },

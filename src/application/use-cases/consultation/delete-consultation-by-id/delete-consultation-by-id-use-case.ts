@@ -36,7 +36,7 @@ export class DeleteConsultationByIdUseCase {
       return left(new ResourceNotFound());
     }
 
-    patient.medicalRecord.consultationsIds.remove(consultation.id);
+    patient.universalMedicalRecord.consultationsIds.remove(consultation.id);
     await this.consultationRepository.delete(consultation);
     return right({});
   }

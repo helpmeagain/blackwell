@@ -105,4 +105,8 @@ export class Clinician extends BaseEntity<ClinicianProps> {
     this.props.occupation = occupation;
     this.touch();
   }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
 }

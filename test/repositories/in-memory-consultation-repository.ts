@@ -2,12 +2,12 @@ import { Consultation } from '@/domain/entities/consultation';
 import { ConsultationRepository } from '@/application/repositories/consultation-repository';
 import { PaginationParams } from '@/application/common/pagination-params';
 import { DomainEvents } from '@/domain/common/events/domain-events';
-import { PatientRepository } from '@/application/repositories/patient-repository';
+import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 
 export class InMemoryConsultationRepository implements ConsultationRepository {
   public items: Consultation[] = [];
 
-  constructor(private PatientRepository: PatientRepository) {}
+  constructor(private universalMedicalRecord: UniversalMedicalRecordRepository) {}
 
   async findById(id: string) {
     const consultation = this.items.find((item) => item.id.toString() === id);
@@ -29,7 +29,7 @@ export class InMemoryConsultationRepository implements ConsultationRepository {
 
   async create(consultation: Consultation) {
     this.items.push(consultation);
-    await this.PatientRepository.saveConsultationOnRecord(consultation);
+    await this.universalMedicalRecord.saveConsultationOnRecord(consultation);
     DomainEvents.dispatchEventsForAggregate(consultation.id);
   }
 
@@ -42,7 +42,7 @@ export class InMemoryConsultationRepository implements ConsultationRepository {
 
   async delete(consultation: Consultation) {
     const index = this.items.findIndex((item) => item.id === consultation.id);
-    await this.PatientRepository.removeConsultationOnRecord(consultation);
+    await this.universalMedicalRecord.removeConsultationOnRecord(consultation);
     this.items.splice(index, 1);
   }
 }

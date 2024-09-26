@@ -11,12 +11,15 @@ import { NestGetPatientBySlugUseCase } from '@/infrastructure/adapter/patient/ne
 import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
 import { NestEditPatientByIdUseCase } from '@/infrastructure/adapter/patient/nest-edit-patient-by-id-use-case';
 import { NestDeletePatientByIdUseCase } from '@/infrastructure/adapter/patient/nest-delete-patient';
+import { FetchPatientController } from './fetch-patient/fetch-patient.controller';
+import { NestFetchPatientUseCase } from '@/infrastructure/adapter/patient/nest-fetch-patient-use-case';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
   controllers: [
     GetByIdPatientController,
     GetBySlugPatientController,
+    FetchPatientController,
     CreatePatientController,
     EditPatientController,
     DeletePatientController,
@@ -24,6 +27,7 @@ import { NestDeletePatientByIdUseCase } from '@/infrastructure/adapter/patient/n
   providers: [
     NestGetPatientByIdUseCase,
     NestGetPatientBySlugUseCase,
+    NestFetchPatientUseCase,
     NestCreatePatientUseCase,
     NestEditPatientByIdUseCase,
     NestDeletePatientByIdUseCase,

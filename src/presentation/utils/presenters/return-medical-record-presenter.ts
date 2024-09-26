@@ -1,15 +1,26 @@
-import { MedicalRecord } from '@/domain/entities/medical-record';
+import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 
-export class ReturnMedicalRecordPresenter {
-  static toHTTP(medicalRecord: MedicalRecord) {
+export class ReturnUniversalMedicalRecordPresenter {
+  static toHTTP(universalMedicalRecord: UniversalMedicalRecord) {
     return {
-      id: medicalRecord.id.toString(),
-      patientId: medicalRecord.patientId.toString(),
-      diagnosis: medicalRecord.diagnosis,
-      comorbidity: medicalRecord.comorbidity,
-      consultationsIds: medicalRecord.consultationsIds.currentItems.map((id) =>
+      id: universalMedicalRecord.id.toString(),
+      patientId: universalMedicalRecord.patientId.toString(),
+      consultationsIds: universalMedicalRecord.consultationsIds.currentItems.map((id) =>
         id.toString(),
       ),
+      profession: universalMedicalRecord.profession,
+      address: universalMedicalRecord.address,
+      city: universalMedicalRecord.city,
+      state: universalMedicalRecord.state,
+      emergencyContactName: universalMedicalRecord.emergencyContactEmail,
+      emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
+      cpf: universalMedicalRecord.cpf,
+      allergies: universalMedicalRecord.allergies,
+      maritalStatus: universalMedicalRecord.maritalStatus,
+      height: universalMedicalRecord.height,
+      weight: universalMedicalRecord.weight,
+      medicationsInUse: universalMedicalRecord.medicationsInUse,
+      diagnosis: universalMedicalRecord.diagnosis,
     };
   }
 }

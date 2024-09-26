@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { fakerPT_BR as faker } from '@faker-js/faker';
 import { Consultation, consultationProps } from '@/domain/entities/consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 
@@ -10,7 +10,7 @@ export function makeConsultation(
     {
       clinicianId: new UniqueEntityId(),
       patientId: new UniqueEntityId(),
-      medicalRecordId: new UniqueEntityId(),
+      universalMedicalRecordId: new UniqueEntityId(),
       room: faker.number.int(50),
       appointmentDate: faker.date.soon({ days: 14 }),
       ...override,

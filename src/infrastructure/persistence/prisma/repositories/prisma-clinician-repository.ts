@@ -3,6 +3,7 @@ import { Clinician } from '@/domain/entities/clinician';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaClinicianMapper } from '../mappers/prisma-clinician-mapper';
+import { PaginationParams } from '@/application/common/pagination-params';
 
 @Injectable()
 export class PrismaClinicianRepository implements ClinicianRepository {
@@ -42,6 +43,16 @@ export class PrismaClinicianRepository implements ClinicianRepository {
     }
 
     return PrismaClinicianMapper.toDomain(clinician);
+  }
+
+  async findMany({ page, orderBy }: PaginationParams): Promise<Clinician[]> {
+    const clinician = await this.prisma.clinician.findMany({
+      orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : { createdAt: 'desc' },
+      take: 20,
+      skip: (page - 1) * 20,
+    });
+
+    return clinician.map(PrismaClinicianMapper.toDomain);
   }
 
   async create(clinician: Clinician): Promise<void> {

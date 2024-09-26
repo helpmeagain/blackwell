@@ -6,7 +6,7 @@ extendZodWithOpenApi(z);
 const authenticateBodySchema = z
   .object({
     email: z.string().email().openapi({ example: 'johndoe@email.com' }),
-    password: z.string().openapi({ example: '12345' }),
+    password: z.string().openapi({ example: 'Password' }),
   })
   .openapi('Clinician');
 

@@ -43,7 +43,7 @@ export class EditConsultationByIdUseCase {
 
     consultation.appointmentDate = appointmentDate;
     consultation.room = room;
-    patient.medicalRecord.consultationsIds.update([consultation.id]);
+    patient.universalMedicalRecord.consultationsIds.update([consultation.id]);
 
     await this.patientRecordRepository.save(patient);
     await this.consultationRepository.save(consultation);
