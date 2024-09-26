@@ -4,7 +4,7 @@ export class ReturnPatientPresenter {
   static toHTTP(patient: Patient) {
     return {
       id: patient.id.toString(),
-      medicalRecordId: patient.medicalRecord.id.toString(),
+      universalMedicalRecordId: patient.universalMedicalRecord.id.toString(),
       name: patient.name,
       surname: patient.surname,
       slug: patient.slug.value,

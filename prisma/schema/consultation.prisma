@@ -1,0 +1,16 @@
+model Consultation {
+  id                       String    @id @default(uuid())
+  room                     Int
+  appointmentDate          DateTime  @map("appointment_date")
+  createdAt                DateTime  @default(now()) @map("created_at")
+  updatedAt                DateTime? @updatedAt @map("updated_at")
+  clinicianId              String    @map("clinician_id")
+  patientId                String    @map("patient_id")
+  universalMedicalRecordId String    @map("universal_medical_record_id")
+
+  clinician              Clinician              @relation(fields: [clinicianId], references: [id])
+  patient                Patient                @relation(fields: [patientId], references: [id])
+  UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+
+  @@map("consultations")
+}

@@ -5,8 +5,10 @@ import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-r
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { InMemoryClinicianRepository } from 'test/repositories/in-memory-clinician-repository';
 import { makeClinician } from 'test/factories/make-clinician';
+import { InMemoryUniversalMedicalRecordRepository } from 'test/repositories/in-memory-universal-medical-record-repository';
 
 let inConsultationMemoryRepository: InMemoryConsultationRepository;
+let inMemoryUniversalMedicalRecordRepository: InMemoryUniversalMedicalRecordRepository;
 let inPatientMemoryRepository: InMemoryPatientRepository;
 let inClinicianMemoryRepository: InMemoryClinicianRepository;
 let sut: CreateConsultationUseCase;
@@ -14,8 +16,10 @@ let sut: CreateConsultationUseCase;
 describe('Schedule Consultation', () => {
   beforeEach(() => {
     inPatientMemoryRepository = new InMemoryPatientRepository();
+    inMemoryUniversalMedicalRecordRepository =
+      new InMemoryUniversalMedicalRecordRepository();
     inConsultationMemoryRepository = new InMemoryConsultationRepository(
-      inPatientMemoryRepository,
+      inMemoryUniversalMedicalRecordRepository,
     );
     inClinicianMemoryRepository = new InMemoryClinicianRepository();
     sut = new CreateConsultationUseCase(
@@ -45,10 +49,12 @@ describe('Schedule Consultation', () => {
     if (result.isRight()) {
       expect(result.value.consultation.patientId).toEqual(newPatient.id);
       expect(
-        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems,
+        inPatientMemoryRepository.items[0].universalMedicalRecord.consultationsIds
+          .currentItems,
       ).toHaveLength(1);
       expect(
-        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems[0],
+        inPatientMemoryRepository.items[0].universalMedicalRecord.consultationsIds
+          .currentItems[0],
       ).toEqual(inConsultationMemoryRepository.items[0].id);
     }
   });

@@ -4,14 +4,14 @@ import { Consultation } from '@/domain/entities/consultation';
 import { Injectable } from '@nestjs/common';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 import { PrismaService } from '../prisma.service';
-import { PatientRepository } from '@/application/repositories/patient-repository';
 import { DomainEvents } from '@/domain/common/events/domain-events';
+import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 
 @Injectable()
 export class PrismaConsultationRepository implements ConsultationRepository {
   constructor(
     private prisma: PrismaService,
-    private patientRepository: PatientRepository,
+    private universalMedicalRecordRepository: UniversalMedicalRecordRepository,
   ) {}
 
   async findById(id: string): Promise<Consultation | null> {
@@ -37,7 +37,7 @@ export class PrismaConsultationRepository implements ConsultationRepository {
 
   async create(consultation: Consultation): Promise<void> {
     const data = PrismaConsultationMapper.toPersistence(consultation);
-    await this.patientRepository.saveConsultationOnRecord(consultation);
+    await this.universalMedicalRecordRepository.saveConsultationOnRecord(consultation);
     await this.prisma.consultation.create({ data });
     DomainEvents.dispatchEventsForAggregate(consultation.id);
   }
@@ -50,7 +50,7 @@ export class PrismaConsultationRepository implements ConsultationRepository {
 
   async delete(consultation: Consultation): Promise<void> {
     const data = PrismaConsultationMapper.toPersistence(consultation);
-    await this.patientRepository.removeConsultationOnRecord(consultation);
+    await this.universalMedicalRecordRepository.removeConsultationOnRecord(consultation);
     await this.prisma.consultation.delete({ where: { id: data.id } });
   }
 }

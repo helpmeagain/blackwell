@@ -80,7 +80,7 @@ async function seed() {
         return consultationFactory.makeDatabaseConsultation({
           patientId: patient.id,
           clinicianId: clinician.id,
-          medicalRecordId: patient.medicalRecord.id,
+          universalMedicalRecordId: patient.universalMedicalRecord.id,
         });
       }),
     );

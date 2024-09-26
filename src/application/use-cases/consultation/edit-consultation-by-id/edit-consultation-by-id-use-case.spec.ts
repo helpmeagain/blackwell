@@ -4,16 +4,20 @@ import { makeConsultation } from 'test/factories/make-consultation';
 import { UniqueEntityId } from '@domain/value-objects/unique-entity-id/unique-entity-id';
 import { makePatient } from 'test/factories/make-patient';
 import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
+import { InMemoryUniversalMedicalRecordRepository } from 'test/repositories/in-memory-universal-medical-record-repository';
 
 let inConsultationMemoryRepository: InMemoryConsultationRepository;
+let inMemoryUniversalMedicalRecordRepository: InMemoryUniversalMedicalRecordRepository;
 let inPatientMemoryRepository: InMemoryPatientRepository;
 let sut: EditConsultationByIdUseCase;
 
 describe('Edit a consultation By Id', () => {
   beforeEach(() => {
     inPatientMemoryRepository = new InMemoryPatientRepository();
+    inMemoryUniversalMedicalRecordRepository =
+      new InMemoryUniversalMedicalRecordRepository();
     inConsultationMemoryRepository = new InMemoryConsultationRepository(
-      inPatientMemoryRepository,
+      inMemoryUniversalMedicalRecordRepository,
     );
     sut = new EditConsultationByIdUseCase(
       inConsultationMemoryRepository,
@@ -47,7 +51,8 @@ describe('Edit a consultation By Id', () => {
         result.value?.consultation.room,
       );
       expect(
-        inPatientMemoryRepository.items[0].medicalRecord.consultationsIds.currentItems,
+        inPatientMemoryRepository.items[0].universalMedicalRecord.consultationsIds
+          .currentItems,
       ).toContainEqual(newConsultation.id);
     }
   });

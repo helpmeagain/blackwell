@@ -8,7 +8,7 @@ export class PrismaConsultationMapper {
       {
         patientId: new UniqueEntityId(raw.patientId),
         clinicianId: new UniqueEntityId(raw.clinicianId),
-        medicalRecordId: new UniqueEntityId(raw.medicalRecordId),
+        universalMedicalRecordId: new UniqueEntityId(raw.universalMedicalRecordId),
         appointmentDate: raw.appointmentDate,
         room: raw.room,
       },
@@ -23,7 +23,7 @@ export class PrismaConsultationMapper {
       id: consultation.id.toString(),
       patientId: consultation.patientId.toString(),
       clinicianId: consultation.clinicianId.toString(),
-      medicalRecordId: consultation.medicalRecordId.toString(),
+      universalMedicalRecordId: consultation.universalMedicalRecordId.toString(),
       appointmentDate: consultation.appointmentDate,
       room: consultation.room,
     };
