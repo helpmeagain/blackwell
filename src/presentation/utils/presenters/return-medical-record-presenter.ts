@@ -8,9 +8,11 @@ export class ReturnUniversalMedicalRecordPresenter {
       consultationsIds: universalMedicalRecord.consultationsIds.currentItems.map((id) =>
         id.toString(),
       ),
-      diagnosis: universalMedicalRecord.diagnosis,
       profession: universalMedicalRecord.profession,
-      emergencyContactName: universalMedicalRecord.emergencyContactName,
+      address: universalMedicalRecord.address,
+      city: universalMedicalRecord.city,
+      state: universalMedicalRecord.state,
+      emergencyContactName: universalMedicalRecord.emergencyContactEmail,
       emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
       cpf: universalMedicalRecord.cpf,
       allergies: universalMedicalRecord.allergies,
@@ -18,6 +20,7 @@ export class ReturnUniversalMedicalRecordPresenter {
       height: universalMedicalRecord.height,
       weight: universalMedicalRecord.weight,
       medicationsInUse: universalMedicalRecord.medicationsInUse,
+      diagnosis: universalMedicalRecord.diagnosis,
     };
   }
 }

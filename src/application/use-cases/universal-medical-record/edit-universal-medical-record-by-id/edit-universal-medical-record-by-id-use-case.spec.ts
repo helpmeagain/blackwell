@@ -34,14 +34,17 @@ describe('Edit a Universal medical record', () => {
       universalMedicalRecordId: newPatient.universalMedicalRecord.id.toString(),
       diagnosis: ['diagnosis1', 'diagnosis2'],
       profession: 'working',
-      emergencyContactName: 'emergencyContactName',
+      address: 'address',
+      city: 'city',
+      state: 'state',
+      emergencyContactEmail: 'emergencyContactEmail@email.com',
       emergencyContactNumber: '123456789',
       cpf: '99999999999',
       allergies: 'allergies',
       maritalStatus: 'single',
       height: 180,
       weight: 80,
-      medicationsInUse: 'medicationsInUse',
+      medicationsInUse: ['medicationsInUse1', 'medicationsInUse2'],
     });
 
     expect(result.isRight()).toBe(true);
@@ -67,14 +70,17 @@ describe('Edit a Universal medical record', () => {
       universalMedicalRecordId: newPatient.universalMedicalRecord.id.toString(),
       diagnosis: ['diagnosis1', 'diagnosis2'],
       profession: 'working',
-      emergencyContactName: 'emergencyContactName',
+      address: 'address',
+      city: 'city',
+      state: 'state',
+      emergencyContactEmail: 'emergencyContactEmail@email.com',
       emergencyContactNumber: '123456789',
       cpf: '99999999999',
       allergies: 'allergies',
       maritalStatus: 'single',
       height: 180,
       weight: 80,
-      medicationsInUse: 'medicationsInUse',
+      medicationsInUse: ['medicationsInUse1', 'medicationsInUse2'],
     });
 
     expect(patientResult.isRight()).toBe(true);

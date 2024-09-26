@@ -36,14 +36,17 @@ describe('Edit universal medical record by id [E2E]', () => {
       .send({
         diagnosis: ['diagnosis1', 'diagnosis2'],
         profession: 'working',
-        emergencyContactName: 'emergencyContactName',
+        address: 'address',
+        city: 'city',
+        state: 'state',
+        emergencyContactEmail: 'emergency@email.com',
         emergencyContactNumber: '123456789',
         cpf: '99999999999',
         allergies: 'allergies',
         maritalStatus: 'single',
         height: 180,
         weight: 80,
-        medicationsInUse: 'medicationsInUse',
+        medicationsInUse: ['medicationsInUse1', 'medicationsInUse2'],
       });
 
     expect(result.statusCode).toBe(200);

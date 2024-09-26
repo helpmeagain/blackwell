@@ -38,7 +38,7 @@ export class GetUniversalMedicalRecordByPatientIdController {
       }
     }
 
-    const { universalmedicalRecord } = result.value;
+    const { universalMedicalRecord: universalmedicalRecord } = result.value;
 
     return {
       universalMedicalRecord:

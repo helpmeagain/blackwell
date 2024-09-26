@@ -31,7 +31,7 @@ describe('Get Universal MedicalRecord By Patient Id', () => {
 
     expect(result.isRight()).toBe(true);
     if (result.isRight())
-      expect(result.value.universalmedicalRecord.patientId.toString()).toEqual(
+      expect(result.value.universalMedicalRecord.patientId.toString()).toEqual(
         newPatient.id.toString(),
       );
   });

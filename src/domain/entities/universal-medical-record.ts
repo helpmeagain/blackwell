@@ -7,7 +7,10 @@ interface UniversalMedicalRecordProps {
   patientId: UniqueEntityId;
   consultationsIds: ConsultationIdList;
   profession?: string | null;
-  emergencyContactName?: string | null;
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  emergencyContactEmail?: string | null;
   emergencyContactNumber?: string | null;
   cpf?: string | null;
   allergies?: string | null;
@@ -15,7 +18,7 @@ interface UniversalMedicalRecordProps {
   height?: number | null;
   weight?: number | null;
   diagnosis?: string[] | null;
-  medicationsInUse?: string | null;
+  medicationsInUse?: string[] | null;
   createdAt: Date;
   updatedAt?: Date | null;
 }
@@ -67,12 +70,38 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
     this.touch();
   }
 
-  get emergencyContactName(): string | null | undefined {
-    return this.props.emergencyContactName;
+  get address(): string | undefined | null {
+    return this.props.address;
   }
 
-  set emergencyContactName(value: string | null | undefined) {
-    this.props.emergencyContactName = value;
+  set address(value: string | undefined | null) {
+    this.props.address = value;
+    this.touch();
+  }
+  get city(): string | undefined | null {
+    return this.props.city;
+  }
+
+  set city(value: string | undefined | null) {
+    this.props.city = value;
+    this.touch();
+  }
+
+  get state(): string | undefined | null {
+    return this.props.state;
+  }
+
+  set state(value: string | undefined | null) {
+    this.props.state = value;
+    this.touch();
+  }
+
+  get emergencyContactEmail(): string | null | undefined {
+    return this.props.emergencyContactEmail;
+  }
+
+  set emergencyContactEmail(value: string | null | undefined) {
+    this.props.emergencyContactEmail = value;
     this.touch();
   }
 
@@ -139,11 +168,11 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
     this.touch();
   }
 
-  get medicationsInUse(): string | null | undefined {
+  get medicationsInUse(): string[] | null | undefined {
     return this.props.medicationsInUse;
   }
 
-  set medicationsInUse(value: string | null | undefined) {
+  set medicationsInUse(value: string[] | null | undefined) {
     this.props.medicationsInUse = value;
     this.touch();
   }

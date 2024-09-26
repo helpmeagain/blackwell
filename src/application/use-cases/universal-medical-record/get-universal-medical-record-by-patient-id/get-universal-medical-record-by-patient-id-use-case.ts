@@ -9,7 +9,7 @@ interface getUniversalMedicalRecordByPatientIdRequest {
 
 type getUniversalMedicalRecordByPatientIdResponse = Either<
   ResourceNotFound,
-  { universalmedicalRecord: UniversalMedicalRecord }
+  { universalMedicalRecord: UniversalMedicalRecord }
 >;
 
 export class GetUniversalMedicalRecordByPatientIdUseCase {
@@ -18,12 +18,12 @@ export class GetUniversalMedicalRecordByPatientIdUseCase {
   async execute({
     patientId,
   }: getUniversalMedicalRecordByPatientIdRequest): Promise<getUniversalMedicalRecordByPatientIdResponse> {
-    const universalmedicalRecord = await this.repository.findByPatientId(patientId);
+    const universalMedicalRecord = await this.repository.findByPatientId(patientId);
 
-    if (!universalmedicalRecord) {
+    if (!universalMedicalRecord) {
       return left(new ResourceNotFound());
     }
 
-    return right({ universalmedicalRecord });
+    return right({ universalMedicalRecord });
   }
 }

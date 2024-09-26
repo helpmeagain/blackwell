@@ -7,7 +7,10 @@ import { UniversalMedicalRecordRepository } from '@/application/repositories/uni
 interface editUniversalMedicalRecordByPatientIRequest {
   patientId: string;
   profession: string;
-  emergencyContactName: string;
+  address: string;
+  city: string;
+  state: string;
+  emergencyContactEmail: string;
   emergencyContactNumber: string;
   cpf: string;
   allergies: string;
@@ -15,7 +18,7 @@ interface editUniversalMedicalRecordByPatientIRequest {
   height: number;
   weight: number;
   diagnosis: string[];
-  medicationsInUse?: string;
+  medicationsInUse: string[];
 }
 
 type editUniversalMedicalRecordByIdResponse = Either<
@@ -32,7 +35,10 @@ export class EditUniversalMedicalRecordByPatientIdUseCase {
     const {
       patientId,
       profession,
-      emergencyContactName,
+      address,
+      city,
+      state,
+      emergencyContactEmail,
       emergencyContactNumber,
       cpf,
       allergies,
@@ -50,7 +56,10 @@ export class EditUniversalMedicalRecordByPatientIdUseCase {
 
     universalMedicalRecord.diagnosis = diagnosis;
     universalMedicalRecord.profession = profession;
-    universalMedicalRecord.emergencyContactName = emergencyContactName;
+    universalMedicalRecord.address = address;
+    universalMedicalRecord.city = city;
+    universalMedicalRecord.state = state;
+    universalMedicalRecord.emergencyContactEmail = emergencyContactEmail;
     universalMedicalRecord.emergencyContactNumber = emergencyContactNumber;
     universalMedicalRecord.cpf = cpf;
     universalMedicalRecord.allergies = allergies;
