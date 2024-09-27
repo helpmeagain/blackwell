@@ -12,7 +12,7 @@ export class ReturnUniversalMedicalRecordPresenter {
       address: universalMedicalRecord.address,
       city: universalMedicalRecord.city,
       state: universalMedicalRecord.state,
-      emergencyContactName: universalMedicalRecord.emergencyContactEmail,
+      emergencyContactEmail: universalMedicalRecord.emergencyContactEmail,
       emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
       cpf: universalMedicalRecord.cpf,
       allergies: universalMedicalRecord.allergies,

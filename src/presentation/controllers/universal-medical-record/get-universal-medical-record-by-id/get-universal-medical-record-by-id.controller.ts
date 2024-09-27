@@ -9,7 +9,7 @@ import {
 import { NestGetUniversalMedicalRecordByIdUseCase } from '@/infrastructure/adapter/universal-medical-record/nest-get-universal-medical-record-by-id-use-case';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { ReturnUniversalMedicalRecordPresenter } from '@/presentation/utils/presenters/return-medical-record-presenter';
+import { ReturnUniversalMedicalRecordPresenter } from '@/presentation/utils/presenters/return-universal-medical-record-presenter';
 
 @Controller('universal-medical-record/:id')
 export class GetUniversalMedicalRecordByIdController {
