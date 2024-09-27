@@ -24,6 +24,24 @@ const createClinicianSchema = z
   })
   .openapi('Clinician');
 
+export const detailedDescription = 'Insert an clinician. All fields are required.';
+export const exampleResponse = {
+  message: 'Clinician created successfully',
+  clinician: {
+    id: '22222222-bbbb-4444-cccc-555555555555',
+    name: 'Alice',
+    surname: 'Johnson',
+    slug: 'alice-johnson',
+    gender: 'female',
+    occupation: 'Pediatrician',
+    phoneNumber: '8888888888',
+    email: 'alicejohnson@email.com',
+    password: '********',
+    createdAt: '2018-11-20T08:45:30.123Z',
+    updatedAt: '2020-05-15T10:30:00.000Z',
+  },
+};
+
 export const {
   swaggerBody,
   validationBody,

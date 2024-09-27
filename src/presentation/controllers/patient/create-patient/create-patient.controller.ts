@@ -7,7 +7,13 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { BodyType, swaggerBody, validationBody } from './create-patient-schema';
+import {
+  BodyType,
+  detailedDescription,
+  exampleResponse,
+  swaggerBody,
+  validationBody,
+} from './create-patient-schema';
 import { NestCreatePatientUseCase } from '@/infrastructure/adapter/patient/nest-create-patient-use-case';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
@@ -21,12 +27,11 @@ export class CreatePatientController {
   @Post()
   @Public()
   @ApiTags('Patients')
-  @ApiOperation({ summary: 'Create a patient' })
+  @ApiOperation({ summary: 'Create a patient', description: detailedDescription })
   @ApiBody({ schema: swaggerBody })
-  @ApiCreatedResponse({ description: 'Patient created' })
+  @ApiCreatedResponse({ description: 'Patient created', example: exampleResponse })
   @ApiBadRequestResponse({ description: 'Invalid information' })
   @ApiConflictResponse({ description: 'Conflict' })
-  // @UsePipes(validationBody)
   async handle(@Body(validationBody) body: typeof BodyType) {
     const { name, surname, gender, birthDate, phoneNumber, email, password } = body;
 
