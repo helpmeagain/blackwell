@@ -7,6 +7,7 @@ import { PatientModule } from './patient/patient.module';
 import { ConsultationModule } from './consultation/consultation.module';
 import { UniversalMedicalRecordModule } from './universal-medical-record/universal-medical-record.module';
 import { NotificationModule } from './notification/notification.module';
+import { IndexModule } from './index/index.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { NotificationModule } from './notification/notification.module';
     UniversalMedicalRecordModule,
     PatientModule,
     NotificationModule,
+    IndexModule,
   ],
 })
 export class HttpModule {}
