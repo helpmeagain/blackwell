@@ -1,6 +1,7 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -9,7 +10,11 @@ import {
 import { NestGetUniversalMedicalRecordByIdUseCase } from '@/infrastructure/adapter/universal-medical-record/nest-get-universal-medical-record-by-id-use-case';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { ReturnUniversalMedicalRecordPresenter } from '@/presentation/utils/presenters/return-medical-record-presenter';
+import { ReturnUniversalMedicalRecordPresenter } from '@/presentation/utils/presenters/return-universal-medical-record-presenter';
+import {
+  detailedDescription,
+  exampleResponse,
+} from './get-universal-medical-record-by-id-schema';
 
 @Controller('universal-medical-record/:id')
 export class GetUniversalMedicalRecordByIdController {
@@ -19,10 +24,17 @@ export class GetUniversalMedicalRecordByIdController {
 
   @Get()
   @ApiTags('Universal Medical Record')
-  @ApiOperation({ summary: 'Get a universal medical record by id' })
+  @ApiOperation({
+    summary: 'Get a universal medical record by id',
+    description: detailedDescription,
+  })
   @ApiBearerAuth()
-  @ApiOkResponse({ description: 'Return universal medical record by id' })
+  @ApiOkResponse({
+    description: 'Return universal medical record by id',
+    example: exampleResponse,
+  })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
+  @ApiNotFoundResponse({ description: 'Universal medical record not found' })
   async handle(@Param('id') id: string) {
     const result = await this.getUniversalMedicalRecordById.execute({
       universalMedicalRecordId: id,

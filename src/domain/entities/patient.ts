@@ -121,4 +121,8 @@ export class Patient extends AggregateRoot<PatientProps> {
   get createdAt() {
     return this.props.createdAt;
   }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
 }

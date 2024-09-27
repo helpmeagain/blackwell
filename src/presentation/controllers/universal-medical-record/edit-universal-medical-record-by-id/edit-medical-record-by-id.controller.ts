@@ -9,7 +9,7 @@ import {
 } from '@nestjs/swagger';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { ReturnUniversalMedicalRecordPresenter } from '@/presentation/utils/presenters/return-medical-record-presenter';
+import { ReturnUniversalMedicalRecordPresenter } from '@/presentation/utils/presenters/return-universal-medical-record-presenter';
 import {
   BodyType,
   swaggerBody,

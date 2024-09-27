@@ -1,6 +1,19 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { BodyType, swaggerBody, validationBody } from './authenticate-patient-schema';
+import { Body, Controller, HttpCode, Post, UnauthorizedException } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import {
+  BodyType,
+  detailedDescription,
+  exampleResponse,
+  swaggerBody,
+  validationBody,
+} from './authenticate-patient-schema';
 import { NestAuthenticatePatientUseCase } from '@/infrastructure/adapter/authenticate/nest-authenticate-patient-use-case';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { WrongCredentials } from '@/application/common/error-handler/errors/wrong-credentials';
@@ -12,9 +25,13 @@ export class AuthenticatePatientController {
 
   @Post('patient')
   @Public()
-  @ApiTags('Auth')
-  @ApiOperation({ summary: 'Authenticate a patient' })
+  @ApiTags('Authentication')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Authenticate a patient', description: detailedDescription })
   @ApiBody({ schema: swaggerBody })
+  @ApiOkResponse({ description: 'Authenticated clinician', schema: exampleResponse })
+  @ApiUnauthorizedResponse({ description: 'Wrong credentials' })
+  @ApiBadRequestResponse({ description: 'Invalid credentials' })
   async handle(@Body(validationBody) body: typeof BodyType) {
     const { email, password } = body;
 

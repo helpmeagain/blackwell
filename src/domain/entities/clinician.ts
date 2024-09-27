@@ -109,4 +109,8 @@ export class Clinician extends BaseEntity<ClinicianProps> {
   get createdAt() {
     return this.props.createdAt;
   }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
 }

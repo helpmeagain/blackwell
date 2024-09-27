@@ -38,7 +38,7 @@ describe('Authenticate patient [E2E]', () => {
       password: '12345',
     });
 
-    expect(result.statusCode).toBe(201);
+    expect(result.statusCode).toBe(200);
     expect(result.body).toEqual({
       access_token: expect.any(String),
     });

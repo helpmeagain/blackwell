@@ -12,7 +12,7 @@ export class ReturnUniversalMedicalRecordPresenter {
       address: universalMedicalRecord.address,
       city: universalMedicalRecord.city,
       state: universalMedicalRecord.state,
-      emergencyContactName: universalMedicalRecord.emergencyContactEmail,
+      emergencyContactEmail: universalMedicalRecord.emergencyContactEmail,
       emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
       cpf: universalMedicalRecord.cpf,
       allergies: universalMedicalRecord.allergies,
@@ -21,6 +21,8 @@ export class ReturnUniversalMedicalRecordPresenter {
       weight: universalMedicalRecord.weight,
       medicationsInUse: universalMedicalRecord.medicationsInUse,
       diagnosis: universalMedicalRecord.diagnosis,
+      createdAt: universalMedicalRecord.createdAt,
+      updatedAt: universalMedicalRecord.updatedAt,
     };
   }
 }

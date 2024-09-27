@@ -1,5 +1,6 @@
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import {
+  ApiBadGatewayResponse,
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
@@ -10,8 +11,10 @@ import {
 import {
   PageBodyType,
   PageValidationBody,
+  detailedDescription,
   directionBodyType,
   directionValidationBody,
+  exampleResponse,
   orderByBodyType,
   orderByValidationBody,
 } from './fetch-clinician-schema';
@@ -24,13 +27,29 @@ export class FetchClinicianController {
 
   @Get()
   @ApiTags('Clinicians')
-  @ApiQuery({ name: 'page', required: false, type: Number })
-  @ApiQuery({ name: 'orderBy', required: false, type: String })
+  @ApiQuery({ name: 'page', required: false, example: 1, type: Number })
+  @ApiQuery({
+    name: 'orderBy',
+    required: false,
+    type: String,
+    enum: [
+      'name',
+      'surname',
+      'gender',
+      'occupation',
+      'slug',
+      'email',
+      'phoneNumber',
+      'createdAt',
+      'updatedAt',
+    ],
+  })
   @ApiQuery({ name: 'direction', required: false, type: String, enum: ['asc', 'desc'] })
-  @ApiOperation({ summary: 'Fetch consultations' })
+  @ApiOperation({ summary: 'Fetch clinicians', description: detailedDescription })
   @ApiBearerAuth()
-  @ApiOkResponse({ description: 'Fetch consultations' })
+  @ApiOkResponse({ description: 'Fetch clinicians', example: exampleResponse })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
+  @ApiBadGatewayResponse({ description: 'Invalid request' })
   async handle(
     @Query('page', PageValidationBody) page: typeof PageBodyType,
     @Query('orderBy', orderByValidationBody) field: typeof orderByBodyType,

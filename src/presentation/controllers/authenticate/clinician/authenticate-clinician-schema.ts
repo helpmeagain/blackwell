@@ -10,6 +10,17 @@ const authenticateBodySchema = z
   })
   .openapi('Clinician');
 
+export const detailedDescription =
+  'To authenticate, provide your email and password created in the POST /clinicians endpoint. ' +
+  "After authenticating, you'll receive an access token, " +
+  "insert this token in the 'Authorize' button above to access the protected routes. ";
+
+export const exampleResponse = {
+  example: {
+    access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+  },
+};
+
 export const {
   swaggerBody,
   validationBody,

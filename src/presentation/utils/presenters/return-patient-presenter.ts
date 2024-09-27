@@ -13,6 +13,8 @@ export class ReturnPatientPresenter {
       phoneNumber: patient.phoneNumber,
       email: patient.email,
       password: '*********',
+      createdAt: patient.createdAt,
+      updatedAt: patient.updatedAt,
     };
   }
 }

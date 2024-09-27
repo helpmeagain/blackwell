@@ -37,6 +37,26 @@ const createPatientSchema = z
   })
   .openapi('Patient');
 
+export const detailedDescription = 'Insert an patient. All fields are required.';
+
+export const exampleResponse = {
+  message: 'Patient created successfully',
+  patient: {
+    id: '77777aaa-bbbb-8888-cccc-999999999999',
+    universalMedicalRecord: '22222222-bbbb-4444-cccc-555555555555',
+    name: 'Charlie',
+    surname: 'Brown',
+    slug: 'charlie-brown',
+    gender: 'male',
+    birthDate: '1988-12-31T00:00:00.000Z',
+    phoneNumber: '7777777777',
+    email: 'charliebrown@email.com',
+    password: '********',
+    createdAt: '2018-11-20T08:45:30.123Z',
+    updatedAt: '2020-05-15T10:30:00.000Z',
+  },
+};
+
 export const {
   swaggerBody,
   validationBody,

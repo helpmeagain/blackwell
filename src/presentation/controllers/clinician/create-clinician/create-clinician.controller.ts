@@ -7,7 +7,13 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { swaggerBody, BodyType, validationBody } from './create-clinician-schema';
+import {
+  swaggerBody,
+  BodyType,
+  validationBody,
+  exampleResponse,
+  detailedDescription,
+} from './create-clinician-schema';
 import { NestCreateClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-create-clinician-use-case';
 import { CreateClinicianPresenter } from '@/presentation/utils/presenters/create-clinician-presenter';
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
@@ -21,10 +27,10 @@ export class CreateClinicianController {
   @Post()
   @Public()
   @ApiTags('Clinicians')
-  @ApiOperation({ summary: 'Create a clinician' })
+  @ApiOperation({ summary: 'Create a clinician', description: detailedDescription })
   @ApiBody({ schema: swaggerBody })
-  @ApiCreatedResponse({ description: 'Clinician created' })
-  @ApiBadRequestResponse({ description: 'Invalid information' })
+  @ApiCreatedResponse({ description: 'Clinician created', example: exampleResponse })
+  @ApiBadRequestResponse({ description: 'Invalid request' })
   @ApiConflictResponse({ description: 'Conflict' })
   async handle(@Body(validationBody) body: typeof BodyType) {
     const { name, surname, gender, occupation, phoneNumber, email, password } = body;
