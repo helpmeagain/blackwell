@@ -21,6 +21,8 @@ export class ReturnUniversalMedicalRecordPresenter {
       weight: universalMedicalRecord.weight,
       medicationsInUse: universalMedicalRecord.medicationsInUse,
       diagnosis: universalMedicalRecord.diagnosis,
+      createdAt: universalMedicalRecord.createdAt,
+      updatedAt: universalMedicalRecord.updatedAt,
     };
   }
 }
