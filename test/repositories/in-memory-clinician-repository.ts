@@ -25,14 +25,16 @@ export class InMemoryClinicianRepository implements ClinicianRepository {
     return clinician;
   }
 
-  async findBySlug(slug: string) {
-    const clinician = this.items.find((item) => item.slug.value.toString() === slug);
+  async findBySlug(slug: string): Promise<Clinician[]> {
+    const clinicians = this.items.filter((item) =>
+      item.slug.value.toString().includes(slug),
+    );
 
-    if (!clinician) {
-      return null;
+    if (!clinicians.length) {
+      return [];
     }
 
-    return clinician;
+    return clinicians;
   }
 
   async findMany({ page, orderBy }: PaginationParams): Promise<Clinician[]> {

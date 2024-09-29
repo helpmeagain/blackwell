@@ -2,7 +2,7 @@ model Clinician {
   id          String    @id @default(uuid())
   name        String
   surname     String
-  slug        String    @unique
+  slug        String
   gender      Gender
   occupation  String
   phoneNumber String    @map("phone_number")

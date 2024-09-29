@@ -41,6 +41,6 @@ export class GetBySlugPatientController {
 
     const { patient } = result.value;
 
-    return { patient: ReturnPatientPresenter.toHTTP(patient) };
+    return { patients: patient.map(ReturnPatientPresenter.toHTTP) };
   }
 }

@@ -33,18 +33,20 @@ describe('Get patient by slug [E2E]', () => {
       .send();
 
     expect(result.statusCode).toBe(200);
-    expect(result.body).toEqual({
-      patient: expect.objectContaining({
-        id: patient.id.toString(),
-        name: patient.name,
-        surname: patient.surname,
-        gender: patient.gender,
-        birthDate: patient.birthDate.toISOString(),
-        phoneNumber: patient.phoneNumber,
-        email: patient.email,
-        password: '*********',
-        slug: patient.slug.value,
-      }),
+    expect(result.body).toMatchObject({
+      patients: expect.arrayContaining([
+        expect.objectContaining({
+          id: patient.id.toString(),
+          name: patient.name,
+          surname: patient.surname,
+          gender: patient.gender,
+          birthDate: patient.birthDate.toISOString(),
+          phoneNumber: patient.phoneNumber,
+          email: patient.email,
+          password: '*********',
+          slug: patient.slug.value,
+        }),
+      ]),
     });
   });
 });

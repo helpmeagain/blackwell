@@ -33,18 +33,20 @@ describe('Get clinician by slug [E2E]', () => {
       .send();
 
     expect(result.statusCode).toBe(200);
-    expect(result.body).toEqual({
-      clinician: expect.objectContaining({
-        id: clinician.id.toString(),
-        name: clinician.name,
-        surname: clinician.surname,
-        gender: clinician.gender,
-        occupation: clinician.occupation,
-        phoneNumber: clinician.phoneNumber,
-        email: clinician.email,
-        password: '*********',
-        slug: clinician.slug.value,
-      }),
+    expect(result.body).toMatchObject({
+      clinicians: expect.arrayContaining([
+        expect.objectContaining({
+          id: clinician.id.toString(),
+          name: clinician.name,
+          surname: clinician.surname,
+          gender: clinician.gender,
+          occupation: clinician.occupation,
+          phoneNumber: clinician.phoneNumber,
+          email: clinician.email,
+          password: '*********',
+          slug: clinician.slug.value,
+        }),
+      ]),
     });
   });
 });

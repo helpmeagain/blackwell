@@ -7,7 +7,7 @@ interface getClinicianBySlugRequest {
   slug: string;
 }
 
-type getClinicianBySlugResponse = Either<ResourceNotFound, { clinician: Clinician }>;
+type getClinicianBySlugResponse = Either<ResourceNotFound, { clinician: Clinician[] }>;
 
 export class GetClinicianBySlugUseCase {
   constructor(private readonly repository: ClinicianRepository) {}
@@ -16,7 +16,7 @@ export class GetClinicianBySlugUseCase {
     const { slug } = req;
     const clinician = await this.repository.findBySlug(slug);
 
-    if (!clinician) {
+    if (clinician === null || !clinician.length) {
       return left(new ResourceNotFound());
     }
 
