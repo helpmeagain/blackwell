@@ -15,6 +15,16 @@ export class InMemoryPatientRepository implements PatientRepository {
     return patient;
   }
 
+  async findByCpf(cpf: string) {
+    const patient = this.items.find((item) => item.cpf === cpf);
+
+    if (!patient) {
+      return null;
+    }
+
+    return patient;
+  }
+
   async findById(id: string) {
     const patient = this.items.find((item) => item.id.toString() === id);
 
@@ -25,14 +35,16 @@ export class InMemoryPatientRepository implements PatientRepository {
     return patient;
   }
 
-  async findBySlug(slug: string) {
-    const patient = this.items.find((item) => item.slug.value === slug);
+  async findBySlug(slug: string): Promise<Patient[]> {
+    const patients = this.items.filter((item) =>
+      item.slug.value.toString().includes(slug),
+    );
 
-    if (!patient) {
-      return null;
+    if (!patients.length) {
+      return [];
     }
 
-    return patient;
+    return patients;
   }
 
   async findMany({ page, orderBy }: PaginationParams): Promise<Patient[]> {

@@ -39,7 +39,6 @@ describe('Edit a medical record', () => {
       state: 'state',
       emergencyContactEmail: 'emergencyContactEmail@email.com',
       emergencyContactNumber: '123456789',
-      cpf: '99999999999',
       allergies: 'allergies',
       maritalStatus: 'single',
       height: 180,
@@ -48,8 +47,8 @@ describe('Edit a medical record', () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.cpf).toBe(
-      '99999999999',
+    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.maritalStatus).toBe(
+      'single',
     );
   });
 
@@ -75,7 +74,6 @@ describe('Edit a medical record', () => {
       state: 'state',
       emergencyContactEmail: 'emergencyContactEmail@email.com',
       emergencyContactNumber: '123456789',
-      cpf: '99999999999',
       allergies: 'allergies',
       maritalStatus: 'single',
       height: 180,
@@ -84,8 +82,8 @@ describe('Edit a medical record', () => {
     });
 
     expect(patientResult.isRight()).toBe(true);
-    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.cpf).toBe(
-      '99999999999',
+    expect(inMemoryPatientRepository.items[0].universalMedicalRecord.maritalStatus).toBe(
+      'single',
     );
     expect(
       inMemoryUniversalMedicalRecordRepository.items[0].consultationsIds.currentItems,

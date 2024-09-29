@@ -7,7 +7,7 @@ interface getPatientBySlugRequest {
   slug: string;
 }
 
-type getPatientBySlugResponse = Either<ResourceNotFound, { patient: Patient }>;
+type getPatientBySlugResponse = Either<ResourceNotFound, { patient: Patient[] }>;
 
 export class GetPatientBySlugUseCase {
   constructor(private readonly repository: PatientRepository) {}
@@ -15,7 +15,7 @@ export class GetPatientBySlugUseCase {
   async execute({ slug }: getPatientBySlugRequest): Promise<getPatientBySlugResponse> {
     const patient = await this.repository.findBySlug(slug);
 
-    if (!patient) {
+    if (patient === null || !patient.length) {
       return left(new ResourceNotFound());
     }
 

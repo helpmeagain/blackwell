@@ -25,9 +25,9 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaPatientMapper.toDomain(patient);
   }
 
-  async findBySlug(slug: string): Promise<Patient | null> {
+  async findByCpf(cpf: string): Promise<Patient | null> {
     const patient = await this.prisma.patient.findUnique({
-      where: { slug },
+      where: { cpf },
     });
 
     if (!patient) {
@@ -35,6 +35,22 @@ export class PrismaPatientRepository implements PatientRepository {
     }
 
     return PrismaPatientMapper.toDomain(patient);
+  }
+
+  async findBySlug(slug: string): Promise<Patient[] | null> {
+    const patients = await this.prisma.patient.findMany({
+      where: {
+        slug: {
+          contains: slug,
+        },
+      },
+    });
+
+    if (!patients.length) {
+      return [];
+    }
+
+    return patients.map(PrismaPatientMapper.toDomain);
   }
 
   async findById(id: string): Promise<Patient | null> {

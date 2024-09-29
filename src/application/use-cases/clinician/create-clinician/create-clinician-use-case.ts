@@ -47,13 +47,6 @@ export class CreateClinicianUseCase {
       password: hashedPassword,
     });
 
-    const clinicianWithSlugAlreadyExists = await this.repository.findBySlug(
-      clinician.slug.value,
-    );
-    if (clinicianWithSlugAlreadyExists) {
-      clinician.slug.value = clinician.slug.value + Math.floor(Math.random() * 100);
-    }
-
     await this.repository.create(clinician);
     return right({ clinician });
   }

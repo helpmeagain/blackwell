@@ -12,7 +12,6 @@ interface UniversalMedicalRecordProps {
   state?: string | null;
   emergencyContactEmail?: string | null;
   emergencyContactNumber?: string | null;
-  cpf?: string | null;
   allergies?: string | null;
   maritalStatus?: string | null;
   height?: number | null;
@@ -111,15 +110,6 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
 
   set emergencyContactNumber(value: string | null | undefined) {
     this.props.emergencyContactNumber = value;
-    this.touch();
-  }
-
-  get cpf(): string | null | undefined {
-    return this.props.cpf;
-  }
-
-  set cpf(value: string | null | undefined) {
-    this.props.cpf = value;
     this.touch();
   }
 

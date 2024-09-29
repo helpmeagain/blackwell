@@ -12,7 +12,6 @@ interface editUniversalMedicalRecordByPatientIRequest {
   state: string;
   emergencyContactEmail: string;
   emergencyContactNumber: string;
-  cpf: string;
   allergies: string;
   maritalStatus: string;
   height: number;
@@ -40,7 +39,6 @@ export class EditUniversalMedicalRecordByPatientIdUseCase {
       state,
       emergencyContactEmail,
       emergencyContactNumber,
-      cpf,
       allergies,
       maritalStatus,
       height,
@@ -61,7 +59,6 @@ export class EditUniversalMedicalRecordByPatientIdUseCase {
     universalMedicalRecord.state = state;
     universalMedicalRecord.emergencyContactEmail = emergencyContactEmail;
     universalMedicalRecord.emergencyContactNumber = emergencyContactNumber;
-    universalMedicalRecord.cpf = cpf;
     universalMedicalRecord.allergies = allergies;
     universalMedicalRecord.maritalStatus = maritalStatus;
     universalMedicalRecord.height = height;

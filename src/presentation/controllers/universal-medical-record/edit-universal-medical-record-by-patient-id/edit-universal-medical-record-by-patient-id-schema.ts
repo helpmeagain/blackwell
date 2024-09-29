@@ -11,7 +11,6 @@ const editUniversalMedicalRecordSchema = z
     state: z.string().openapi({ example: 'Example state' }),
     emergencyContactEmail: z.string().email().openapi({ example: 'emergency@email.com' }),
     emergencyContactNumber: z.string().openapi({ example: '123456789' }),
-    cpf: z.string().openapi({ example: '99999999999' }),
     allergies: z.string().openapi({ example: 'none' }),
     maritalStatus: z.enum(['single', 'married', 'divorced', 'widowed']).openapi({
       example: 'single',

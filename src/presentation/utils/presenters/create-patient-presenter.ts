@@ -10,6 +10,7 @@ export class CreatePatientPresenter {
       surname: patient.surname,
       slug: patient.slug.value,
       gender: patient.gender,
+      cpf: patient.cpf,
       birthDate: patient.birthDate,
       phoneNumber: patient.phoneNumber,
       email: patient.email,

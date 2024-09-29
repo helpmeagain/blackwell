@@ -25,6 +25,7 @@ describe('Create patient [E2E]', () => {
       slug: 'john-doe',
       gender: 'male',
       birthDate: '2000-01-01T12:00:00.000Z',
+      cpf: '12345678901',
       phoneNumber: '123456789',
       email: 'jonhdoe@email.com',
       password: '12345678qwertY',

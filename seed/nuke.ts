@@ -1,8 +1,4 @@
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import { AppModule } from '@/presentation/app.module';
-import { PersistenceModule } from '@/infrastructure/persistence/persistence.module';
+import { PrismaClient } from '@prisma/client';
 import { execSync } from 'node:child_process';
 import * as readline from 'node:readline';
 
@@ -21,35 +17,44 @@ function askConfirmation(question: string): Promise<boolean> {
 }
 
 async function nukeDatabase() {
-  const moduleRef = await Test.createTestingModule({
-    imports: [AppModule, PersistenceModule],
-  }).compile();
-
-  const app: INestApplication = moduleRef.createNestApplication();
-  const prisma: PrismaService = moduleRef.get(PrismaService);
-
-  await app.init();
+  const prisma = new PrismaClient();
 
   const confirmed = await askConfirmation(
     'Do you want to clean the database and apply migrations? (y/n)',
   );
 
-  if (confirmed) {
-    await prisma.$queryRawUnsafe(`DROP SCHEMA IF EXISTS PUBLIC CASCADE`);
-    execSync('pnpm prisma migrate deploy');
-    console.log('Database cleaned and migrations applied.');
-  } else {
-    console.log('Skipped database cleaning and migrations.');
+  try {
+    if (confirmed) {
+      await prisma.$queryRawUnsafe(`DROP SCHEMA IF EXISTS "public" CASCADE`);
+      execSync('pnpm prisma generate');
+      execSync('pnpm prisma migrate deploy');
+      console.log('Database cleaned and migrations applied.');
+      return true;
+    } else {
+      console.log('Skipped database cleaning and migrations.');
+      return false;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error cleaning the database:', error.message);
+    } else {
+      console.error('Unknown error occurred while cleaning the database:', error);
+    }
+    return false;
+  } finally {
+    await prisma.$disconnect();
+    rl.close();
   }
-
-  await app.close();
-  rl.close();
 }
 
 nukeDatabase()
-  .then(() => {
-    console.log('Database nuke completed.');
+  .then((result) => {
+    if (result) {
+      console.log('Database nuke completed successfully.');
+    } else {
+      console.log('Database nuke did not complete successfully.');
+    }
   })
   .catch((err) => {
-    console.error('Error cleaning the database', err);
+    console.error('Error completing database nuke:', err);
   });

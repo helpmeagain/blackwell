@@ -8,7 +8,6 @@ model UniversalMedicalRecord {
   state                  String?
   emergencyContactEmail  String?   @map("emergency_contact_email")
   emergencyContactNumber String?   @map("emergency_contact_number")
-  cpf                    String?
   allergies              String?
   maritalStatus          String?   @map("marital_status")
   height                 Float?

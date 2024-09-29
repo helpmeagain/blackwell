@@ -33,16 +33,20 @@ export class PrismaClinicianRepository implements ClinicianRepository {
     return PrismaClinicianMapper.toDomain(clinician);
   }
 
-  async findBySlug(slug: string): Promise<Clinician | null> {
-    const clinician = await this.prisma.clinician.findUnique({
-      where: { slug },
+  async findBySlug(slug: string): Promise<Clinician[]> {
+    const clinicians = await this.prisma.clinician.findMany({
+      where: {
+        slug: {
+          contains: slug,
+        },
+      },
     });
 
-    if (!clinician) {
-      return null;
+    if (!clinicians.length) {
+      return [];
     }
 
-    return PrismaClinicianMapper.toDomain(clinician);
+    return clinicians.map(PrismaClinicianMapper.toDomain);
   }
 
   async findMany({ page, orderBy }: PaginationParams): Promise<Clinician[]> {

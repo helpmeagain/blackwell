@@ -41,6 +41,6 @@ export class GetBySlugClinicianController {
 
     const { clinician } = result.value;
 
-    return { clinician: ReturnClinicianPresenter.toHTTP(clinician) };
+    return { clinicians: clinician.map(ReturnClinicianPresenter.toHTTP) };
   }
 }

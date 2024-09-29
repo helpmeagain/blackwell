@@ -11,6 +11,7 @@ export interface PatientProps {
   slug: Slug;
   gender: Gender;
   birthDate: Date;
+  cpf: string;
   phoneNumber: string;
   email: string;
   password: string;
@@ -79,6 +80,15 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set birthDate(birthDate: Date) {
     this.props.birthDate = birthDate;
+    this.touch();
+  }
+
+  get cpf(): string {
+    return this.props.cpf;
+  }
+
+  set cpf(cpf: string) {
+    this.props.cpf = cpf;
     this.touch();
   }
 

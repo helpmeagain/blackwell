@@ -11,6 +11,7 @@ interface editPatientByIdRequest {
   surname: string;
   gender: Gender;
   birthDate: Date;
+  cpf: string;
   phoneNumber: string;
   email: string;
   password: string;
@@ -25,8 +26,17 @@ export class EditPatientByIdUseCase {
   constructor(private readonly repository: PatientRepository) {}
 
   async execute(req: editPatientByIdRequest): Promise<editPatientByIdResponse> {
-    const { patientId, name, surname, gender, birthDate, phoneNumber, email, password } =
-      req;
+    const {
+      patientId,
+      name,
+      surname,
+      gender,
+      birthDate,
+      cpf,
+      phoneNumber,
+      email,
+      password,
+    } = req;
     const patient = await this.repository.findById(patientId);
 
     if (!patient) {
@@ -41,6 +51,7 @@ export class EditPatientByIdUseCase {
     patient.surname = surname;
     patient.gender = gender;
     patient.birthDate = birthDate;
+    patient.cpf = cpf;
     patient.phoneNumber = phoneNumber;
     patient.email = email;
     patient.password = password;
