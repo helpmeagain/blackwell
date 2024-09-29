@@ -25,8 +25,20 @@ export class PrismaPatientRepository implements PatientRepository {
     return PrismaPatientMapper.toDomain(patient);
   }
 
-  async findBySlug(slug: string): Promise<Patient | null> {
+  async findByCpf(cpf: string): Promise<Patient | null> {
     const patient = await this.prisma.patient.findUnique({
+      where: { cpf },
+    });
+
+    if (!patient) {
+      return null;
+    }
+
+    return PrismaPatientMapper.toDomain(patient);
+  }
+
+  async findBySlug(slug: string): Promise<Patient | null> {
+    const patient = await this.prisma.patient.findFirst({
       where: { slug },
     });
 

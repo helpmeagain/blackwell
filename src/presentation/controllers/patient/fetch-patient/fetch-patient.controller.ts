@@ -39,6 +39,8 @@ export class FetchPatientController {
       'occupation',
       'slug',
       'email',
+      'cpf',
+      'birthDate',
       'phoneNumber',
       'password',
       'createdAt',

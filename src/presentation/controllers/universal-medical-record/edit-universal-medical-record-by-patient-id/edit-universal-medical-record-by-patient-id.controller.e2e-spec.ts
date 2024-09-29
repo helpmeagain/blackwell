@@ -43,7 +43,6 @@ describe('Edit universal medical record by id [E2E]', () => {
         state: 'state',
         emergencyContactEmail: 'emergency@email.com',
         emergencyContactNumber: '123456789',
-        cpf: '99999999999',
         allergies: 'allergies',
         maritalStatus: 'single',
         height: 180,

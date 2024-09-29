@@ -23,6 +23,7 @@ describe('Edit a patient By Id', () => {
       surname: 'Doe',
       gender: 'male',
       birthDate: new Date(1990, 0, 1),
+      cpf: '123456789',
       phoneNumber: '123456789',
       email: 'johndoe@email.com',
       password: 'password',

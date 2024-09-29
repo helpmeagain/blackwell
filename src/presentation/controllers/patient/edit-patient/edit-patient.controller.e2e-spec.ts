@@ -7,7 +7,7 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
 
-describe('Edit clinician by id [E2E]', () => {
+describe('Edit patient by id [E2E]', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -37,6 +37,7 @@ describe('Edit clinician by id [E2E]', () => {
         name: 'ExampleName',
         surname: 'ExampleSurname',
         gender: 'other',
+        cpf: '12345678901',
         birthDate: '2000-01-01T12:00:00.000Z',
         phoneNumber: '123456789',
         email: 'exampleEdit@email.com',

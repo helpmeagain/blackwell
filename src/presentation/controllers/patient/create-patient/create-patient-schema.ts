@@ -22,6 +22,7 @@ const createPatientSchema = z
         { message: 'Birth date must be in the past' },
       )
       .openapi({ example: '2000-01-01T00:00:00.000Z' }),
+    cpf: z.string().length(11).openapi({ example: '11111111111' }),
     phoneNumber: z.string().openapi({ example: '9999999999' }),
     email: z.string().email().openapi({ example: 'janedoe@email.com' }),
     password: z
@@ -49,6 +50,7 @@ export const exampleResponse = {
     slug: 'charlie-brown',
     gender: 'male',
     birthDate: '1988-12-31T00:00:00.000Z',
+    cpf: '22222222222',
     phoneNumber: '7777777777',
     email: 'charliebrown@email.com',
     password: '********',

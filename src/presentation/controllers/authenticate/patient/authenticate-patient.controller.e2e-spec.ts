@@ -27,6 +27,7 @@ describe('Authenticate patient [E2E]', () => {
         slug: 'john-doe',
         gender: 'male',
         birthDate: new Date(),
+        cpf: '12345678901',
         phoneNumber: '123456789',
         email: 'jonhdoe@email.com',
         password: await hash('12345', 8),

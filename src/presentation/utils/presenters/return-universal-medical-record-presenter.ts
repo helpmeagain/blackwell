@@ -14,7 +14,6 @@ export class ReturnUniversalMedicalRecordPresenter {
       state: universalMedicalRecord.state,
       emergencyContactEmail: universalMedicalRecord.emergencyContactEmail,
       emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
-      cpf: universalMedicalRecord.cpf,
       allergies: universalMedicalRecord.allergies,
       maritalStatus: universalMedicalRecord.maritalStatus,
       height: universalMedicalRecord.height,

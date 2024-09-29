@@ -12,6 +12,7 @@ interface createPatientRequest {
   surname: string;
   gender: Gender;
   birthDate: Date;
+  cpf: string;
   phoneNumber: string;
   email: string;
   password: string;
@@ -27,12 +28,18 @@ export class CreatePatientUseCase {
   ) {}
 
   async execute(req: createPatientRequest): Promise<createConsultationResponse> {
-    const { name, surname, gender, birthDate, phoneNumber, email, password } = req;
+    const { name, surname, gender, cpf, birthDate, phoneNumber, email, password } = req;
 
-    const patientWithEmailAlreadyExists = await this.patientRepository.findByEmail(email);
+    const [patientWithEmailAlreadyExists, patientWithCpfAlreadyExists] =
+      await Promise.all([
+        this.patientRepository.findByEmail(email),
+        this.patientRepository.findByCpf(cpf),
+      ]);
 
-    if (patientWithEmailAlreadyExists) {
-      return left(new UserAlreadyExists('email', email));
+    if (patientWithEmailAlreadyExists || patientWithCpfAlreadyExists) {
+      const field = patientWithEmailAlreadyExists ? 'email' : 'CPF';
+      const value = patientWithEmailAlreadyExists ? email : cpf;
+      return left(new UserAlreadyExists(field, value));
     }
 
     const hashedPassword = await this.hashGenerator.hash(password);
@@ -41,6 +48,7 @@ export class CreatePatientUseCase {
       name,
       surname,
       gender,
+      cpf,
       birthDate,
       phoneNumber,
       email,
@@ -50,12 +58,6 @@ export class CreatePatientUseCase {
     patient.universalMedicalRecord = UniversalMedicalRecord.create({
       patientId: patient.id,
     });
-    const patientWithSlugAlreadyExists = await this.patientRepository.findBySlug(
-      patient.slug.value,
-    );
-    if (patientWithSlugAlreadyExists) {
-      patient.slug.value = patient.slug.value + Math.floor(Math.random() * 100);
-    }
 
     await this.universalMedicalRecordRepository.create(patient.universalMedicalRecord);
     await this.patientRepository.create(patient);

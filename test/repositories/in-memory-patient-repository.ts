@@ -15,6 +15,16 @@ export class InMemoryPatientRepository implements PatientRepository {
     return patient;
   }
 
+  async findByCpf(cpf: string) {
+    const patient = this.items.find((item) => item.cpf === cpf);
+
+    if (!patient) {
+      return null;
+    }
+
+    return patient;
+  }
+
   async findById(id: string) {
     const patient = this.items.find((item) => item.id.toString() === id);
 
