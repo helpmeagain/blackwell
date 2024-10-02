@@ -13,6 +13,9 @@ export class CreatePatientPresenter {
       cpf: patient.cpf,
       birthDate: patient.birthDate,
       phoneNumber: patient.phoneNumber,
+      address: patient.address,
+      city: patient.city,
+      state: patient.state,
       email: patient.email,
       password: maskPassword(password),
     };

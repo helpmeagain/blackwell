@@ -25,6 +25,9 @@ describe('Edit a patient By Id', () => {
       birthDate: new Date(1990, 0, 1),
       cpf: '123456789',
       phoneNumber: '123456789',
+      address: 'address',
+      city: 'city',
+      state: 'state',
       email: 'johndoe@email.com',
       password: 'password',
     });

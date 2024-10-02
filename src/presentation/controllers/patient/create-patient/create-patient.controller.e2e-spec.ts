@@ -27,6 +27,9 @@ describe('Create patient [E2E]', () => {
       birthDate: '2000-01-01T12:00:00.000Z',
       cpf: '12345678901',
       phoneNumber: '123456789',
+      address: 'address',
+      city: 'city',
+      state: 'state',
       email: 'jonhdoe@email.com',
       password: '12345678qwertY',
     });

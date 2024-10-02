@@ -24,6 +24,9 @@ const createPatientSchema = z
       .openapi({ example: '2000-01-01T00:00:00.000Z' }),
     cpf: z.string().length(11).openapi({ example: '11111111111' }),
     phoneNumber: z.string().openapi({ example: '9999999999' }),
+    address: z.string().openapi({ example: '123 Main St' }),
+    city: z.string().openapi({ example: 'Fortaleza' }),
+    state: z.string().openapi({ example: 'Ceará' }),
     email: z.string().email().openapi({ example: 'janedoe@email.com' }),
     password: z
       .string()
@@ -52,6 +55,9 @@ export const exampleResponse = {
     birthDate: '1988-12-31T00:00:00.000Z',
     cpf: '22222222222',
     phoneNumber: '7777777777',
+    address: '456 Elm St',
+    city: 'New York',
+    state: 'New York',
     email: 'charliebrown@email.com',
     password: '********',
     createdAt: '2018-11-20T08:45:30.123Z',

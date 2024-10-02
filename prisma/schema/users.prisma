@@ -26,6 +26,9 @@ model Patient {
   birthDate                DateTime  @map("birth_date")
   cpf                      String    @unique
   phoneNumber              String    @map("phone_number")
+  address                  String
+  state                    String
+  city                     String
   universalMedicalRecordId String?   @unique @map("universal_medical_record_id")
   email                    String    @unique
   password                 String

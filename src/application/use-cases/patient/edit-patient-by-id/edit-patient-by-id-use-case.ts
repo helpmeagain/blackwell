@@ -13,6 +13,9 @@ interface editPatientByIdRequest {
   birthDate: Date;
   cpf: string;
   phoneNumber: string;
+  address: string;
+  city: string;
+  state: string;
   email: string;
   password: string;
 }
@@ -33,6 +36,9 @@ export class EditPatientByIdUseCase {
       gender,
       birthDate,
       cpf,
+      address,
+      city,
+      state,
       phoneNumber,
       email,
       password,
@@ -52,6 +58,9 @@ export class EditPatientByIdUseCase {
     patient.gender = gender;
     patient.birthDate = birthDate;
     patient.cpf = cpf;
+    patient.address = address;
+    patient.city = city;
+    patient.state = state;
     patient.phoneNumber = phoneNumber;
     patient.email = email;
     patient.password = password;
