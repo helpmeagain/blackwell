@@ -53,6 +53,6 @@ describe('Edit universal medical record by id [E2E]', () => {
         id: patients.universalMedicalRecord.id.toString(),
       },
     });
-    expect(medicalRecordOnDatabase?.allergies).toBe('allergies');
+    expect(medicalRecordOnDatabase?.allergies).toStrictEqual(['Peanuts', 'Lactose']);
   });
 });
