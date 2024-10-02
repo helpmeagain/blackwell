@@ -38,12 +38,9 @@ describe('Edit universal medical record by id [E2E]', () => {
       .send({
         diagnosis: ['diagnosis1', 'diagnosis2'],
         profession: 'working',
-        address: 'address',
-        city: 'city',
-        state: 'state',
         emergencyContactEmail: 'emergency@email.com',
         emergencyContactNumber: '123456789',
-        allergies: 'allergies',
+        allergies: ['Peanuts', 'Lactose'],
         maritalStatus: 'single',
         height: 180,
         weight: 80,
@@ -56,6 +53,6 @@ describe('Edit universal medical record by id [E2E]', () => {
         id: patients.universalMedicalRecord.id.toString(),
       },
     });
-    expect(medicalRecordOnDatabase?.allergies).toBe('allergies');
+    expect(medicalRecordOnDatabase?.allergies).toStrictEqual(['Peanuts', 'Lactose']);
   });
 });

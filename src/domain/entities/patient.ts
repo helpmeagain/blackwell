@@ -13,6 +13,9 @@ export interface PatientProps {
   birthDate: Date;
   cpf: string;
   phoneNumber: string;
+  address: string;
+  city: string;
+  state: string;
   email: string;
   password: string;
   universalMedicalRecord?: UniversalMedicalRecord;
@@ -98,6 +101,33 @@ export class Patient extends AggregateRoot<PatientProps> {
 
   set phoneNumber(phoneNumber: string) {
     this.props.phoneNumber = phoneNumber;
+    this.touch();
+  }
+
+  get address(): string {
+    return this.props.address;
+  }
+
+  set address(address: string) {
+    this.props.address = address;
+    this.touch();
+  }
+
+  get city(): string {
+    return this.props.city;
+  }
+
+  set city(city: string) {
+    this.props.city = city;
+    this.touch();
+  }
+
+  get state(): string {
+    return this.props.state;
+  }
+
+  set state(state: string) {
+    this.props.state = state;
     this.touch();
   }
 

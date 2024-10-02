@@ -3,15 +3,12 @@ model UniversalMedicalRecord {
   patientId              String    @unique @map("patient_id")
   consultationId         String[]  @map("consultations_ids")
   profession             String?
-  address                String?
-  city                   String?
-  state                  String?
   emergencyContactEmail  String?   @map("emergency_contact_email")
   emergencyContactNumber String?   @map("emergency_contact_number")
-  allergies              String?
   maritalStatus          String?   @map("marital_status")
   height                 Float?
   weight                 Float?
+  allergies              String[]
   diagnosis              String[]
   medicationsInUse       String[]  @map("medications_in_use")
   createdAt              DateTime  @default(now()) @map("created_at")

@@ -40,6 +40,9 @@ describe('Edit patient by id [E2E]', () => {
         cpf: '12345678901',
         birthDate: '2000-01-01T12:00:00.000Z',
         phoneNumber: '123456789',
+        address: 'address',
+        city: 'city',
+        state: 'state',
         email: 'exampleEdit@email.com',
         password: '12345678qwertY',
       });

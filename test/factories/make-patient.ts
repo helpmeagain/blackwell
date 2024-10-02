@@ -16,6 +16,9 @@ export function makePatient(override: Partial<PatientProps> = {}, id?: UniqueEnt
       birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
       cpf: faker.number.int({ min: 10000000000, max: 99999999999 }).toString(),
       phoneNumber: faker.phone.number(),
+      address: faker.location.street(),
+      city: faker.location.city(),
+      state: faker.location.state(),
       email: faker.internet
         .email({ firstName: mockName, lastName: mockSurName })
         .toLowerCase(),

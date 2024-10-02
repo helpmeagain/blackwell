@@ -46,7 +46,7 @@ export class PrismaUniversalMedicalRecordMapper {
       profession: universalMedicalRecord.profession,
       emergencyContactEmail: universalMedicalRecord.emergencyContactEmail,
       emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
-      allergies: universalMedicalRecord.allergies,
+      allergies: universalMedicalRecord.allergies ?? [],
       maritalStatus: universalMedicalRecord.maritalStatus,
       height: universalMedicalRecord.height,
       weight: universalMedicalRecord.weight,

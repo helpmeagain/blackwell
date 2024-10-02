@@ -24,6 +24,9 @@ const editPatientSchema = z
       .openapi({ example: '2001-01-01T00:00:00.000Z' }),
     cpf: z.string().length(11).openapi({ example: '11111111111' }),
     phoneNumber: z.string().openapi({ example: '9999999999' }),
+    address: z.string().openapi({ example: '123 Main St' }),
+    city: z.string().openapi({ example: 'Fortaleza' }),
+    state: z.string().openapi({ example: 'Ceará' }),
     email: z.string().email().openapi({ example: 'janedoe@email.com' }),
     password: z
       .string()

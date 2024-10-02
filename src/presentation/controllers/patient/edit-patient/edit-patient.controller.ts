@@ -35,7 +35,19 @@ export class EditPatientController {
   @ApiBadRequestResponse({ description: 'Invalid information' })
   @ApiConflictResponse({ description: 'Conflict' })
   async handle(@Body(validationBody) body: typeof BodyType, @Param('id') id: string) {
-    const { name, surname, gender, birthDate, cpf, phoneNumber, email, password } = body;
+    const {
+      name,
+      surname,
+      gender,
+      birthDate,
+      cpf,
+      phoneNumber,
+      address,
+      state,
+      city,
+      email,
+      password,
+    } = body;
 
     const result = await this.editPatient.execute({
       patientId: id,
@@ -44,6 +56,9 @@ export class EditPatientController {
       gender,
       birthDate: new Date(birthDate),
       cpf,
+      address,
+      state,
+      city,
       phoneNumber,
       email,
       password,

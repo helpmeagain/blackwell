@@ -30,6 +30,9 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       cpf: '123456789',
       phoneNumber: '+1234567890',
+      address: 'address',
+      city: 'city',
+      state: 'state',
       email: 'jonhdoe@email.com',
       password: 'password',
     });
@@ -49,6 +52,9 @@ describe('Create Patient', () => {
       birthDate: new Date(),
       cpf: '123456789',
       phoneNumber: '+1234567890',
+      address: 'address',
+      city: 'city',
+      state: 'state',
       email: 'jonhdoe@email.com',
       password: 'password',
     });

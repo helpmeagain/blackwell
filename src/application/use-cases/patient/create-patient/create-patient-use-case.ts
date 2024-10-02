@@ -14,6 +14,9 @@ interface createPatientRequest {
   birthDate: Date;
   cpf: string;
   phoneNumber: string;
+  address: string;
+  city: string;
+  state: string;
   email: string;
   password: string;
 }
@@ -28,7 +31,19 @@ export class CreatePatientUseCase {
   ) {}
 
   async execute(req: createPatientRequest): Promise<createConsultationResponse> {
-    const { name, surname, gender, cpf, birthDate, phoneNumber, email, password } = req;
+    const {
+      name,
+      surname,
+      gender,
+      cpf,
+      birthDate,
+      phoneNumber,
+      address,
+      city,
+      state,
+      email,
+      password,
+    } = req;
 
     const [patientWithEmailAlreadyExists, patientWithCpfAlreadyExists] =
       await Promise.all([
@@ -51,6 +66,9 @@ export class CreatePatientUseCase {
       cpf,
       birthDate,
       phoneNumber,
+      address,
+      city,
+      state,
       email,
       password: hashedPassword,
     });
