@@ -4,6 +4,7 @@ import { NotAllowed } from '@error/errors/not-allowed';
 import { Patient } from '@entities/patient';
 import { type PatientRepository } from '@application/repositories/patient-repository';
 import { Gender } from '@/domain/common/types/gender-type';
+import { HashGenerator } from '@/application/cryptography/hash-generator';
 
 interface editPatientByIdRequest {
   patientId: string;
@@ -26,7 +27,10 @@ type editPatientByIdResponse = Either<
 >;
 
 export class EditPatientByIdUseCase {
-  constructor(private readonly repository: PatientRepository) {}
+  constructor(
+    private readonly repository: PatientRepository,
+    private readonly hashGenerator: HashGenerator,
+  ) {}
 
   async execute(req: editPatientByIdRequest): Promise<editPatientByIdResponse> {
     const {
@@ -53,6 +57,8 @@ export class EditPatientByIdUseCase {
       return left(new NotAllowed());
     }
 
+    const hashedPassword = await this.hashGenerator.hash(password);
+
     patient.name = name;
     patient.surname = surname;
     patient.gender = gender;
@@ -63,7 +69,7 @@ export class EditPatientByIdUseCase {
     patient.state = state;
     patient.phoneNumber = phoneNumber;
     patient.email = email;
-    patient.password = password;
+    patient.password = hashedPassword;
     await this.repository.save(patient);
 
     return right({ patient });
