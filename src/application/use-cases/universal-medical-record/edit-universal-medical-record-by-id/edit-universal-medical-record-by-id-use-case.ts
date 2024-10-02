@@ -7,15 +7,12 @@ import { UniversalMedicalRecordRepository } from '@/application/repositories/uni
 interface editUniversalMedicalRecordByIdRequest {
   universalMedicalRecordId: string;
   profession: string;
-  address: string;
-  city: string;
-  state: string;
   emergencyContactEmail: string;
   emergencyContactNumber: string;
-  allergies: string;
   maritalStatus: string;
   height: number;
   weight: number;
+  allergies: string[];
   diagnosis: string[];
   medicationsInUse: string[];
 }
@@ -34,9 +31,6 @@ export class EditUniversalMedicalRecordByIdUseCase {
     const {
       universalMedicalRecordId,
       profession,
-      address,
-      city,
-      state,
       emergencyContactEmail,
       emergencyContactNumber,
       allergies,
@@ -56,9 +50,6 @@ export class EditUniversalMedicalRecordByIdUseCase {
 
     universalMedicalRecord.diagnosis = diagnosis;
     universalMedicalRecord.profession = profession;
-    universalMedicalRecord.address = address;
-    universalMedicalRecord.city = city;
-    universalMedicalRecord.state = state;
     universalMedicalRecord.emergencyContactEmail = emergencyContactEmail;
     universalMedicalRecord.emergencyContactNumber = emergencyContactNumber;
     universalMedicalRecord.allergies = allergies;

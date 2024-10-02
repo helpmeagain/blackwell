@@ -7,15 +7,12 @@ interface UniversalMedicalRecordProps {
   patientId: UniqueEntityId;
   consultationsIds: ConsultationIdList;
   profession?: string | null;
-  address?: string | null;
-  city?: string | null;
-  state?: string | null;
   emergencyContactEmail?: string | null;
   emergencyContactNumber?: string | null;
-  allergies?: string | null;
   maritalStatus?: string | null;
   height?: number | null;
   weight?: number | null;
+  allergies?: string[] | null;
   diagnosis?: string[] | null;
   medicationsInUse?: string[] | null;
   createdAt: Date;
@@ -69,32 +66,6 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
     this.touch();
   }
 
-  get address(): string | undefined | null {
-    return this.props.address;
-  }
-
-  set address(value: string | undefined | null) {
-    this.props.address = value;
-    this.touch();
-  }
-  get city(): string | undefined | null {
-    return this.props.city;
-  }
-
-  set city(value: string | undefined | null) {
-    this.props.city = value;
-    this.touch();
-  }
-
-  get state(): string | undefined | null {
-    return this.props.state;
-  }
-
-  set state(value: string | undefined | null) {
-    this.props.state = value;
-    this.touch();
-  }
-
   get emergencyContactEmail(): string | null | undefined {
     return this.props.emergencyContactEmail;
   }
@@ -113,11 +84,11 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
     this.touch();
   }
 
-  get allergies(): string | null | undefined {
+  get allergies(): string[] | null | undefined {
     return this.props.allergies;
   }
 
-  set allergies(value: string) {
+  set allergies(value: string[] | null | undefined) {
     this.props.allergies = value;
     this.touch();
   }
