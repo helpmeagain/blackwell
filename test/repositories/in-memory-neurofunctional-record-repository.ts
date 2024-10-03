@@ -6,6 +6,40 @@ export class InMemoryNeurofunctionalRecordRepository
 {
   public items: NeurofunctionalRecord[] = [];
 
+  async findById(id: string) {
+    const neuroFunctional = this.items.find((item) => item.id.toString() === id);
+
+    if (!neuroFunctional) {
+      return null;
+    }
+
+    return neuroFunctional;
+  }
+
+  async findByPatientId(patientId: string) {
+    const neuroFunctional = this.items.find(
+      (item) => item.patientId.toString() === patientId,
+    );
+
+    if (!neuroFunctional) {
+      return null;
+    }
+
+    return neuroFunctional;
+  }
+
+  async findByUniversalRecordId(universalRecordId: string) {
+    const neuroFunctional = this.items.find(
+      (item) => item.universalMedicalRecordId.toString() === universalRecordId,
+    );
+
+    if (!neuroFunctional) {
+      return null;
+    }
+
+    return neuroFunctional;
+  }
+
   async create(neurofunctionalRecord: NeurofunctionalRecord) {
     this.items.push(neurofunctionalRecord);
   }
