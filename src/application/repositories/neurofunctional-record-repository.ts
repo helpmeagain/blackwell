@@ -7,4 +7,5 @@ export abstract class NeurofunctionalRecordRepository {
     universalRecordId: string,
   ) => Promise<NeurofunctionalRecord | null>;
   abstract create: (neurofunctionalRecord: NeurofunctionalRecord) => Promise<void>;
+  abstract save: (neurofunctionalRecord: NeurofunctionalRecord) => Promise<void>;
 }

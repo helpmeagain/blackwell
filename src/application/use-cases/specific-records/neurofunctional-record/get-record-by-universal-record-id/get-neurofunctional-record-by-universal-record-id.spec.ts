@@ -25,7 +25,6 @@ describe('Get Neurofunctional Record By Id', () => {
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
       expect(result.value?.neurofunctionalRecord.id).toEqual(newNeurofunctional.id);
-      console.log(result.value?.neurofunctionalRecord);
     }
   });
 });

@@ -43,4 +43,9 @@ export class InMemoryNeurofunctionalRecordRepository
   async create(neurofunctionalRecord: NeurofunctionalRecord) {
     this.items.push(neurofunctionalRecord);
   }
+
+  async save(neurofunctionalRecord: NeurofunctionalRecord) {
+    const index = this.items.findIndex((item) => item.id === neurofunctionalRecord.id);
+    this.items[index] = neurofunctionalRecord;
+  }
 }
