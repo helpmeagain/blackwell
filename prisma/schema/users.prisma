@@ -12,7 +12,8 @@ model Clinician {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
 
-  consultations Consultation[]
+  consultations         Consultation[]
+  NeurofunctionalRecord NeurofunctionalRecord[]
 
   @@map("clinicians")
 }
@@ -38,6 +39,7 @@ model Patient {
 
   Consultation           Consultation[]
   UniversalMedicalRecord UniversalMedicalRecord? @relation("record", fields: [universalMedicalRecordId], references: [id])
+  NeurofunctionalRecord  NeurofunctionalRecord?
 
   @@map("patients")
 }

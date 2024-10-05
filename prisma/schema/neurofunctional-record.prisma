@@ -1,0 +1,110 @@
+model NeurofunctionalRecord {
+  id                          String                  @id @default(uuid())
+  clinicianId                 String
+  patientId                   String                  @unique
+  universalMedicalRecordId    String                  @unique
+  medicalDiagnosis            String
+  anamnesis                   String
+  physicalExamination         String
+  physiotherapyDepartment     PhysiotherapyDepartment
+  triage                      Triage
+  // lifestyleHabits {
+  alcoholConsumption          Boolean
+  smoker                      Boolean
+  obesity                     Boolean
+  diabetes                    Boolean
+  drugUser                    Boolean
+  physicalActivity            Boolean
+  // }
+  // vitalSigns {
+  bloodPressure               Float
+  heartRate                   Float
+  respiratoryRate             Float
+  oxygenSaturation            Float
+  bodyTemperature             Float
+  // }
+  // physicalInspection {
+  independentMobility         Boolean
+  usesCrutches                Boolean
+  usesWalker                  Boolean
+  wheelchairUser              Boolean
+  hasScar                     Boolean
+  hasBedsore                  Boolean
+  cooperative                 Boolean
+  nonCooperative              Boolean
+  hydrated                    Boolean
+  hasHematoma                 Boolean
+  hasEdema                    Boolean
+  hasDeformity                Boolean
+  // }
+  // sensoryAssessment {
+  superficial                 SuperficialSensation
+  deep                        DeepSensation
+  //    combinedSensations {
+  graphesthesia               Boolean
+  barognosis                  Boolean
+  stereognosis                Boolean
+  //     }
+  // }
+  // patientMobility {
+  threeMeterWalkTimeInSeconds Float
+  hasFallRisk                 Boolean
+  //    postureChanges {
+  bridge                      MobilityStatus
+  semiRollRight               MobilityStatus
+  semiRollLeft                MobilityStatus
+  fullRoll                    MobilityStatus
+  drag                        MobilityStatus
+  proneToForearmSupport       MobilityStatus
+  forearmSupportToAllFours    MobilityStatus
+  allFours                    MobilityStatus
+  allFoursToKneeling          MobilityStatus
+  kneelingToHalfKneelingRight MobilityStatus
+  kneelingToHalfKneelingLeft  MobilityStatus
+  halfKneelingRightToStanding MobilityStatus
+  halfKneelingLeftToStanding  MobilityStatus
+  //     }
+  // }
+  // physiotherapyAssessment {
+  diagnosis                   String
+  treatmentGoals              String
+  physiotherapeuticConduct    String
+  // }
+  createdAt                   DateTime                @default(now())
+  updatedAt                   DateTime?               @updatedAt
+
+  clinicians             Clinician              @relation(fields: [clinicianId], references: [id])
+  patients               Patient                @relation(fields: [patientId], references: [id])
+  UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+}
+
+enum PhysiotherapyDepartment {
+  Orthopedic
+  Neurofunctional
+  Cardiorespiratory
+}
+
+enum Triage {
+  orange
+  yellow
+  green
+  blue
+}
+
+enum SuperficialSensation {
+  Tactile
+  Thermal
+  Painful
+}
+
+enum DeepSensation {
+  PositionSense
+  MovementSense
+}
+
+enum MobilityStatus {
+  Independent
+  PartiallyDependent
+  Dependent
+  CannotPerform
+}

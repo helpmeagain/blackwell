@@ -13,7 +13,7 @@ export interface SpecificMedicalRecordProps {
   physiotherapyDepartment: PhysiotherapyDepartment;
   triage: Triage;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export class SpecificMedicalRecord<
@@ -84,7 +84,7 @@ export class SpecificMedicalRecord<
     return this.props.createdAt;
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date | undefined | null {
     return this.props.updatedAt;
   }
 }
