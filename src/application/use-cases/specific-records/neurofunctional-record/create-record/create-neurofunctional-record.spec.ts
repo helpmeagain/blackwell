@@ -1,20 +1,37 @@
 import { InMemoryNeurofunctionalRecordRepository } from 'test/repositories/in-memory-neurofunctional-record-repository';
 import { createNeurofunctionalRecord } from './create-neurofunctional-record';
+import { InMemoryPatientRepository } from 'test/repositories/in-memory-patient-repository';
+import { InMemoryClinicianRepository } from 'test/repositories/in-memory-clinician-repository';
+import { makePatient } from 'test/factories/make-patient';
+import { makeClinician } from 'test/factories/make-clinician';
 
-let inMemoryRepository: InMemoryNeurofunctionalRecordRepository;
+let inMemoryNeurofunctionalRecordRepository: InMemoryNeurofunctionalRecordRepository;
+let inMemoryPatientRepository: InMemoryPatientRepository;
+let inMemoryClinicianRepository: InMemoryClinicianRepository;
 let sut: createNeurofunctionalRecord;
 
 describe('Create Neurofunctional Record', () => {
   beforeEach(() => {
-    inMemoryRepository = new InMemoryNeurofunctionalRecordRepository();
-    sut = new createNeurofunctionalRecord(inMemoryRepository);
+    inMemoryNeurofunctionalRecordRepository =
+      new InMemoryNeurofunctionalRecordRepository();
+    inMemoryPatientRepository = new InMemoryPatientRepository();
+    inMemoryClinicianRepository = new InMemoryClinicianRepository();
+    sut = new createNeurofunctionalRecord(
+      inMemoryNeurofunctionalRecordRepository,
+      inMemoryPatientRepository,
+      inMemoryClinicianRepository,
+    );
   });
 
   it('should be able to create a neurofunctional record', async () => {
+    const patient = makePatient();
+    const clinician = makeClinician();
+    await inMemoryPatientRepository.create(patient);
+    await inMemoryClinicianRepository.create(clinician);
+
     const result = await sut.execute({
-      clinicianId: '1',
-      patientId: '1',
-      universalMedicalRecordId: '1',
+      clinicianId: clinician.id.toString(),
+      patientId: patient.id.toString(),
       medicalDiagnosis: 'diagnosis',
       anamnesis: 'anamnesis',
       physicalExamination: 'physical examination',
@@ -84,16 +101,22 @@ describe('Create Neurofunctional Record', () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryRepository.items).toHaveLength(1);
-    expect(inMemoryRepository.items[0].anamnesis).toBe('anamnesis');
-    expect(inMemoryRepository.items[0].vitalSigns.heartRate).toBe(80);
-    expect(inMemoryRepository.items[0].patientMobility.postureChanges.drag).toBe(
-      'Independent',
+    expect(inMemoryNeurofunctionalRecordRepository.items).toHaveLength(1);
+    expect(inMemoryNeurofunctionalRecordRepository.items[0].anamnesis).toBe('anamnesis');
+    expect(inMemoryNeurofunctionalRecordRepository.items[0].vitalSigns.heartRate).toBe(
+      80,
     );
-    expect(result.value?.neurofunctionalRecord.anamnesis).toBe('anamnesis');
-    expect(result.value?.neurofunctionalRecord.vitalSigns.heartRate).toBe(80);
-    expect(result.value?.neurofunctionalRecord.patientMobility.postureChanges.drag).toBe(
-      'Independent',
-    );
+    expect(
+      inMemoryNeurofunctionalRecordRepository.items[0].patientMobility.postureChanges
+        .drag,
+    ).toBe('Independent');
+
+    if (result.isRight()) {
+      expect(result.value?.neurofunctionalRecord.anamnesis).toBe('anamnesis');
+      expect(result.value?.neurofunctionalRecord.vitalSigns.heartRate).toBe(80);
+      expect(
+        result.value?.neurofunctionalRecord.patientMobility.postureChanges.drag,
+      ).toBe('Independent');
+    }
   });
 });

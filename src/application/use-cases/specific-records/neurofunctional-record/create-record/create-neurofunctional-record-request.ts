@@ -4,7 +4,6 @@ import { Triage } from '@/domain/common/types/triage-type';
 export interface createNeurofunctionalRecordRequest {
   clinicianId: string;
   patientId: string;
-  universalMedicalRecordId: string;
   medicalDiagnosis: string;
   anamnesis: string;
   physicalExamination: string;

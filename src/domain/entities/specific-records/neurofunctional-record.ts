@@ -71,12 +71,13 @@ export interface NeurofunctionalRecordProps extends SpecificMedicalRecordProps {
 
 export class NeurofunctionalRecord extends SpecificMedicalRecord<NeurofunctionalRecordProps> {
   static create(
-    props: Optional<NeurofunctionalRecordProps, 'createdAt'>,
+    props: Optional<NeurofunctionalRecordProps, 'physiotherapyDepartment' | 'createdAt'>,
     id?: UniqueEntityId,
   ) {
     const neurofunctionalRecord = new NeurofunctionalRecord(
       {
         ...props,
+        physiotherapyDepartment: 'Neurofunctional',
         createdAt: props.createdAt ?? new Date(),
       },
       id,
