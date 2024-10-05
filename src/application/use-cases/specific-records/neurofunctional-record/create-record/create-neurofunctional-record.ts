@@ -1,20 +1,8 @@
 import { Either, right } from '@error/either';
-import { Triage } from '@/domain/common/types/triage-type';
 import { NeurofunctionalRecord } from '@/domain/entities/specific-records/neurofunctional-record';
 import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
-
-interface createNeurofunctionalRecordRequest {
-  clinicianId: string;
-  patientId: string;
-  universalMedicalRecordId: string;
-  medicalDiagnosis: string;
-  anamnesis: string;
-  physicalExamination: string;
-  triage: Triage;
-  specialNeurofunctionalTests1: string;
-  specialNeurofunctionalTests2: string;
-}
+import { createNeurofunctionalRecordRequest } from './create-neurofunctional-record-request';
 
 type createNeurofunctionalRecordResponse = Either<
   null,
@@ -29,29 +17,21 @@ export class createNeurofunctionalRecord {
   async execute(
     req: createNeurofunctionalRecordRequest,
   ): Promise<createNeurofunctionalRecordResponse> {
-    const {
-      clinicianId,
-      patientId,
-      universalMedicalRecordId,
-      medicalDiagnosis,
-      anamnesis,
-      physicalExamination,
-      triage,
-      specialNeurofunctionalTests1,
-      specialNeurofunctionalTests2,
-    } = req;
-
     const neurofunctionalRecord = NeurofunctionalRecord.create({
-      clinicianId: new UniqueEntityId(clinicianId),
-      patientId: new UniqueEntityId(patientId),
-      universalMedicalRecordId: new UniqueEntityId(universalMedicalRecordId),
-      medicalDiagnosis,
-      anamnesis,
-      physicalExamination,
+      clinicianId: new UniqueEntityId(req.clinicianId),
+      patientId: new UniqueEntityId(req.patientId),
+      universalMedicalRecordId: new UniqueEntityId(req.universalMedicalRecordId),
+      medicalDiagnosis: req.medicalDiagnosis,
+      anamnesis: req.anamnesis,
+      physicalExamination: req.physicalExamination,
       physiotherapyDepartment: 'Neurofunctional',
-      triage,
-      specialNeurofunctionalTests1,
-      specialNeurofunctionalTests2,
+      triage: req.triage,
+      lifestyleHabits: req.lifestyleHabits,
+      vitalSigns: req.vitalSigns,
+      physicalInspection: req.physicalInspection,
+      sensoryAssessment: req.sensoryAssessment,
+      patientMobility: req.patientMobility,
+      physiotherapyAssessment: req.physiotherapyAssessment,
     });
 
     await this.neurofunctionalRecordRepository.create(neurofunctionalRecord);
