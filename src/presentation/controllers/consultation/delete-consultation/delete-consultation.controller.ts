@@ -1,6 +1,7 @@
 import { Controller, Delete, HttpCode, NotFoundException, Param } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiNoContentResponse,
   ApiOperation,
   ApiTags,
@@ -10,6 +11,7 @@ import { NestDeleteConsultationByIdUseCase } from '@/infrastructure/adapter/cons
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
+@ApiExcludeController()
 @Controller('consultations/:id')
 export class DeleteConsultationController {
   constructor(private deleteByIdConsultations: NestDeleteConsultationByIdUseCase) {}

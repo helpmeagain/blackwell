@@ -2,6 +2,7 @@ import { Body, Controller, NotFoundException, Param, Put } from '@nestjs/common'
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -13,6 +14,7 @@ import { NestEditConsultationByIdUseCase } from '@/infrastructure/adapter/consul
 import { BodyType, swaggerBody, validationBody } from './edit-consultation-schema';
 import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 
+@ApiExcludeController()
 @Controller('consultations/:id')
 export class EditConsultationController {
   constructor(private editByIdConsultations: NestEditConsultationByIdUseCase) {}

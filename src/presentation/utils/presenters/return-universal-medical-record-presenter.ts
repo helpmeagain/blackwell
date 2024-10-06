@@ -5,9 +5,9 @@ export class ReturnUniversalMedicalRecordPresenter {
     return {
       id: universalMedicalRecord.id.toString(),
       patientId: universalMedicalRecord.patientId.toString(),
-      consultationsIds: universalMedicalRecord.consultationsIds.currentItems.map((id) =>
-        id.toString(),
-      ),
+      // consultationsIds: universalMedicalRecord.consultationsIds.currentItems.map((id) =>
+      //   id.toString(),
+      // ),
       specificMedicalRecordsIds: {
         neurofunctionalRecord:
           universalMedicalRecord.neurofunctionalRecordId?.toString() ?? null,
