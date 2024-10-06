@@ -8,6 +8,12 @@ export class ReturnUniversalMedicalRecordPresenter {
       consultationsIds: universalMedicalRecord.consultationsIds.currentItems.map((id) =>
         id.toString(),
       ),
+      specificMedicalRecordsIds: {
+        neurofunctionalRecord:
+          universalMedicalRecord.neurofunctionalRecordId?.toString() ?? null,
+        cardiorespiratoryRecord: null,
+        traumatoOrthopedicRecord: null,
+      },
       profession: universalMedicalRecord.profession,
       emergencyContactEmail: universalMedicalRecord.emergencyContactEmail,
       emergencyContactNumber: universalMedicalRecord.emergencyContactNumber,
