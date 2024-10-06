@@ -9,7 +9,7 @@ type editNeurofunctionalRecordResponse = Either<
   { neurofunctionalRecord: NeurofunctionalRecord }
 >;
 
-export class editNeurofunctionalRecord {
+export class EditNeurofunctionalByIdUseCase {
   constructor(
     private readonly neurofunctionalRecordRepository: NeurofunctionalRecordRepository,
   ) {}

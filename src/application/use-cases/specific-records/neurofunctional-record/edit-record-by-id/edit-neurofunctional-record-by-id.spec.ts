@@ -1,15 +1,15 @@
 import { InMemoryNeurofunctionalRecordRepository } from 'test/repositories/in-memory-neurofunctional-record-repository';
-import { editNeurofunctionalRecord } from './edit-neurofunctional-record-by-id';
+import { EditNeurofunctionalByIdUseCase } from './edit-neurofunctional-record-by-id';
 import { makeNeurofunctionalRecord } from 'test/factories/make-neurofunctional-record';
 import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
 let inMemoryRepository: InMemoryNeurofunctionalRecordRepository;
-let sut: editNeurofunctionalRecord;
+let sut: EditNeurofunctionalByIdUseCase;
 
 describe('Create Neurofunctional Record', () => {
   beforeEach(() => {
     inMemoryRepository = new InMemoryNeurofunctionalRecordRepository();
-    sut = new editNeurofunctionalRecord(inMemoryRepository);
+    sut = new EditNeurofunctionalByIdUseCase(inMemoryRepository);
   });
 
   it('should be able to create a neurofunctional record', async () => {
