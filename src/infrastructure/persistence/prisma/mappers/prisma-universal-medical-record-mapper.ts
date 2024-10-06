@@ -8,7 +8,11 @@ import {
 } from '@prisma/client';
 
 export class PrismaUniversalMedicalRecordMapper {
-  static toDomain(raw: PrismaUniversalMedicalRecord): UniversalMedicalRecord {
+  static toDomain(
+    raw: PrismaUniversalMedicalRecord & {
+      NeurofunctionalRecord?: { id: string } | null;
+    },
+  ): UniversalMedicalRecord {
     const universalMedicalRecord = UniversalMedicalRecord.create(
       {
         patientId: new UniqueEntityId(raw.patientId),
@@ -24,6 +28,9 @@ export class PrismaUniversalMedicalRecordMapper {
         height: raw.height,
         weight: raw.weight,
         medicationsInUse: raw.medicationsInUse,
+        neurofunctionalRecordId: raw.NeurofunctionalRecord?.id
+          ? new UniqueEntityId(raw.NeurofunctionalRecord.id)
+          : null,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },
