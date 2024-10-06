@@ -3,6 +3,7 @@ import { NeurofunctionalRecord } from '@/domain/entities/specific-records/neurof
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaNeurofunctionalRecordMapper } from '../mappers/prisma-neurofunctional-record-mapper';
+import { PaginationParams } from '@/application/common/pagination-params';
 
 @Injectable()
 export class PrismaNeurofunctionalRecordRepository
@@ -21,6 +22,7 @@ export class PrismaNeurofunctionalRecordRepository
 
     return PrismaNeurofunctionalRecordMapper.toDomain(neurofunctionalRecord);
   }
+
   async findByPatientId(patientId: string): Promise<NeurofunctionalRecord | null> {
     const neurofunctionalRecord = await this.prisma.neurofunctionalRecord.findUnique({
       where: { patientId },
@@ -45,6 +47,20 @@ export class PrismaNeurofunctionalRecordRepository
     }
 
     return PrismaNeurofunctionalRecordMapper.toDomain(neurofunctionalRecord);
+  }
+
+  async findManyByClinicianId(
+    clinicianId: string,
+    { page, orderBy }: PaginationParams,
+  ): Promise<NeurofunctionalRecord[]> {
+    const neurofunctionalRecord = await this.prisma.neurofunctionalRecord.findMany({
+      where: { clinicianId },
+      orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : { createdAt: 'desc' },
+      take: 20,
+      skip: (page - 1) * 20,
+    });
+
+    return neurofunctionalRecord.map(PrismaNeurofunctionalRecordMapper.toDomain);
   }
 
   async create(neurofunctionalRecord: NeurofunctionalRecord): Promise<void> {
