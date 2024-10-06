@@ -15,13 +15,17 @@ interface UniversalMedicalRecordProps {
   allergies?: string[] | null;
   diagnosis?: string[] | null;
   medicationsInUse?: string[] | null;
+  neurofunctionalRecordId?: UniqueEntityId | null;
   createdAt: Date;
   updatedAt?: Date | null;
 }
 
 export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordProps> {
   static create(
-    props: Optional<UniversalMedicalRecordProps, 'consultationsIds' | 'createdAt'>,
+    props: Optional<
+      UniversalMedicalRecordProps,
+      'consultationsIds' | 'createdAt' | 'neurofunctionalRecordId'
+    >,
     id?: UniqueEntityId,
   ) {
     const record = new UniversalMedicalRecord(
@@ -136,6 +140,10 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
   set medicationsInUse(value: string[] | null | undefined) {
     this.props.medicationsInUse = value;
     this.touch();
+  }
+
+  get neurofunctionalRecordId(): UniqueEntityId | null | undefined {
+    return this.props.neurofunctionalRecordId;
   }
 
   get createdAt(): Date {

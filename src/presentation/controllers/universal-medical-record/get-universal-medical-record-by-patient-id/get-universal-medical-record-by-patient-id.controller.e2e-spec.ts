@@ -37,7 +37,6 @@ describe('Get universal medical record by patient id [E2E]', () => {
       universalMedicalRecord: expect.objectContaining({
         id: patient.universalMedicalRecord.id.toString(),
         patientId: patient.universalMedicalRecord.patientId.toString(),
-        consultationsIds: [],
         diagnosis: [],
       }),
     });

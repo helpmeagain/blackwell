@@ -5,6 +5,7 @@ import {
   ApiBody,
   // ApiConflictResponse,
   ApiCreatedResponse,
+  ApiExcludeController,
   ApiNotFoundResponse,
   ApiOperation,
   ApiTags,
@@ -15,6 +16,7 @@ import { NestCreateConsultationUseCase } from '@/infrastructure/adapter/consulta
 import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 
+@ApiExcludeController()
 @Controller('consultations/clinician/:clinicianId/patient/:patientId/')
 export class CreateConsultationController {
   constructor(private createConsultation: NestCreateConsultationUseCase) {}

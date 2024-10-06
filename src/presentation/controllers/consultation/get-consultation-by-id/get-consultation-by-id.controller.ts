@@ -1,6 +1,7 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -11,6 +12,7 @@ import { ResourceNotFound } from '@/application/common/error-handler/errors/reso
 import { NestGetConsultationByIdUseCase } from '@/infrastructure/adapter/consultation/nest-get-consultation-by-id-use-case';
 import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 
+@ApiExcludeController()
 @Controller('consultations/:id')
 export class GetByIdConsultationsController {
   constructor(private getByIdConsultations: NestGetConsultationByIdUseCase) {}

@@ -15,6 +15,7 @@ export class PrismaUniversalMedicalRecordRepository
   async findById(medicalRecordId: string): Promise<UniversalMedicalRecord | null> {
     const medicalRecord = await this.prisma.universalMedicalRecord.findUnique({
       where: { id: medicalRecordId },
+      include: { NeurofunctionalRecord: { select: { id: true } } },
     });
 
     if (!medicalRecord) {
@@ -27,6 +28,7 @@ export class PrismaUniversalMedicalRecordRepository
   async findByPatientId(patientId: string): Promise<UniversalMedicalRecord | null> {
     const medicalRecord = await this.prisma.universalMedicalRecord.findUnique({
       where: { patientId },
+      include: { NeurofunctionalRecord: { select: { id: true } } },
     });
 
     if (!medicalRecord) {

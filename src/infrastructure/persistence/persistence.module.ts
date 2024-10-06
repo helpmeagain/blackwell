@@ -10,6 +10,8 @@ import { ConsultationRepository } from '@/application/repositories/consultation-
 import { NotificationRepository } from '@/application/repositories/notification-repository';
 import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
 import { PrismaUniversalMedicalRecordRepository } from './prisma/repositories/prisma-universal-medical-record-repository';
+import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
+import { PrismaNeurofunctionalRecordRepository } from './prisma/repositories/prisma-neurofunctional-record-repository';
 
 @Module({
   providers: [
@@ -22,6 +24,10 @@ import { PrismaUniversalMedicalRecordRepository } from './prisma/repositories/pr
       provide: UniversalMedicalRecordRepository,
       useClass: PrismaUniversalMedicalRecordRepository,
     },
+    {
+      provide: NeurofunctionalRecordRepository,
+      useClass: PrismaNeurofunctionalRecordRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -30,6 +36,7 @@ import { PrismaUniversalMedicalRecordRepository } from './prisma/repositories/pr
     NotificationRepository,
     PatientRepository,
     UniversalMedicalRecordRepository,
+    NeurofunctionalRecordRepository,
   ],
 })
 export class PersistenceModule {}

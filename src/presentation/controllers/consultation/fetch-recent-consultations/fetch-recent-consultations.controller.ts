@@ -5,6 +5,7 @@ import { NestFetchRecentConsultationUseCase } from '@/infrastructure/adapter/con
 import { CreateConsultationPresenter } from '@/presentation/utils/presenters/create-consultation-presenter';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiQuery,
@@ -23,6 +24,7 @@ import { BodyType, validationBody } from './fetch-recent-consultations-schema';
 // const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema);
 // type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>;
 
+@ApiExcludeController()
 @Controller('/consultations')
 export class FetchRecentConsultationsController {
   constructor(private fetchRecentConsultations: NestFetchRecentConsultationUseCase) {}
