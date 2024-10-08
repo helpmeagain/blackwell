@@ -1,4 +1,11 @@
-import { Body, Controller, NotFoundException, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  NotFoundException,
+  Param,
+  Put,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -16,6 +23,9 @@ import {
   validationBody,
 } from './edit-medical-record-by-id-schema';
 import { NestEditUniversalMedicalRecordByIdUseCase } from '@/infrastructure/adapter/universal-medical-record/nest-edit-universal-medical-record-by-id-use-case';
+import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
+import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 @Controller('universal-medical-record/:id')
 export class EditMedicalRecordByIdController {
@@ -28,7 +38,11 @@ export class EditMedicalRecordByIdController {
   @ApiBody({ schema: swaggerBody })
   @ApiOkResponse({ description: 'Return universal medical record by id' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(@Body(validationBody) body: typeof BodyType, @Param('id') id: string) {
+  async handle(
+    @Body(validationBody) body: typeof BodyType,
+    @Param('id') id: string,
+    @CurrentUser() user: UserPayload,
+  ) {
     const {
       diagnosis,
       profession,
@@ -42,6 +56,7 @@ export class EditMedicalRecordByIdController {
     } = body;
     const result = await this.editMedicalRecordById.execute({
       universalMedicalRecordId: id,
+      currentUserId: user.sub,
       diagnosis,
       profession,
       emergencyContactEmail,
@@ -58,6 +73,8 @@ export class EditMedicalRecordByIdController {
       switch (error.constructor) {
         case ResourceNotFound:
           throw new NotFoundException(error.message);
+        case UnauthorizedUser:
+          throw new UnauthorizedException(error.message);
         default:
           throw new BadRequest(error.message);
       }

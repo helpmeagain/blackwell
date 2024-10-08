@@ -32,6 +32,7 @@ describe('Edit a medical record', () => {
 
     const result = await sut.execute({
       patientId: newPatient.id.toString(),
+      currentUserId: newPatient.id.toString(),
       diagnosis: ['diagnosis1', 'diagnosis2'],
       profession: 'working',
       emergencyContactEmail: 'emergencyContactEmail@email.com',
@@ -64,6 +65,7 @@ describe('Edit a medical record', () => {
 
     const patientResult = await sut.execute({
       patientId: newPatient.id.toString(),
+      currentUserId: newPatient.id.toString(),
       diagnosis: ['diagnosis1', 'diagnosis2'],
       profession: 'working',
       emergencyContactEmail: 'emergencyContactEmail@email.com',

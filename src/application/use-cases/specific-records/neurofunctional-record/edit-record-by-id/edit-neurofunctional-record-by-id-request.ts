@@ -3,6 +3,7 @@ import { Triage } from '@/domain/common/types/triage-type';
 
 export interface editNeurofunctionalRecordRequest {
   id: string;
+  currentUserId: string;
   medicalDiagnosis: string;
   anamnesis: string;
   physicalExamination: string;

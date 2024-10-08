@@ -20,6 +20,7 @@ describe('Edit a clinician By Id', () => {
 
     const result = await sut.execute({
       clinicianId: newClinician.id.toString(),
+      currentUserId: newClinician.id.toString(),
       name: 'John',
       surname: 'Doe',
       gender: 'male',
@@ -40,6 +41,7 @@ describe('Edit a clinician By Id', () => {
 
     const result = await sut.execute({
       clinicianId: newClinician.id.toString(),
+      currentUserId: newClinician.id.toString(),
       name: 'John',
       surname: 'Doe',
       gender: 'male',

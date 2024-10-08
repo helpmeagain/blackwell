@@ -1,13 +1,14 @@
 import { Either, left, right } from '@error/either';
 import { ResourceNotFound } from '@error/errors/resource-not-found';
-import { NotAllowed } from '@error/errors/not-allowed';
 import { Patient } from '@entities/patient';
 import { type PatientRepository } from '@application/repositories/patient-repository';
 import { Gender } from '@/domain/common/types/gender-type';
 import { HashGenerator } from '@/application/cryptography/hash-generator';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 interface editPatientByIdRequest {
   patientId: string;
+  currentUserId: string;
   name: string;
   surname: string;
   gender: Gender;
@@ -22,7 +23,7 @@ interface editPatientByIdRequest {
 }
 
 type editPatientByIdResponse = Either<
-  ResourceNotFound | NotAllowed,
+  ResourceNotFound | UnauthorizedUser,
   { patient: Patient }
 >;
 
@@ -35,6 +36,7 @@ export class EditPatientByIdUseCase {
   async execute(req: editPatientByIdRequest): Promise<editPatientByIdResponse> {
     const {
       patientId,
+      currentUserId,
       name,
       surname,
       gender,
@@ -53,8 +55,8 @@ export class EditPatientByIdUseCase {
       return left(new ResourceNotFound());
     }
 
-    if (patientId !== patient.id.toString()) {
-      return left(new NotAllowed());
+    if (currentUserId !== patient.id.toString()) {
+      return left(new UnauthorizedUser());
     }
 
     const hashedPassword = await this.hashGenerator.hash(password);

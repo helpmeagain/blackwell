@@ -3,9 +3,10 @@ import { NeurofunctionalRecord } from '@/domain/entities/specific-records/neurof
 import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { editNeurofunctionalRecordRequest } from './edit-neurofunctional-record-by-id-request';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 type editNeurofunctionalRecordResponse = Either<
-  ResourceNotFound,
+  ResourceNotFound | UnauthorizedUser,
   { neurofunctionalRecord: NeurofunctionalRecord }
 >;
 
@@ -23,6 +24,10 @@ export class EditNeurofunctionalByIdUseCase {
 
     if (!neurofunctionalRecord) {
       return left(new ResourceNotFound());
+    }
+
+    if (req.currentUserId !== neurofunctionalRecord.clinicianId.toString()) {
+      return left(new UnauthorizedUser());
     }
 
     neurofunctionalRecord.medicalDiagnosis = req.medicalDiagnosis;

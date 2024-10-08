@@ -22,6 +22,7 @@ describe('Edit a patient By Id', () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     const result = await sut.execute({
       patientId: newPatient.id.toString(),
+      currentUserId: newPatient.id.toString(),
       name: 'John',
       surname: 'Doe',
       gender: 'male',
