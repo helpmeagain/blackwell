@@ -11,6 +11,14 @@ export abstract class NeurofunctionalRecordRepository {
     clinicianId: string,
     params: PaginationParams,
   ) => Promise<NeurofunctionalRecord[]>;
+  abstract askForAuthorization(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void>;
+  abstract authorizeAccess(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void>;
   abstract create: (neurofunctionalRecord: NeurofunctionalRecord) => Promise<void>;
   abstract save: (neurofunctionalRecord: NeurofunctionalRecord) => Promise<void>;
 }

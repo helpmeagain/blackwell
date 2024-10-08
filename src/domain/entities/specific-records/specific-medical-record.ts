@@ -12,6 +12,8 @@ export interface SpecificMedicalRecordProps {
   physicalExamination: string;
   physiotherapyDepartment: PhysiotherapyDepartment;
   triage: Triage;
+  authorizedUsers?: string[];
+  pendingAuthorizationUsers?: string[];
   createdAt: Date;
   updatedAt?: Date | null;
 }
@@ -77,6 +79,24 @@ export class SpecificMedicalRecord<
 
   set triage(value: Triage) {
     this.props.triage = value;
+    this.touch();
+  }
+
+  get authorizedUsers(): string[] | undefined {
+    return this.props.authorizedUsers;
+  }
+
+  set authorizedUsers(value: string[]) {
+    this.props.authorizedUsers = value;
+    this.touch();
+  }
+
+  get pendingAuthorizationUsers(): string[] | undefined {
+    return this.props.pendingAuthorizationUsers;
+  }
+
+  set pendingAuthorizationUsers(value: string[]) {
+    this.props.pendingAuthorizationUsers = value;
     this.touch();
   }
 
