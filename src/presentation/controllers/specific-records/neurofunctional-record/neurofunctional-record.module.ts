@@ -10,10 +10,16 @@ import { FetchNeurofunctionalRecordController } from './fetch-records-ids-by-cli
 import { NestFetchNeurofunctionalIdsByClinicianIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-fetch-neurofunctional-ids-by-clinician-id-use-case';
 import { EditNeurofunctionalRecordController } from './edit-record-by-id/edit-record.controller';
 import { NestEditNeurofunctionalByIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-edit-neurofunctional-record';
+import { AskForAuthorizationController } from './authorization/ask-for-authorization/ask-for-authorization.controller';
+import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
+import { AuthorizeAccessUseCaseController } from './authorization/authorize-access/authorize-access.controller';
+import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
 
 @Module({
   imports: [PersistenceModule],
   controllers: [
+    AskForAuthorizationController,
+    AuthorizeAccessUseCaseController,
     CreateNeurofunctionalRecordController,
     GetByIdNeurofunctionalController,
     GetByPatientIdNeurofunctionalController,
@@ -21,6 +27,8 @@ import { NestEditNeurofunctionalByIdUseCase } from '@/infrastructure/adapter/spe
     EditNeurofunctionalRecordController,
   ],
   providers: [
+    NestAskForAuthorizationUseCase,
+    NestAuthorizeAccessUseCase,
     NestCreateNeurofunctionalRecordUseCase,
     NestGetNeurofunctionalByIdUseCase,
     NestGetNeurofunctionalByPatientIdUseCase,
