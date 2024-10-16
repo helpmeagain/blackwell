@@ -2,8 +2,6 @@ import { Either, left, right } from '@error/either';
 import { ResourceNotFound } from '@error/errors/resource-not-found';
 import { NeurofunctionalRecord } from '@/domain/entities/specific-records/neurofunctional-record';
 import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
-import { PatientRepository } from '@/application/repositories/patient-repository';
-import { ClinicianRepository } from '@/application/repositories/clinician-repository';
 
 interface authorizeAccessRequest {
   recordId: string;
@@ -16,11 +14,7 @@ type authorizeAccessResponse = Either<
 >;
 
 export class AuthorizeAccessUseCase {
-  constructor(
-    private readonly recordRepository: NeurofunctionalRecordRepository,
-    private readonly patientRepository: PatientRepository,
-    private readonly clinicianRepository: ClinicianRepository,
-  ) {}
+  constructor(private readonly recordRepository: NeurofunctionalRecordRepository) {}
 
   async execute(req: authorizeAccessRequest): Promise<authorizeAccessResponse> {
     const { recordId, userId } = req;

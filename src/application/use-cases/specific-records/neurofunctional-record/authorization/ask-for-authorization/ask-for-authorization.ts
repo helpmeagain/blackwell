@@ -35,7 +35,7 @@ export class AskForAuthorizationUseCase {
       this.clinicianRepository.findById(userId),
     ]);
 
-    if (!patient || !clinician) {
+    if (!patient && !clinician) {
       return left(new ResourceNotFound('User'));
     }
 

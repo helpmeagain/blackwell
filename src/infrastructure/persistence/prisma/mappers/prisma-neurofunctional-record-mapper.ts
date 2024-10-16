@@ -17,6 +17,8 @@ export class PrismaNeurofunctionalRecordMapper {
         physicalExamination: raw.physicalExamination,
         physiotherapyDepartment: raw.physiotherapyDepartment,
         triage: raw.triage,
+        authorizedUsers: raw.authorizedUsers,
+        pendingAuthorizationUsers: raw.pendingAuthorizationUsers,
         lifestyleHabits: {
           alcoholConsumption: raw.alcoholConsumption,
           smoker: raw.smoker,
@@ -99,6 +101,8 @@ export class PrismaNeurofunctionalRecordMapper {
       physicalExamination: neurofunctionalRecord.physicalExamination,
       physiotherapyDepartment: neurofunctionalRecord.physiotherapyDepartment,
       triage: neurofunctionalRecord.triage,
+      authorizedUsers: neurofunctionalRecord.authorizedUsers,
+      pendingAuthorizationUsers: neurofunctionalRecord.pendingAuthorizationUsers,
       // lifestyleHabits: {
       alcoholConsumption: neurofunctionalRecord.lifestyleHabits.alcoholConsumption,
       smoker: neurofunctionalRecord.lifestyleHabits.smoker,
