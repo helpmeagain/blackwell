@@ -14,12 +14,15 @@ import { AskForAuthorizationController } from './authorization/ask-for-authoriza
 import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
 import { AuthorizeAccessUseCaseController } from './authorization/authorize-access/authorize-access.controller';
 import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
+import { NestGetPendingAuthorizationUsersController } from './authorization/get-pending-authorization-users/get-pending-authorization-users.controller';
+import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-get-pending-authorization';
 
 @Module({
   imports: [PersistenceModule],
   controllers: [
     AskForAuthorizationController,
     AuthorizeAccessUseCaseController,
+    NestGetPendingAuthorizationUsersController,
     CreateNeurofunctionalRecordController,
     GetByIdNeurofunctionalController,
     GetByPatientIdNeurofunctionalController,
@@ -29,6 +32,7 @@ import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-re
   providers: [
     NestAskForAuthorizationUseCase,
     NestAuthorizeAccessUseCase,
+    NestGetPendingAuthorizationUsersUseCase,
     NestCreateNeurofunctionalRecordUseCase,
     NestGetNeurofunctionalByIdUseCase,
     NestGetNeurofunctionalByPatientIdUseCase,
