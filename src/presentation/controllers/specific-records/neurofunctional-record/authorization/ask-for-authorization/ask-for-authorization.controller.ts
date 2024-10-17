@@ -9,6 +9,7 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
+import { detailedDescription } from './ask-for-authorization-schema';
 
 @Controller('neurofunctional-record/ask-for-authorization/record-id/:id/user-id/:userId')
 export class AskForAuthorizationController {
@@ -18,7 +19,7 @@ export class AskForAuthorizationController {
   @ApiTags('Neurofunctional Record')
   @ApiOperation({
     summary: 'Ask for authorization',
-    description: 'Insert an record Id and User Id',
+    description: detailedDescription,
   })
   @ApiBearerAuth()
   @ApiOkResponse({

@@ -117,7 +117,8 @@ const createNeurofunctionalRecordSchema = z
   .openapi('Neurofunctional');
 
 export const detailedDescription =
-  'Insert an neurofunctional record. All fields are required.';
+  'Insert an neurofunctional record. All fields are required. ' +
+  'This route is protected, only clinicians can access it.';
 export const exampleResponse = {
   message: 'Neurofunctional record created successfully',
   record: {},

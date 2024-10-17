@@ -18,6 +18,7 @@ import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-re
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
+import { detailedDescription } from './authorize-access-schema';
 
 @Controller('neurofunctional-record/authorize-access/record-id/:id/user-id/:userId')
 export class AuthorizeAccessController {
@@ -27,7 +28,7 @@ export class AuthorizeAccessController {
   @ApiTags('Neurofunctional Record')
   @ApiOperation({
     summary: 'Authorize access for record',
-    description: 'Insert an record Id and User Id',
+    description: detailedDescription,
   })
   @ApiBearerAuth()
   @ApiOkResponse({

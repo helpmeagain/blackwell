@@ -19,6 +19,7 @@ import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapte
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
+import { detailedDescription } from './get-pending-authorization-users-schema';
 
 @Controller('neurofunctional-record/pending-authorization-users/:id')
 export class NestGetPendingAuthorizationUsersController {
@@ -26,7 +27,10 @@ export class NestGetPendingAuthorizationUsersController {
 
   @Get()
   @ApiTags('Neurofunctional Record')
-  @ApiOperation({ summary: 'Get pending authorization users id' })
+  @ApiOperation({
+    summary: 'Get pending authorization users id',
+    description: detailedDescription,
+  })
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Return pending authorization users by record id' })
   @ApiNotFoundResponse({ description: 'Neurofunctional Record not found' })

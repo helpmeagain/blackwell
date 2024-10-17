@@ -20,6 +20,7 @@ import { ReturnNeurofunctionalePresenter } from '@/presentation/utils/presenters
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
+import { detailedDescription } from './get-record-by-id-schema';
 
 @Controller('neurofunctional-record/by-id/:id')
 export class GetByIdNeurofunctionalController {
@@ -27,7 +28,10 @@ export class GetByIdNeurofunctionalController {
 
   @Get()
   @ApiTags('Neurofunctional Record')
-  @ApiOperation({ summary: 'Get a neurofunctional record by id' })
+  @ApiOperation({
+    summary: 'Get a neurofunctional record by id',
+    description: detailedDescription,
+  })
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Return neurofunctional record by id' })
   @ApiNotFoundResponse({ description: 'Neurofunctional Record not found' })

@@ -16,6 +16,7 @@ import {
 import {
   PageBodyType,
   PageValidationBody,
+  detailedDescription,
   directionBodyType,
   directionValidationBody,
   orderByBodyType,
@@ -39,7 +40,10 @@ export class FetchNeurofunctionalRecordController {
     enum: ['createdAt'],
   })
   @ApiQuery({ name: 'direction', required: false, type: String, enum: ['asc', 'desc'] })
-  @ApiOperation({ summary: 'Fetch neurofunctional record ids by clinician id' })
+  @ApiOperation({
+    summary: 'Fetch neurofunctional record ids by clinician id',
+    description: detailedDescription,
+  })
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Fetch neurofunctional Record' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })

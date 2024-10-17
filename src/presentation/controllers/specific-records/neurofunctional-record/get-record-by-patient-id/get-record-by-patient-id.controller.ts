@@ -20,6 +20,7 @@ import { NestGetNeurofunctionalByPatientIdUseCase } from '@/infrastructure/adapt
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
+import { detailedDescription } from './get-record-by-patient-id-schema';
 
 @Controller('neurofunctional-record/by-patient-id/:patientId')
 export class GetByPatientIdNeurofunctionalController {
@@ -27,7 +28,10 @@ export class GetByPatientIdNeurofunctionalController {
 
   @Get()
   @ApiTags('Neurofunctional Record')
-  @ApiOperation({ summary: 'Get a neurofunctional record by patient id' })
+  @ApiOperation({
+    summary: 'Get a neurofunctional record by patient id',
+    description: detailedDescription,
+  })
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Return neurofunctional record by patient id' })
   @ApiNotFoundResponse({ description: 'Neurofunctional Record not found' })
