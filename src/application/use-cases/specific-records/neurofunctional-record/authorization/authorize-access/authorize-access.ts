@@ -33,7 +33,7 @@ export class AuthorizeAccessUseCase {
       return left(new ResourceNotFound('User'));
     }
 
-    if (neurofunctionalRecord.clinicianId.toString() !== currentUserId) {
+    if (neurofunctionalRecord.patientId.toString() !== currentUserId) {
       return left(new UnauthorizedUser());
     }
 

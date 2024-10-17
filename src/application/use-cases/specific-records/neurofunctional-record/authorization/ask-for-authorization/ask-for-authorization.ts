@@ -4,6 +4,7 @@ import { NeurofunctionalRecord } from '@/domain/entities/specific-records/neurof
 import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
 import { PatientRepository } from '@/application/repositories/patient-repository';
 import { ClinicianRepository } from '@/application/repositories/clinician-repository';
+import { UserAlreadyMadeRequest } from '@/application/common/error-handler/errors/user-already-made-request';
 
 interface askForAuthorizationRequest {
   recordId: string;
@@ -11,7 +12,7 @@ interface askForAuthorizationRequest {
 }
 
 type askForAuthorizationResponse = Either<
-  ResourceNotFound,
+  ResourceNotFound | UserAlreadyMadeRequest,
   { neurofunctionalRecord: NeurofunctionalRecord }
 >;
 
@@ -28,6 +29,14 @@ export class AskForAuthorizationUseCase {
 
     if (!neurofunctionalRecord) {
       return left(new ResourceNotFound('Neurofunctional Record'));
+    }
+
+    if (neurofunctionalRecord.pendingAuthorizationUsers?.includes(userId)) {
+      return left(new UserAlreadyMadeRequest('id', userId, false));
+    }
+
+    if (neurofunctionalRecord.authorizedUsers?.includes(userId)) {
+      return left(new UserAlreadyMadeRequest('id', userId, true));
     }
 
     const [patient, clinician] = await Promise.all([
