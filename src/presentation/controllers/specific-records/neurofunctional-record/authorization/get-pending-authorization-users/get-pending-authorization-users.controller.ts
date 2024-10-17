@@ -1,4 +1,10 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiNotFoundResponse,
@@ -10,6 +16,9 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-get-pending-authorization';
+import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
+import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 @Controller('neurofunctional-record/pending-authorization-users/:id')
 export class NestGetPendingAuthorizationUsersController {
@@ -22,9 +31,10 @@ export class NestGetPendingAuthorizationUsersController {
   @ApiOkResponse({ description: 'Return pending authorization users by record id' })
   @ApiNotFoundResponse({ description: 'Neurofunctional Record not found' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(@Param('id') id: string) {
+  async handle(@Param('id') id: string, @CurrentUser() user: UserPayload) {
     const result = await this.getById.execute({
       id,
+      currentUserId: user.sub,
     });
 
     if (result.isLeft()) {
@@ -32,6 +42,8 @@ export class NestGetPendingAuthorizationUsersController {
       switch (error.constructor) {
         case ResourceNotFound:
           throw new NotFoundException(error.message);
+        case UnauthorizedUser:
+          throw new UnauthorizedException(error.message);
         default:
           throw new BadRequest(error.message);
       }
