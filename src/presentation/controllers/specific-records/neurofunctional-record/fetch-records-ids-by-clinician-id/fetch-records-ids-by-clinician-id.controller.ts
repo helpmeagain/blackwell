@@ -22,12 +22,14 @@ import {
   orderByValidationBody,
 } from './fetch-records-ids-by-clinician-id-schema';
 import { NestFetchNeurofunctionalIdsByClinicianIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-fetch-neurofunctional-ids-by-clinician-id-use-case';
+import { Roles } from '@/infrastructure/auth/role/roles.decorator';
 
 @Controller('neurofunctional-record/fetch-ids-by-clinician-id/:clinicianId')
 export class FetchNeurofunctionalRecordController {
   constructor(private fetchRecords: NestFetchNeurofunctionalIdsByClinicianIdUseCase) {}
 
   @Get()
+  @Roles('EMPLOYEE')
   @ApiTags('Neurofunctional Record')
   @ApiQuery({ name: 'page', required: false, example: 1, type: Number })
   @ApiQuery({

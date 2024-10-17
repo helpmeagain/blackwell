@@ -20,6 +20,7 @@ describe('Get Neurofunctional Record By Id', () => {
 
     const result = await sut.execute({
       patientId: 'id-1',
+      currentUserId: 'id-1',
     });
 
     expect(result.isRight()).toBe(true);
