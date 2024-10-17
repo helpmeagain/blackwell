@@ -1,4 +1,4 @@
-import { Controller, NotFoundException, Param, Post } from '@nestjs/common';
+import { Controller, NotFoundException, Param, Patch } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -14,7 +14,7 @@ import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specifi
 export class AskForAuthorizationController {
   constructor(private getAskForAuthorizationUseCase: NestAskForAuthorizationUseCase) {}
 
-  @Post()
+  @Patch()
   @ApiTags('Neurofunctional Record')
   @ApiOperation({
     summary: 'Ask for authorization',

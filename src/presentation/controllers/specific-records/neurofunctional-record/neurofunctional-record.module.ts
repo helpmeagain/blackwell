@@ -12,7 +12,7 @@ import { EditNeurofunctionalRecordController } from './edit-record-by-id/edit-re
 import { NestEditNeurofunctionalByIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-edit-neurofunctional-record';
 import { AskForAuthorizationController } from './authorization/ask-for-authorization/ask-for-authorization.controller';
 import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
-import { AuthorizeAccessUseCaseController } from './authorization/authorize-access/authorize-access.controller';
+import { AuthorizeAccessController } from './authorization/authorize-access/authorize-access.controller';
 import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
 import { NestGetPendingAuthorizationUsersController } from './authorization/get-pending-authorization-users/get-pending-authorization-users.controller';
 import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-get-pending-authorization';
@@ -21,7 +21,7 @@ import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapte
   imports: [PersistenceModule],
   controllers: [
     AskForAuthorizationController,
-    AuthorizeAccessUseCaseController,
+    AuthorizeAccessController,
     NestGetPendingAuthorizationUsersController,
     CreateNeurofunctionalRecordController,
     GetByIdNeurofunctionalController,

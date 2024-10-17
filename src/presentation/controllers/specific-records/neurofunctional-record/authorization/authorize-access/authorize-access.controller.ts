@@ -1,4 +1,4 @@
-import { Controller, NotFoundException, Param, Post } from '@nestjs/common';
+import { Controller, NotFoundException, Param, Patch } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -11,10 +11,10 @@ import { ResourceNotFound } from '@/application/common/error-handler/errors/reso
 import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
 
 @Controller('neurofunctional-record/authorize-access/record-id/:id/user-id/:userId')
-export class AuthorizeAccessUseCaseController {
+export class AuthorizeAccessController {
   constructor(private authorizeAccessUseCase: NestAuthorizeAccessUseCase) {}
 
-  @Post()
+  @Patch()
   @ApiTags('Neurofunctional Record')
   @ApiOperation({
     summary: 'Authorize access for record',
