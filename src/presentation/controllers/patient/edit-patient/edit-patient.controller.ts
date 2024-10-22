@@ -63,7 +63,7 @@ export class EditPatientController {
       name,
       surname,
       gender,
-      birthDate: new Date(birthDate),
+      birthDate: birthDate ? new Date(birthDate) : undefined,
       cpf,
       address,
       state,
@@ -91,7 +91,7 @@ export class EditPatientController {
 
     return {
       message: 'Patient edited successfully',
-      patient: CreatePatientPresenter.toHTTP(patient, password),
+      patient: CreatePatientPresenter.toHTTP(patient, password ?? '********'),
     };
   }
 }

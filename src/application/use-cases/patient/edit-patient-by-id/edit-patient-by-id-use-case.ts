@@ -9,17 +9,17 @@ import { UnauthorizedUser } from '@/application/common/error-handler/errors/unau
 interface editPatientByIdRequest {
   patientId: string;
   currentUserId: string;
-  name: string;
-  surname: string;
-  gender: Gender;
-  birthDate: Date;
-  cpf: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  state: string;
-  email: string;
-  password: string;
+  name?: string;
+  surname?: string;
+  gender?: Gender;
+  birthDate?: Date;
+  cpf?: string;
+  phoneNumber?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  email?: string;
+  password?: string;
 }
 
 type editPatientByIdResponse = Either<
@@ -59,19 +59,22 @@ export class EditPatientByIdUseCase {
       return left(new UnauthorizedUser());
     }
 
-    const hashedPassword = await this.hashGenerator.hash(password);
+    if (password) {
+      const hashedPassword = await this.hashGenerator.hash(password);
+      patient.password = hashedPassword;
+    }
 
-    patient.name = name;
-    patient.surname = surname;
-    patient.gender = gender;
-    patient.birthDate = birthDate;
-    patient.cpf = cpf;
-    patient.address = address;
-    patient.city = city;
-    patient.state = state;
-    patient.phoneNumber = phoneNumber;
-    patient.email = email;
-    patient.password = hashedPassword;
+    patient.name = name ?? patient.name;
+    patient.surname = surname ?? patient.surname;
+    patient.gender = gender ?? patient.gender;
+    patient.birthDate = birthDate ?? patient.birthDate;
+    patient.cpf = cpf ?? patient.cpf;
+    patient.address = address ?? patient.address;
+    patient.city = city ?? patient.city;
+    patient.state = state ?? patient.state;
+    patient.phoneNumber = phoneNumber ?? patient.phoneNumber;
+    patient.email = email ?? patient.email;
+
     await this.repository.save(patient);
 
     return right({ patient });

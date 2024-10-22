@@ -75,7 +75,7 @@ export class EditClinicianController {
 
     return {
       message: 'Clinician edited successfully',
-      clinician: CreateClinicianPresenter.toHTTP(clinician, password),
+      clinician: CreateClinicianPresenter.toHTTP(clinician, password ?? '********'),
     };
   }
 }

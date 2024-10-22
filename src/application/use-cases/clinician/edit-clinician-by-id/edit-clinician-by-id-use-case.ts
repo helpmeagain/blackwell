@@ -9,13 +9,13 @@ import { UnauthorizedUser } from '@/application/common/error-handler/errors/unau
 export interface editClinicianByIdRequest {
   clinicianId: string;
   currentUserId: string;
-  name: string;
-  surname: string;
-  occupation: string;
-  gender: Gender;
-  phoneNumber: string;
-  email: string;
-  password: string;
+  name?: string;
+  surname?: string;
+  occupation?: string;
+  gender?: Gender;
+  phoneNumber?: string;
+  email?: string;
+  password?: string;
 }
 
 export type editClinicianByIdResponse = Either<
@@ -51,16 +51,17 @@ export class EditClinicianByIdUseCase {
       return left(new UnauthorizedUser());
     }
 
-    const hashedPassword = await this.hashGenerator.hash(password);
+    if (password) {
+      const hashedPassword = await this.hashGenerator.hash(password);
+      clinician.password = hashedPassword;
+    }
 
-    clinician.name = name;
-    clinician.surname = surname;
-    clinician.gender = gender;
-    clinician.phoneNumber = phoneNumber;
-    clinician.email = email;
-    clinician.occupation = occupation;
-    clinician.password = hashedPassword;
-
+    clinician.name = name ?? clinician.name;
+    clinician.surname = surname ?? clinician.surname;
+    clinician.gender = gender ?? clinician.gender;
+    clinician.phoneNumber = phoneNumber ?? clinician.phoneNumber;
+    clinician.email = email ?? clinician.email;
+    clinician.occupation = occupation ?? clinician.occupation;
     await this.repository.save(clinician);
     return right({ clinician });
   }

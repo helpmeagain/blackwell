@@ -5,10 +5,11 @@ import { createZodSchemaTools } from '@/presentation/utils/create-zod-schema-too
 extendZodWithOpenApi(z);
 const editPatientSchema = z
   .object({
-    name: z.string().openapi({ example: 'Jane' }),
-    surname: z.string().openapi({ example: 'Doe' }),
+    name: z.string().optional().openapi({ example: 'Jane' }),
+    surname: z.string().optional().openapi({ example: 'Doe' }),
     gender: z
       .enum(['male', 'female', 'nonbinary', 'other'])
+      .optional()
       .openapi({ example: 'female' }),
     birthDate: z
       .string()
@@ -21,13 +22,14 @@ const editPatientSchema = z
         },
         { message: 'Birth date must be in the past' },
       )
+      .optional()
       .openapi({ example: '2001-01-01T00:00:00.000Z' }),
-    cpf: z.string().length(11).openapi({ example: '11111111111' }),
-    phoneNumber: z.string().openapi({ example: '9999999999' }),
-    address: z.string().openapi({ example: '123 Main St' }),
-    city: z.string().openapi({ example: 'Fortaleza' }),
-    state: z.string().openapi({ example: 'Ceará' }),
-    email: z.string().email().openapi({ example: 'janedoe@email.com' }),
+    cpf: z.string().length(11).optional().openapi({ example: '11111111111' }),
+    phoneNumber: z.string().optional().openapi({ example: '9999999999' }),
+    address: z.string().optional().openapi({ example: '123 Main St' }),
+    city: z.string().optional().openapi({ example: 'Fortaleza' }),
+    state: z.string().optional().openapi({ example: 'Ceará' }),
+    email: z.string().email().optional().openapi({ example: 'janedoe@email.com' }),
     password: z
       .string()
       .min(8, { message: 'Password must be at least 8 characters long' })
@@ -37,6 +39,7 @@ const editPatientSchema = z
       .refine((value) => /[A-Z]/.test(value), {
         message: 'Password must contain at least one uppercase letter',
       })
+      .optional()
       .openapi({ example: 'Password' }),
   })
   .openapi('Patient');
