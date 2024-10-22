@@ -13,11 +13,15 @@ describe('Create Neurofunctional Record', () => {
   });
 
   it('should be able to create a neurofunctional record', async () => {
-    const newNeurofunctional = makeNeurofunctionalRecord({}, new UniqueEntityId('id-1'));
+    const newNeurofunctional = makeNeurofunctionalRecord(
+      { clinicianId: new UniqueEntityId('clinicianId-1') },
+      new UniqueEntityId('id-1'),
+    );
     await inMemoryRepository.create(newNeurofunctional);
 
     const result = await sut.execute({
       id: 'id-1',
+      currentUserId: 'clinicianId-1',
       medicalDiagnosis: 'diagnosis',
       anamnesis: 'anamnesis',
       physicalExamination: 'physical examination',

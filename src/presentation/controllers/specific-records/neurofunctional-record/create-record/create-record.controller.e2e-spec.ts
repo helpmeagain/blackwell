@@ -34,7 +34,7 @@ describe('Create neurofunctional record [E2E]', () => {
       await patientFactory.makeDatabasePatient(),
       await clinicianFactory.makeDatabaseClinician(),
     ]);
-    const token = jwt.sign({ sub: patient.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .post(

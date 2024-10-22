@@ -18,6 +18,7 @@ describe('Delete a patient By Id', () => {
 
     const result = await sut.execute({
       patientId: 'patientId-1',
+      currentUserId: 'patientId-1',
     });
 
     expect(result.isRight()).toBe(true);

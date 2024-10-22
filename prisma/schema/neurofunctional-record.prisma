@@ -8,6 +8,8 @@ model NeurofunctionalRecord {
   physicalExamination         String
   physiotherapyDepartment     PhysiotherapyDepartment
   triage                      Triage
+  authorizedUsers             String[]
+  pendingAuthorizationUsers   String[]
   // lifestyleHabits {
   alcoholConsumption          Boolean
   smoker                      Boolean

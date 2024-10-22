@@ -38,7 +38,7 @@ describe('Get neurofunctional record by id [E2E]', () => {
       universalMedicalRecordId: patient.universalMedicalRecord.id,
       anamnesis: 'test',
     });
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .get(`/neurofunctional-record/by-id/${record.id.toString()}`)

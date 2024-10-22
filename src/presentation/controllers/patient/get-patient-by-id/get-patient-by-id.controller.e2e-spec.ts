@@ -25,7 +25,7 @@ describe('Get patient by id [E2E]', () => {
 
   test('[GET] /patients/by-id/:id', async () => {
     const patient = await patientFactory.makeDatabasePatient({});
-    const token = jwt.sign({ sub: patient.id.toString() });
+    const token = jwt.sign({ sub: patient.id.toString(), role: 'CLIENT' });
 
     const result = await request(app.getHttpServer())
       .get(`/patients/by-id/${patient.id.toString()}`)

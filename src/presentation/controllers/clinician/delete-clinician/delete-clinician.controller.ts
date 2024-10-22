@@ -1,4 +1,11 @@
-import { Controller, Delete, HttpCode, NotFoundException, Param } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  HttpCode,
+  NotFoundException,
+  Param,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiNoContentResponse,
@@ -9,6 +16,9 @@ import {
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { NestDeleteClinicianUseCase } from '@/infrastructure/adapter/clinician/nest-delete-clinician-by-id';
+import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
+import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 @Controller('clinicians/:id')
 export class DeleteClinicianController {
@@ -21,9 +31,10 @@ export class DeleteClinicianController {
   @ApiBearerAuth()
   @ApiNoContentResponse({ description: 'Deleted clinician successfully' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(@Param('id') id: string) {
+  async handle(@Param('id') id: string, @CurrentUser() user: UserPayload) {
     const result = await this.deleteClinician.execute({
       clinicianId: id,
+      currentUserId: user.sub,
     });
 
     if (result.isLeft()) {
@@ -31,6 +42,8 @@ export class DeleteClinicianController {
       switch (error.constructor) {
         case ResourceNotFound:
           throw new NotFoundException(error.message);
+        case UnauthorizedUser:
+          throw new UnauthorizedException(error.message);
         default:
           throw new BadRequest(error.message);
       }

@@ -55,7 +55,7 @@ describe('Fetch consultations', () => {
         room: 3,
       }),
     ]);
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .get(`/consultations/`)

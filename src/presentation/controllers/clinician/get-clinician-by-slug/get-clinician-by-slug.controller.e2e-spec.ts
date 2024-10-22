@@ -25,7 +25,7 @@ describe('Get clinician by slug [E2E]', () => {
 
   test('[GET] /clinicians/by-slug/:slug', async () => {
     const clinician = await clinicianFactory.makeDatabaseClinician({});
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .get(`/clinicians/by-slug/${clinician.slug.value}`)

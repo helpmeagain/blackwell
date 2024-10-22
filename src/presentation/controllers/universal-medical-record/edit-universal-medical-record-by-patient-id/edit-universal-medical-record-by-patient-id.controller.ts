@@ -1,4 +1,11 @@
-import { Body, Controller, NotFoundException, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  NotFoundException,
+  Param,
+  Put,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -16,6 +23,9 @@ import {
   swaggerBody,
   validationBody,
 } from './edit-universal-medical-record-by-patient-id-schema';
+import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
+import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 @Controller('universal-medical-record/by-patient-id/:patientId')
 export class EditUniversalMedicalRecordByPatientIdController {
@@ -33,6 +43,7 @@ export class EditUniversalMedicalRecordByPatientIdController {
   async handle(
     @Body(validationBody) body: typeof BodyType,
     @Param('patientId') patientId: string,
+    @CurrentUser() user: UserPayload,
   ) {
     const {
       diagnosis,
@@ -48,6 +59,7 @@ export class EditUniversalMedicalRecordByPatientIdController {
 
     const result = await this.editMedicalRecordById.execute({
       patientId,
+      currentUserId: user.sub,
       diagnosis,
       profession,
       emergencyContactEmail,
@@ -64,6 +76,8 @@ export class EditUniversalMedicalRecordByPatientIdController {
       switch (error.constructor) {
         case ResourceNotFound:
           throw new NotFoundException(error.message);
+        case UnauthorizedUser:
+          throw new UnauthorizedException(error.message);
         default:
           throw new BadRequest(error.message);
       }

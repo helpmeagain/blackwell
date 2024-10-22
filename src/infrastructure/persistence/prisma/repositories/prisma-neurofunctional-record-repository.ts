@@ -63,6 +63,85 @@ export class PrismaNeurofunctionalRecordRepository
     return neurofunctionalRecord.map(PrismaNeurofunctionalRecordMapper.toDomain);
   }
 
+  async askForAuthorization(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
+
+    await this.prisma.neurofunctionalRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          push: userId,
+        },
+      },
+    });
+  }
+
+  async removePendingAuthorization(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.neurofunctionalRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+      },
+    });
+  }
+
+  async removeAccess(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.neurofunctionalRecord.update({
+      where: { id: data.id },
+      data: {
+        authorizedUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+      },
+    });
+  }
+
+  async authorizeAccess(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.neurofunctionalRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+        authorizedUsers: {
+          push: userId,
+        },
+      },
+    });
+  }
+
   async create(neurofunctionalRecord: NeurofunctionalRecord): Promise<void> {
     const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
     await this.prisma.neurofunctionalRecord.create({ data });

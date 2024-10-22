@@ -41,7 +41,7 @@ describe('On consultation created [E2E]', () => {
       await clinicianFactory.makeDatabaseClinician(),
     ]);
 
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     await request(app.getHttpServer())
       .post(

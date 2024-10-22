@@ -28,7 +28,7 @@ describe('Edit universal medical record by id [E2E]', () => {
 
   test('[PUT] /universal-medical-record/:id', async () => {
     const patients = await patientFactory.makeDatabasePatient();
-    const token = jwt.sign({ sub: patients.id.toString() });
+    const token = jwt.sign({ sub: patients.id.toString(), role: 'CLIENT' });
 
     const result = await request(app.getHttpServer())
       .put(`/universal-medical-record/${patients.universalMedicalRecord.id.toString()}`)

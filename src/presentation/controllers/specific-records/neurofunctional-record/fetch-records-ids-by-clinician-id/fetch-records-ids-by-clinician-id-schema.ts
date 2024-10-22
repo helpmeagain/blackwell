@@ -25,6 +25,10 @@ const directionQueryParamSchema = z
   .default('desc')
   .openapi('Record');
 
+export const detailedDescription =
+  'Fetch neurofunctional record ids by clinician id. ' +
+  'This route is proceted, only clinicians can access it.';
+
 export const {
   swaggerBody: PageSwaggerBody,
   validationBody: PageValidationBody,
