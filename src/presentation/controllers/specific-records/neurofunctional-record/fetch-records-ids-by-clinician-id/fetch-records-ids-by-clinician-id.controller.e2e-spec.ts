@@ -56,7 +56,7 @@ describe('Fetch neurofunctional record ids by clinician id', () => {
         anamnesis: 'test',
       }),
     ]);
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .get(`/neurofunctional-record/fetch-ids-by-clinician-id/${clinician.id.toString()}`)

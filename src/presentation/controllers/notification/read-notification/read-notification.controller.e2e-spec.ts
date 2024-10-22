@@ -35,7 +35,7 @@ describe('Get notification by id [E2E]', () => {
     const notification = await notificationFactory.makeDatabaseNotification({
       recipientId: patient.id,
     });
-    const token = jwt.sign({ sub: patient.id.toString() });
+    const token = jwt.sign({ sub: patient.id.toString(), role: 'CLIENT' });
     const notificationId = notification.id.toString();
 
     const result = await request(app.getHttpServer())

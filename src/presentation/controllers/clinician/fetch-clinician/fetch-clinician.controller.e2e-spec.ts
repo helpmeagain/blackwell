@@ -29,7 +29,7 @@ describe('Fetch clinicians', () => {
       await clinicianFactory.makeDatabaseClinician({ name: 'B' }),
       await clinicianFactory.makeDatabaseClinician({ name: 'C' }),
     ]);
-    const token = jwt.sign({ sub: clinician1.id.toString() });
+    const token = jwt.sign({ sub: clinician1.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .get(`/clinicians/`)
