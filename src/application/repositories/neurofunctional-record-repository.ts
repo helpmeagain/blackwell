@@ -19,6 +19,14 @@ export abstract class NeurofunctionalRecordRepository {
     neurofunctionalRecord: NeurofunctionalRecord,
     userId: string,
   ): Promise<void>;
+  abstract removePendingAuthorization(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void>;
+  abstract removeAccess(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void>;
   abstract create: (neurofunctionalRecord: NeurofunctionalRecord) => Promise<void>;
   abstract save: (neurofunctionalRecord: NeurofunctionalRecord) => Promise<void>;
 }

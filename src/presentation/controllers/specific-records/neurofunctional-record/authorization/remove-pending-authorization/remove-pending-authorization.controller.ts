@@ -1,13 +1,12 @@
 import {
   Controller,
-  Get,
+  Delete,
   NotFoundException,
   Param,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -15,29 +14,39 @@ import {
 } from '@nestjs/swagger';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-get-pending-authorization';
-import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
+import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
-import { detailedDescription } from './get-pending-authorization-users-schema';
+import { detailedDescription } from './remove-pending-authorization-schema';
+import { NestRemovePendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-pending-authorization';
 
-@Controller('neurofunctional-record/pending-authorization-users/:id')
-export class GetPendingAuthorizationUsersController {
-  constructor(private getById: NestGetPendingAuthorizationUsersUseCase) {}
+@Controller(
+  'neurofunctional-record/remove-pending-authorization/record-id/:id/user-id/:userId',
+)
+export class RemovePendingAuthorizationController {
+  constructor(
+    private removePendingAuthorizationUseCase: NestRemovePendingAuthorizationUseCase,
+  ) {}
 
-  @Get()
+  @Delete()
   @ApiTags('Neurofunctional Record')
   @ApiOperation({
-    summary: 'Get pending authorization users id',
+    summary: 'Remove pending authorization users',
     description: detailedDescription,
   })
   @ApiBearerAuth()
-  @ApiOkResponse({ description: 'Return pending authorization users by record id' })
-  @ApiNotFoundResponse({ description: 'Neurofunctional Record not found' })
+  @ApiOkResponse({
+    description: 'Suceessfully removed',
+  })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(@Param('id') id: string, @CurrentUser() user: UserPayload) {
-    const result = await this.getById.execute({
-      id,
+  async handle(
+    @Param('id') id: string,
+    @Param('userId') userId: string,
+    @CurrentUser() user: UserPayload,
+  ) {
+    const result = await this.removePendingAuthorizationUseCase.execute({
+      recordId: id,
+      userId,
       currentUserId: user.sub,
     });
 
@@ -52,11 +61,5 @@ export class GetPendingAuthorizationUsersController {
           throw new BadRequest(error.message);
       }
     }
-
-    const { pendingAuthorizationUsers } = result.value;
-
-    return {
-      pendingAuthorizationUsers: pendingAuthorizationUsers,
-    };
   }
 }

@@ -14,15 +14,21 @@ import { AskForAuthorizationController } from './authorization/ask-for-authoriza
 import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
 import { AuthorizeAccessController } from './authorization/authorize-access/authorize-access.controller';
 import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
-import { NestGetPendingAuthorizationUsersController } from './authorization/get-pending-authorization-users/get-pending-authorization-users.controller';
+import { GetPendingAuthorizationUsersController } from './authorization/get-pending-authorization-users/get-pending-authorization-users.controller';
 import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-get-pending-authorization';
+import { RemovePendingAuthorizationController } from './authorization/remove-pending-authorization/remove-pending-authorization.controller';
+import { NestRemovePendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-pending-authorization';
+import { RemoveAccessController } from './authorization/remove-access/remove-access.controller';
+import { NestRemoveAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-access';
 
 @Module({
   imports: [PersistenceModule],
   controllers: [
     AskForAuthorizationController,
     AuthorizeAccessController,
-    NestGetPendingAuthorizationUsersController,
+    GetPendingAuthorizationUsersController,
+    RemovePendingAuthorizationController,
+    RemoveAccessController,
     CreateNeurofunctionalRecordController,
     GetByIdNeurofunctionalController,
     GetByPatientIdNeurofunctionalController,
@@ -33,6 +39,8 @@ import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapte
     NestAskForAuthorizationUseCase,
     NestAuthorizeAccessUseCase,
     NestGetPendingAuthorizationUsersUseCase,
+    NestRemovePendingAuthorizationUseCase,
+    NestRemoveAccessUseCase,
     NestCreateNeurofunctionalRecordUseCase,
     NestGetNeurofunctionalByIdUseCase,
     NestGetNeurofunctionalByPatientIdUseCase,

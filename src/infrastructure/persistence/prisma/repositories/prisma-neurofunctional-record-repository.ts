@@ -79,6 +79,46 @@ export class PrismaNeurofunctionalRecordRepository
     });
   }
 
+  async removePendingAuthorization(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.neurofunctionalRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+      },
+    });
+  }
+
+  async removeAccess(
+    neurofunctionalRecord: NeurofunctionalRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.neurofunctionalRecord.update({
+      where: { id: data.id },
+      data: {
+        authorizedUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+      },
+    });
+  }
+
   async authorizeAccess(
     neurofunctionalRecord: NeurofunctionalRecord,
     userId: string,
