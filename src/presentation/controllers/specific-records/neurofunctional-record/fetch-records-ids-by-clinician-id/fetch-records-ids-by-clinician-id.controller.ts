@@ -16,18 +16,21 @@ import {
 import {
   PageBodyType,
   PageValidationBody,
+  detailedDescription,
   directionBodyType,
   directionValidationBody,
   orderByBodyType,
   orderByValidationBody,
 } from './fetch-records-ids-by-clinician-id-schema';
 import { NestFetchNeurofunctionalIdsByClinicianIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-fetch-neurofunctional-ids-by-clinician-id-use-case';
+import { Roles } from '@/infrastructure/auth/role/roles.decorator';
 
 @Controller('neurofunctional-record/fetch-ids-by-clinician-id/:clinicianId')
 export class FetchNeurofunctionalRecordController {
   constructor(private fetchRecords: NestFetchNeurofunctionalIdsByClinicianIdUseCase) {}
 
   @Get()
+  @Roles('EMPLOYEE')
   @ApiTags('Neurofunctional Record')
   @ApiQuery({ name: 'page', required: false, example: 1, type: Number })
   @ApiQuery({
@@ -37,7 +40,10 @@ export class FetchNeurofunctionalRecordController {
     enum: ['createdAt'],
   })
   @ApiQuery({ name: 'direction', required: false, type: String, enum: ['asc', 'desc'] })
-  @ApiOperation({ summary: 'Fetch neurofunctional record ids by clinician id' })
+  @ApiOperation({
+    summary: 'Fetch neurofunctional record ids by clinician id',
+    description: detailedDescription,
+  })
   @ApiBearerAuth()
   @ApiOkResponse({ description: 'Fetch neurofunctional Record' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })

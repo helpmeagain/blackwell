@@ -9,6 +9,7 @@ import { UniversalMedicalRecordModule } from './universal-medical-record/univers
 import { NotificationModule } from './notification/notification.module';
 import { IndexModule } from './index/index.module';
 import { NeurofunctionalRecordModule } from './specific-records/neurofunctional-record/neurofunctional-record.module';
+import { ManageAccessModule } from './specific-records/manage-access/manage-access.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { NeurofunctionalRecordModule } from './specific-records/neurofunctional-
     PatientModule,
     NotificationModule,
     NeurofunctionalRecordModule,
+    ManageAccessModule,
     IndexModule,
   ],
 })

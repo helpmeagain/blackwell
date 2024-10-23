@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Put,
+  UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -21,6 +22,9 @@ import { CreatePatientPresenter } from '@/presentation/utils/presenters/create-p
 import { UserAlreadyExists } from '@/application/common/error-handler/errors/user-already-exists';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
+import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
+import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 @Controller('patients/:id')
 export class EditPatientController {
@@ -34,7 +38,11 @@ export class EditPatientController {
   @ApiOkResponse({ description: 'Patient edited' })
   @ApiBadRequestResponse({ description: 'Invalid information' })
   @ApiConflictResponse({ description: 'Conflict' })
-  async handle(@Body(validationBody) body: typeof BodyType, @Param('id') id: string) {
+  async handle(
+    @Body(validationBody) body: typeof BodyType,
+    @Param('id') id: string,
+    @CurrentUser() user: UserPayload,
+  ) {
     const {
       name,
       surname,
@@ -51,10 +59,11 @@ export class EditPatientController {
 
     const result = await this.editPatient.execute({
       patientId: id,
+      currentUserId: user.sub,
       name,
       surname,
       gender,
-      birthDate: new Date(birthDate),
+      birthDate: birthDate ? new Date(birthDate) : undefined,
       cpf,
       address,
       state,
@@ -71,6 +80,8 @@ export class EditPatientController {
           throw new ConflictException(error.message);
         case ResourceNotFound:
           throw new NotFoundException(error.message);
+        case UnauthorizedUser:
+          throw new UnauthorizedException(error.message);
         default:
           throw new BadRequest(error.message);
       }
@@ -80,7 +91,7 @@ export class EditPatientController {
 
     return {
       message: 'Patient edited successfully',
-      patient: CreatePatientPresenter.toHTTP(patient, password),
+      patient: CreatePatientPresenter.toHTTP(patient, password ?? '********'),
     };
   }
 }

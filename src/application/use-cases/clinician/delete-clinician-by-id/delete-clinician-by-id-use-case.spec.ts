@@ -19,6 +19,7 @@ describe('Delete a clinician By Id', () => {
 
     const result = await sut.execute({
       clinicianId: 'clinicianId-1',
+      currentUserId: 'clinicianId-1',
     });
 
     expect(result.isRight()).toBe(true);
@@ -28,6 +29,7 @@ describe('Delete a clinician By Id', () => {
   it('should not be able to delete a clinician with incorrect id', async () => {
     const result = await sut.execute({
       clinicianId: 'clinicianId-1',
+      currentUserId: 'clinicianId-1',
     });
 
     expect(result.isLeft()).toBe(true);

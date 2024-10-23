@@ -27,6 +27,7 @@ import { NestCreateNeurofunctionalRecordUseCase } from '@/infrastructure/adapter
 import { ReturnNeurofunctionalePresenter } from '@/presentation/utils/presenters/return-neurofunctional-record-presenter';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
 import { RecordAlreadyExists } from '@/application/common/error-handler/errors/record-already-exists';
+import { Roles } from '@/infrastructure/auth/role/roles.decorator';
 
 @Controller('neurofunctional-record/patient-id/:patientId/clinician-id/:clinicianId')
 export class CreateNeurofunctionalRecordController {
@@ -35,6 +36,7 @@ export class CreateNeurofunctionalRecordController {
   ) {}
 
   @Post()
+  @Roles('EMPLOYEE')
   @ApiBearerAuth()
   @ApiTags('Neurofunctional Record')
   @ApiOperation({

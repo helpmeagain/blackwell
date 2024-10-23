@@ -10,10 +10,25 @@ import { FetchNeurofunctionalRecordController } from './fetch-records-ids-by-cli
 import { NestFetchNeurofunctionalIdsByClinicianIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-fetch-neurofunctional-ids-by-clinician-id-use-case';
 import { EditNeurofunctionalRecordController } from './edit-record-by-id/edit-record.controller';
 import { NestEditNeurofunctionalByIdUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/nest-edit-neurofunctional-record';
+import { AskForAuthorizationController } from './authorization/ask-for-authorization/ask-for-authorization.controller';
+import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
+import { AuthorizeAccessController } from './authorization/authorize-access/authorize-access.controller';
+import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
+import { GetPendingAuthorizationUsersController } from './authorization/get-pending-authorization-users/get-pending-authorization-users.controller';
+import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-get-pending-authorization';
+import { RemovePendingAuthorizationController } from './authorization/remove-pending-authorization/remove-pending-authorization.controller';
+import { NestRemovePendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-pending-authorization';
+import { RemoveAccessController } from './authorization/remove-access/remove-access.controller';
+import { NestRemoveAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-access';
 
 @Module({
   imports: [PersistenceModule],
   controllers: [
+    AskForAuthorizationController,
+    AuthorizeAccessController,
+    GetPendingAuthorizationUsersController,
+    RemovePendingAuthorizationController,
+    RemoveAccessController,
     CreateNeurofunctionalRecordController,
     GetByIdNeurofunctionalController,
     GetByPatientIdNeurofunctionalController,
@@ -21,6 +36,11 @@ import { NestEditNeurofunctionalByIdUseCase } from '@/infrastructure/adapter/spe
     EditNeurofunctionalRecordController,
   ],
   providers: [
+    NestAskForAuthorizationUseCase,
+    NestAuthorizeAccessUseCase,
+    NestGetPendingAuthorizationUsersUseCase,
+    NestRemovePendingAuthorizationUseCase,
+    NestRemoveAccessUseCase,
     NestCreateNeurofunctionalRecordUseCase,
     NestGetNeurofunctionalByIdUseCase,
     NestGetNeurofunctionalByPatientIdUseCase,

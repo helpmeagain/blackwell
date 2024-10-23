@@ -41,7 +41,10 @@ export class AuthenticateClinicianUseCase {
       return left(new WrongCredentials());
     }
 
-    const accessToken = await this.encrypter.encrypt({ sub: clinician.id.toString() });
+    const accessToken = await this.encrypter.encrypt({
+      sub: clinician.id.toString(),
+      role: 'EMPLOYEE',
+    });
     return right({ accessToken });
   }
 }

@@ -11,7 +11,7 @@ export class SwaggerService {
       .setVersion(version)
       .setLicense(
         'Apache License 2.0',
-        'https://github.com/felipecomarques/blackwell/blob/main/LICENSE.txt',
+        'https://github.com/helpmeagain/blackwell/blob/main/LICENSE.txt',
       )
       .setExternalDoc('Source code', homepage)
       .addBearerAuth()

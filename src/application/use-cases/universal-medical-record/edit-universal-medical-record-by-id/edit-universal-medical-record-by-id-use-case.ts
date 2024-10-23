@@ -1,11 +1,12 @@
 import { Either, left, right } from '@error/either';
 import { ResourceNotFound } from '@error/errors/resource-not-found';
-import { NotAllowed } from '@error/errors/not-allowed';
 import { UniversalMedicalRecord } from '@/domain/entities/universal-medical-record';
 import { UniversalMedicalRecordRepository } from '@/application/repositories/universal-medical-record-repository';
+import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
 interface editUniversalMedicalRecordByIdRequest {
   universalMedicalRecordId: string;
+  currentUserId: string;
   profession: string;
   emergencyContactEmail: string;
   emergencyContactNumber: string;
@@ -18,7 +19,7 @@ interface editUniversalMedicalRecordByIdRequest {
 }
 
 type editUniversalMedicalRecordByIdResponse = Either<
-  ResourceNotFound | NotAllowed,
+  ResourceNotFound | UnauthorizedUser,
   { universalMedicalRecord: UniversalMedicalRecord }
 >;
 
@@ -30,6 +31,7 @@ export class EditUniversalMedicalRecordByIdUseCase {
   ): Promise<editUniversalMedicalRecordByIdResponse> {
     const {
       universalMedicalRecordId,
+      currentUserId,
       profession,
       emergencyContactEmail,
       emergencyContactNumber,
@@ -46,6 +48,10 @@ export class EditUniversalMedicalRecordByIdUseCase {
 
     if (!universalMedicalRecord) {
       return left(new ResourceNotFound('Universal Medical Record'));
+    }
+
+    if (currentUserId !== universalMedicalRecord.patientId.toString()) {
+      return left(new UnauthorizedUser());
     }
 
     universalMedicalRecord.diagnosis = diagnosis;

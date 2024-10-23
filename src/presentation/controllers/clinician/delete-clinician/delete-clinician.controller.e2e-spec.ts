@@ -28,7 +28,7 @@ describe('Delete clinician by id [E2E]', () => {
 
   test('[DELETE] /clinicians/:id', async () => {
     const clinician = await clinicianFactory.makeDatabaseClinician({});
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .delete(`/clinicians/${clinician.id.toString()}`)

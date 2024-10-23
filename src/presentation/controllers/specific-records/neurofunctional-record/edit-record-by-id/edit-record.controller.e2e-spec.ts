@@ -37,7 +37,7 @@ describe('Edit neurofunctional record by id [E2E]', () => {
       patientId: patient.id,
       universalMedicalRecordId: patient.universalMedicalRecord.id,
     });
-    const token = jwt.sign({ sub: clinician.id.toString() });
+    const token = jwt.sign({ sub: clinician.id.toString(), role: 'EMPLOYEE' });
 
     const result = await request(app.getHttpServer())
       .put(`/neurofunctional-record/${record.id.toString()}`)
