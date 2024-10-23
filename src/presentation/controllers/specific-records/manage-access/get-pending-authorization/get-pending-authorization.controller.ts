@@ -21,11 +21,11 @@ export class GetPendingAuthorizationUsersController {
   @ApiTags('Manage record access')
   @Roles('CLIENT')
   @ApiOperation({
-    summary: 'Get pending authorization users id',
+    summary: 'Get pending authorization users',
     description: detailedDescription,
   })
   @ApiBearerAuth()
-  @ApiOkResponse({ description: 'Return pending authorization users by record id' })
+  @ApiOkResponse({ description: 'Return pending authorization users by user payload' })
   @ApiNotFoundResponse({ description: 'Neurofunctional Record not found' })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(@CurrentUser() user: UserPayload) {

@@ -5,10 +5,20 @@ import { GetPendingAuthorizationUsersController } from './get-pending-authorizat
 import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-pending-authorization';
 import { RevokeAccessController } from './revoke-access/revoke-access.controller';
 import { NestRevokeAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-revoke-access';
+import { AuthorizeAccessController } from './authorize-access/authorize-access.controller';
+import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-authorize-access';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
-  controllers: [GetPendingAuthorizationUsersController, RevokeAccessController],
-  providers: [NestGetPendingAuthorizationUsersUseCase, NestRevokeAccessUseCase],
+  controllers: [
+    GetPendingAuthorizationUsersController,
+    RevokeAccessController,
+    AuthorizeAccessController,
+  ],
+  providers: [
+    NestGetPendingAuthorizationUsersUseCase,
+    NestRevokeAccessUseCase,
+    NestAuthorizeAccessUseCase,
+  ],
 })
 export class ManageAccessModule {}
