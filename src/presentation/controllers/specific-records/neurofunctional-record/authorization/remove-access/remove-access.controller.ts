@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -20,6 +21,7 @@ import { UnauthorizedUser } from '@/application/common/error-handler/errors/unau
 import { detailedDescription } from './remove-access-schema';
 import { NestRemoveAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-access';
 
+@ApiExcludeController()
 @Controller('neurofunctional-record/remove-access/record-id/:id/user-id/:userId')
 export class RemoveAccessController {
   constructor(private removeAccessUseCase: NestRemoveAccessUseCase) {}

@@ -1,49 +1,59 @@
 import {
   Controller,
+  Delete,
   NotFoundException,
   Param,
-  Patch,
+  Query,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
-import { detailedDescription } from './authorize-access-schema';
+import {
+  detailedDescription,
+  ParamBodyType,
+  ParamValidationBody,
+} from './revoke-access-schema';
+import { NestRevokeAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-revoke-access';
 
-@ApiExcludeController()
-@Controller('neurofunctional-record/authorize-access/record-id/:id/user-id/:userId')
-export class AuthorizeAccessController {
-  constructor(private authorizeAccessUseCase: NestAuthorizeAccessUseCase) {}
+@Controller('manage-access/authorized-users/revoke-access/:userId')
+export class RevokeAccessController {
+  constructor(private revokeAccessUseCase: NestRevokeAccessUseCase) {}
 
-  @Patch()
-  @ApiTags('Neurofunctional Record')
+  @Delete()
+  @ApiTags('Manage record access')
+  @ApiQuery({
+    name: 'recordType',
+    required: true,
+    type: String,
+    enum: ['Neurofunctional', 'Trauma', 'Cardio'],
+  })
   @ApiOperation({
-    summary: 'Authorize access for record',
+    summary: 'Remove access from user',
     description: detailedDescription,
   })
   @ApiBearerAuth()
   @ApiOkResponse({
-    description: 'Suceessfully authorized',
+    description: 'Successfully removed',
   })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(
-    @Param('id') id: string,
+    @Query('recordType', ParamValidationBody) recordType: typeof ParamBodyType,
     @Param('userId') userId: string,
     @CurrentUser() user: UserPayload,
   ) {
-    const result = await this.authorizeAccessUseCase.execute({
-      recordId: id,
+    const result = await this.revokeAccessUseCase.execute({
+      recordType,
       userId,
       currentUserId: user.sub,
     });

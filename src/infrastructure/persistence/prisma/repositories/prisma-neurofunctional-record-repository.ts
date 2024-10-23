@@ -104,16 +104,15 @@ export class PrismaNeurofunctionalRecordRepository
     userId: string,
   ): Promise<void> {
     const data = PrismaNeurofunctionalRecordMapper.toPersistence(neurofunctionalRecord);
-
-    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
-      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+    const updatedAuthorizedUsers = Array.isArray(data.authorizedUsers)
+      ? data.authorizedUsers.filter((id) => id !== userId)
       : [];
 
     await this.prisma.neurofunctionalRecord.update({
       where: { id: data.id },
       data: {
         authorizedUsers: {
-          set: updatedPendingAuthorizationUsers,
+          set: updatedAuthorizedUsers,
         },
       },
     });

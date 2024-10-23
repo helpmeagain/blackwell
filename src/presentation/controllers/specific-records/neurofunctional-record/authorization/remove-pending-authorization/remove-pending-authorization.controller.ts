@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -20,6 +21,7 @@ import { UnauthorizedUser } from '@/application/common/error-handler/errors/unau
 import { detailedDescription } from './remove-pending-authorization-schema';
 import { NestRemovePendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-pending-authorization';
 
+@ApiExcludeController()
 @Controller(
   'neurofunctional-record/remove-pending-authorization/record-id/:id/user-id/:userId',
 )

@@ -1,49 +1,61 @@
 import {
   Controller,
+  Delete,
   NotFoundException,
   Param,
-  Patch,
+  Query,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-authorize-access';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
-import { detailedDescription } from './authorize-access-schema';
+import { NestDenyPendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-deny-pending-authorization';
+import {
+  detailedDescription,
+  ParamBodyType,
+  ParamValidationBody,
+} from './deny-pending-authorization-schema';
 
-@ApiExcludeController()
-@Controller('neurofunctional-record/authorize-access/record-id/:id/user-id/:userId')
-export class AuthorizeAccessController {
-  constructor(private authorizeAccessUseCase: NestAuthorizeAccessUseCase) {}
+@Controller('manage-access/pending-authorization/deny-access/:userId')
+export class DenyPendingAuthorizationController {
+  constructor(
+    private denyPendingAuthorizationUseCase: NestDenyPendingAuthorizationUseCase,
+  ) {}
 
-  @Patch()
-  @ApiTags('Neurofunctional Record')
+  @Delete()
+  @ApiTags('Manage record access')
   @ApiOperation({
-    summary: 'Authorize access for record',
+    summary: 'Deny pending authorization users',
     description: detailedDescription,
   })
   @ApiBearerAuth()
+  @ApiQuery({
+    name: 'recordType',
+    required: true,
+    type: String,
+    enum: ['Neurofunctional', 'Trauma', 'Cardio'],
+  })
   @ApiOkResponse({
-    description: 'Suceessfully authorized',
+    description: 'Suceessfully denyd',
   })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(
-    @Param('id') id: string,
+    @Query('recordType', ParamValidationBody) recordType: typeof ParamBodyType,
     @Param('userId') userId: string,
     @CurrentUser() user: UserPayload,
   ) {
-    const result = await this.authorizeAccessUseCase.execute({
-      recordId: id,
+    const result = await this.denyPendingAuthorizationUseCase.execute({
+      recordType,
       userId,
       currentUserId: user.sub,
     });

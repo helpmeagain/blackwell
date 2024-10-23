@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -21,6 +22,7 @@ import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 import { detailedDescription } from './get-pending-authorization-users-schema';
 
+@ApiExcludeController()
 @Controller('neurofunctional-record/pending-authorization-users/:id')
 export class GetPendingAuthorizationUsersController {
   constructor(private getById: NestGetPendingAuthorizationUsersUseCase) {}
