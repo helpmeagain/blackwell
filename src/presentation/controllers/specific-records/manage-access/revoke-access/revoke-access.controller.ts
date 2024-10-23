@@ -26,7 +26,7 @@ import {
 } from './revoke-access-schema';
 import { NestRevokeAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-revoke-access';
 
-@Controller('manage-access/revoke-access/:userId')
+@Controller('manage-access/authorized-users/revoke-access/:userId')
 export class RevokeAccessController {
   constructor(private revokeAccessUseCase: NestRevokeAccessUseCase) {}
 

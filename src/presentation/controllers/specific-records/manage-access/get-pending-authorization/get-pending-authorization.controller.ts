@@ -13,7 +13,7 @@ import { detailedDescription } from './get-pending-authorization-schema';
 import { NestGetPendingAuthorizationUsersUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-pending-authorization';
 import { Roles } from '@/infrastructure/auth/role/roles.decorator';
 
-@Controller('manage-access/pending-authorization-users/')
+@Controller('manage-access/pending-authorization')
 export class GetPendingAuthorizationUsersController {
   constructor(private getById: NestGetPendingAuthorizationUsersUseCase) {}
 

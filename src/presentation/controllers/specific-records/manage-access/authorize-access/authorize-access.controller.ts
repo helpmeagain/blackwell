@@ -27,7 +27,7 @@ import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-re
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 
-@Controller('manage-access/authorize-access/:userId')
+@Controller('manage-access/pending-authorization/authorize-access/:userId')
 export class AuthorizeAccessController {
   constructor(private authorizeAccessUseCase: NestAuthorizeAccessUseCase) {}
 

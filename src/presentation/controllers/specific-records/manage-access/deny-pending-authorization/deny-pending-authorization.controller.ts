@@ -26,7 +26,7 @@ import {
   ParamValidationBody,
 } from './deny-pending-authorization-schema';
 
-@Controller('manage-access/deny-access/:userId')
+@Controller('manage-access/pending-authorization/deny-access/:userId')
 export class DenyPendingAuthorizationController {
   constructor(
     private denyPendingAuthorizationUseCase: NestDenyPendingAuthorizationUseCase,

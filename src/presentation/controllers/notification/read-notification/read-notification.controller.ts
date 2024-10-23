@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiNoContentResponse,
   ApiOperation,
   ApiTags,
@@ -20,6 +21,7 @@ import { NotAllowed } from '@/application/common/error-handler/errors/not-allowe
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 
+@ApiExcludeController()
 @Controller('notification/read/:notificationId')
 export class ReadNotificationController {
   constructor(private readNotification: NestReadNotificationUseCase) {}
