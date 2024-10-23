@@ -3,13 +3,14 @@ import {
   Delete,
   NotFoundException,
   Param,
+  Query,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -18,36 +19,43 @@ import { ResourceNotFound } from '@/application/common/error-handler/errors/reso
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
-import { detailedDescription } from './remove-pending-authorization-schema';
-import { NestRemovePendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-remove-pending-authorization';
+import { NestDenyPendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-deny-pending-authorization';
+import {
+  detailedDescription,
+  ParamBodyType,
+  ParamValidationBody,
+} from './deny-pending-authorization-schema';
 
-@ApiExcludeController()
-@Controller(
-  'neurofunctional-record/remove-pending-authorization/record-id/:id/user-id/:userId',
-)
-export class RemovePendingAuthorizationController {
+@Controller('manage-access/deny-access/:userId')
+export class DenyPendingAuthorizationController {
   constructor(
-    private removePendingAuthorizationUseCase: NestRemovePendingAuthorizationUseCase,
+    private denyPendingAuthorizationUseCase: NestDenyPendingAuthorizationUseCase,
   ) {}
 
   @Delete()
-  @ApiTags('Neurofunctional Record')
+  @ApiTags('Manage record access')
   @ApiOperation({
-    summary: 'Remove pending authorization users',
+    summary: 'Deny pending authorization users',
     description: detailedDescription,
   })
   @ApiBearerAuth()
+  @ApiQuery({
+    name: 'recordType',
+    required: true,
+    type: String,
+    enum: ['Neurofunctional', 'Trauma', 'Cardio'],
+  })
   @ApiOkResponse({
-    description: 'Suceessfully removed',
+    description: 'Suceessfully denyd',
   })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
   async handle(
-    @Param('id') id: string,
+    @Query('recordType', ParamValidationBody) recordType: typeof ParamBodyType,
     @Param('userId') userId: string,
     @CurrentUser() user: UserPayload,
   ) {
-    const result = await this.removePendingAuthorizationUseCase.execute({
-      recordId: id,
+    const result = await this.denyPendingAuthorizationUseCase.execute({
+      recordType,
       userId,
       currentUserId: user.sub,
     });
