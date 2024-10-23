@@ -9,6 +9,8 @@ import { AuthorizeAccessController } from './authorize-access/authorize-access.c
 import { NestAuthorizeAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-authorize-access';
 import { DenyPendingAuthorizationController } from './deny-pending-authorization/deny-pending-authorization.controller';
 import { NestDenyPendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-deny-pending-authorization';
+import { RequestAccessController } from './request-access/request-access.controller';
+import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-request-access';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { NestDenyPendingAuthorizationUseCase } from '@/infrastructure/adapter/sp
     RevokeAccessController,
     AuthorizeAccessController,
     DenyPendingAuthorizationController,
+    RequestAccessController,
   ],
   providers: [
     NestGetPendingAuthorizationUsersUseCase,
     NestRevokeAccessUseCase,
     NestAuthorizeAccessUseCase,
     NestDenyPendingAuthorizationUseCase,
+    NestRequestAccessUseCase,
   ],
 })
 export class ManageAccessModule {}

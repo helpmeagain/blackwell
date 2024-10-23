@@ -4,40 +4,55 @@ import {
   NotFoundException,
   Param,
   Patch,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
-import { NestAskForAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/neurofunctional-record/authorization/nest-ask-for-authorization';
-import { detailedDescription } from './ask-for-authorization-schema';
 import { UserAlreadyMadeRequest } from '@/application/common/error-handler/errors/user-already-made-request';
+import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-request-access';
+import {
+  detailedDescription,
+  ParamBodyType,
+  ParamValidationBody,
+} from './request-access-schema';
 
-@ApiExcludeController()
-@Controller('neurofunctional-record/ask-for-authorization/record-id/:id/user-id/:userId')
-export class AskForAuthorizationController {
-  constructor(private getAskForAuthorizationUseCase: NestAskForAuthorizationUseCase) {}
+@Controller('manage-access/request-access/record-id/:recordId/userId/:userId')
+export class RequestAccessController {
+  constructor(private getRequestAccessUseCase: NestRequestAccessUseCase) {}
 
   @Patch()
-  @ApiTags('Neurofunctional Record')
+  @ApiTags('Manage record access')
   @ApiOperation({
-    summary: 'Ask for authorization',
+    summary: 'Request authorization',
     description: detailedDescription,
+  })
+  @ApiQuery({
+    name: 'recordType',
+    required: true,
+    type: String,
+    enum: ['Neurofunctional', 'Trauma', 'Cardio'],
   })
   @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Suceessfully asked for authorization',
   })
   @ApiUnauthorizedResponse({ description: 'Not authorized to access this route' })
-  async handle(@Param('id') id: string, @Param('userId') userId: string) {
-    const result = await this.getAskForAuthorizationUseCase.execute({
-      recordId: id,
+  async handle(
+    @Param('recordId') recordId: string,
+    @Param('userId') userId: string,
+    @Query('recordType', ParamValidationBody) recordType: typeof ParamBodyType,
+  ) {
+    const result = await this.getRequestAccessUseCase.execute({
+      recordType,
+      recordId,
       userId,
     });
 
