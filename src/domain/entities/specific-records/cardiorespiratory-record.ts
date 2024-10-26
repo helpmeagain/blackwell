@@ -52,25 +52,25 @@ export interface CardiorespiratoryRecordProps extends SpecificMedicalRecordProps
         thirdMeasurement: number;
       };
     };
-    cardiofunctionalAssessment: {
-      bmi: number; 
-      abdominalPerimeter: number; 
-      waistHipRatio: number; 
-      bioimpedance: {
-        bodyFat: number; 
-        visceralFat: number; 
-        muscleMassPercentage: number; 
-      };
-      adipometry: {
-        skinfoldMeasurements: {
-          bicipital: number;
-          tricipital: number;
-          subscapular: number;
-          abdominal: number;
-        };
-      };    
-    };
   }
+  cardiofunctionalAssessment: {
+    bmi: number; 
+    abdominalPerimeter: number; 
+    waistHipRatio: number; 
+    bioimpedance: {
+      bodyFat: number; 
+      visceralFat: number; 
+      muscleMassPercentage: number; 
+    };
+    adipometry: {
+      skinfoldMeasurements: {
+        bicipital: number;
+        tricipital: number;
+        subscapular: number;
+        abdominal: number;
+      };
+    };    
+  };
 }
 
 export class CardiorespiratoryRecord extends SpecificMedicalRecord<CardiorespiratoryRecordProps> {
@@ -128,6 +128,15 @@ export class CardiorespiratoryRecord extends SpecificMedicalRecord<Cardiorespira
 
   set pneumofunctionalAssessment(value: CardiorespiratoryRecordProps['pneumofunctionalAssessment']) {
     this.props.pneumofunctionalAssessment = value;
+    this.touch();
+  }
+
+  get cardiofunctionalAssessment() {
+    return this.props.cardiofunctionalAssessment;
+  }
+
+  set cardiofunctionalAssessment(value: CardiorespiratoryRecordProps['cardiofunctionalAssessment']) {
+    this.props.cardiofunctionalAssessment = value;
     this.touch();
   }
 }
