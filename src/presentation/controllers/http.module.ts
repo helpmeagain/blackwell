@@ -10,6 +10,7 @@ import { NotificationModule } from './notification/notification.module';
 import { IndexModule } from './index/index.module';
 import { NeurofunctionalRecordModule } from './specific-records/neurofunctional-record/neurofunctional-record.module';
 import { ManageAccessModule } from './specific-records/manage-access/manage-access.module';
+import { CardiorespiratoryRecordModule } from './specific-records/cardiorespiratory-record/cardiorespiratory-record.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ManageAccessModule } from './specific-records/manage-access/manage-acce
     NeurofunctionalRecordModule,
     ManageAccessModule,
     IndexModule,
+    CardiorespiratoryRecordModule
   ],
 })
 export class HttpModule {}
