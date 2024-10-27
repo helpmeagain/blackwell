@@ -38,7 +38,7 @@ export class CreateNeurofunctionalRecordController {
   @Post()
   @Roles('EMPLOYEE')
   @ApiBearerAuth()
-  @ApiTags('Neurofunctional Record')
+  @ApiTags('Specific records - Neurofunctional Record')
   @ApiOperation({
     summary: 'Create a neurofunctional record',
     description: detailedDescription,

@@ -12,8 +12,10 @@ model Clinician {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
 
-  consultations         Consultation[]
-  NeurofunctionalRecord NeurofunctionalRecord[]
+  consultations           Consultation[]
+  NeurofunctionalRecord   NeurofunctionalRecord[]
+  CardiorespiratoryRecord CardiorespiratoryRecord[]
+  TraumaOrthopedicRecord  TraumaOrthopedicRecord[]
 
   @@map("clinicians")
 }
@@ -37,9 +39,11 @@ model Patient {
   createdAt                DateTime  @default(now()) @map("created_at")
   updatedAt                DateTime? @updatedAt @map("updated_at")
 
-  Consultation           Consultation[]
-  UniversalMedicalRecord UniversalMedicalRecord? @relation("record", fields: [universalMedicalRecordId], references: [id])
-  NeurofunctionalRecord  NeurofunctionalRecord?
+  Consultation            Consultation[]
+  UniversalMedicalRecord  UniversalMedicalRecord?  @relation("record", fields: [universalMedicalRecordId], references: [id])
+  NeurofunctionalRecord   NeurofunctionalRecord?
+  CardiorespiratoryRecord CardiorespiratoryRecord?
+  TraumaOrthopedicRecord  TraumaOrthopedicRecord?
 
   @@map("patients")
 }

@@ -36,7 +36,7 @@ export class EditNeurofunctionalRecordController {
 
   @Put()
   @ApiBearerAuth()
-  @ApiTags('Neurofunctional Record')
+  @ApiTags('Specific records - Neurofunctional Record')
   @ApiOperation({
     summary: 'Edit a neurofunctional record',
     description: detailedDescription,
