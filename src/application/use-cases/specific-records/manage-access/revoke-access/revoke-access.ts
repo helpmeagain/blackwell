@@ -5,6 +5,8 @@ import { NeurofunctionalRecordRepository } from '@/application/repositories/neur
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 import { CardiorespiratoryRecord } from '@/domain/entities/specific-records/cardiorespiratory-record';
 import { CardiorespiratoryRecordRepository } from '@/application/repositories/cardiorespiratory-record-repository';
+import { TraumaOrthopedicRecord } from '@/domain/entities/specific-records/trauma-orthopedic-record';
+import { TraumaOrthopedicRecordRepository } from '@/application/repositories/trauma-orthopedic-record-repository';
 
 interface revokeAccessRequest {
   recordType: 'Neurofunctional' | 'Trauma' | 'Cardio';
@@ -15,13 +17,15 @@ interface revokeAccessRequest {
 type revokeAccessResponse = Either<
   ResourceNotFound | UnauthorizedUser,
   { neurofunctionalRecord: NeurofunctionalRecord } |
-  { cardiorespiratoryRecord: CardiorespiratoryRecord }
+  { cardiorespiratoryRecord: CardiorespiratoryRecord } |
+  { traumaOrthopedicRecord: TraumaOrthopedicRecord }
 >;
 
 export class RevokeAccessUseCase {
   constructor(
     private readonly neuroRepository: NeurofunctionalRecordRepository,
-    private readonly cardioRepository: CardiorespiratoryRecordRepository
+    private readonly cardioRepository: CardiorespiratoryRecordRepository,
+    private readonly traumaRepository: TraumaOrthopedicRecordRepository
   ) {}
 
   async execute(req: revokeAccessRequest): Promise<revokeAccessResponse> {
@@ -29,7 +33,8 @@ export class RevokeAccessUseCase {
     switch (recordType) {
       case 'Neurofunctional':
         return await this.handleNeurofunctionalRequest(userId, currentUserId)
-      // case 'Trauma':
+      case 'Trauma':
+        return await this.handleTraumaOrthopedicRequest(userId, currentUserId)
       case 'Cardio':
         return await this.handleCardiorespiratoryRequest(userId, currentUserId)
       default:
@@ -73,5 +78,24 @@ export class RevokeAccessUseCase {
     await this.cardioRepository.removeAccess(cardiorespiratoryRecord, userId);
 
     return right({ cardiorespiratoryRecord });
+  }
+
+  private async handleTraumaOrthopedicRequest(userId: string, currentUserId: string): Promise<revokeAccessResponse> {
+    const traumaOrthopedicRecord = await this.traumaRepository.findByPatientId(currentUserId);
+
+    if (!traumaOrthopedicRecord) {
+      return left(new ResourceNotFound('Neurofunctional Record'));
+    }
+
+    if (
+      !traumaOrthopedicRecord.authorizedUsers ||
+      !traumaOrthopedicRecord.authorizedUsers.includes(userId)
+    ) {
+      return left(new ResourceNotFound('User'));
+    }
+
+    await this.traumaRepository.removeAccess(traumaOrthopedicRecord, userId);
+
+    return right({ traumaOrthopedicRecord });
   }
 }

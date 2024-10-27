@@ -4,7 +4,7 @@ import { PatientRepository } from '@/application/repositories/patient-repository
 import { ClinicianRepository } from '@/application/repositories/clinician-repository';
 import { GetPendingAuthorizationUsersResponse } from './get-pending-authorization-response';
 import { CardiorespiratoryRecordRepository } from '@/application/repositories/cardiorespiratory-record-repository';
-// import { TraumaRecordRepository } from '@/application/repositories/trauma-record-repository';
+import { TraumaOrthopedicRecordRepository } from '@/application/repositories/trauma-orthopedic-record-repository';
 
 interface getPendingAuthorizationUsersRequest {
   currentUserId: string;
@@ -18,7 +18,7 @@ type getPendingAuthorizationUsersResponse = Either<
 export class GetPendingAuthorizationUsersUseCase {
   constructor(
     private readonly neuroRepository: NeurofunctionalRecordRepository,
-    // private readonly traumaRepository: TraumaRecordRepository,
+    private readonly traumaRepository: TraumaOrthopedicRecordRepository,
     private readonly cardioRepository: CardiorespiratoryRecordRepository,
     private readonly patientRepository: PatientRepository,
     private readonly clinicianRepository: ClinicianRepository,
@@ -31,7 +31,7 @@ export class GetPendingAuthorizationUsersUseCase {
 
     const neuroRecord = await this.neuroRepository.findByPatientId(currentUserId);
     const cardioRecord = await this.cardioRepository.findByPatientId(currentUserId);
-    // const traumaRecord = await this.traumaRepository.findByPatientId(currentUserId);
+    const traumaRecord = await this.traumaRepository.findByPatientId(currentUserId);
 
     
     const neuroPendingUsers = neuroRecord
@@ -41,12 +41,12 @@ export class GetPendingAuthorizationUsersUseCase {
         )
       : [];
 
-    // const traumaPendingUsers = traumaRecord
-    //   ? await this.processPendingUsers(
-    //       traumaRecord.pendingAuthorizationUsers ?? [],
-    //       'Trauma',
-    //     )
-    //   : [];
+    const traumaPendingUsers = traumaRecord
+      ? await this.processPendingUsers(
+          traumaRecord.pendingAuthorizationUsers ?? [],
+          'Trauma',
+        )
+      : [];
 
     const cardioPendingUsers = cardioRecord
       ? await this.processPendingUsers(
@@ -57,7 +57,7 @@ export class GetPendingAuthorizationUsersUseCase {
 
     const pendingAuthorizationUsers = [
       ...neuroPendingUsers,
-      // ...traumaPendingUsers,
+      ...traumaPendingUsers,
       ...cardioPendingUsers,
     ];
 

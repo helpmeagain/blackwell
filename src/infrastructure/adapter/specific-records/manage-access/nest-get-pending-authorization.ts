@@ -2,6 +2,7 @@ import { CardiorespiratoryRecordRepository } from '@/application/repositories/ca
 import { ClinicianRepository } from '@/application/repositories/clinician-repository';
 import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
 import { PatientRepository } from '@/application/repositories/patient-repository';
+import { TraumaOrthopedicRecordRepository } from '@/application/repositories/trauma-orthopedic-record-repository';
 import { GetPendingAuthorizationUsersUseCase } from '@/application/use-cases/specific-records/manage-access/get-pending-authorization/get-pending-authorization';
 import { Injectable } from '@nestjs/common';
 
@@ -9,10 +10,11 @@ import { Injectable } from '@nestjs/common';
 export class NestGetPendingAuthorizationUsersUseCase extends GetPendingAuthorizationUsersUseCase {
   constructor(
     neuroRepository: NeurofunctionalRecordRepository,
+    traumaRepository: TraumaOrthopedicRecordRepository,
     cardioRepository: CardiorespiratoryRecordRepository,
     patientRepository: PatientRepository,
     clinicianRepository: ClinicianRepository,
   ) {
-    super(neuroRepository, cardioRepository, patientRepository, clinicianRepository);
+    super(neuroRepository, traumaRepository, cardioRepository, patientRepository, clinicianRepository);
   }
 }
