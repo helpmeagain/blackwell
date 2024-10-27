@@ -8,6 +8,22 @@ export abstract class CardiorespiratoryRecordRepository {
     clinicianId: string,
     params: PaginationParams,
   ) => Promise<CardiorespiratoryRecord[]>;
+  abstract askForAuthorization(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void>;
+  abstract authorizeAccess(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void>;
+  abstract removePendingAuthorization(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void>;
+  abstract removeAccess(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void>;
   abstract create: (cardiorespiratoryRecord: CardiorespiratoryRecord) => Promise<void>;
   abstract save: (cardiorespiratoryRecord: CardiorespiratoryRecord) => Promise<void>;
 }

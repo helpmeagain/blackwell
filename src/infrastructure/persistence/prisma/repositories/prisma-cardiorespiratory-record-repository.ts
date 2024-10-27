@@ -49,6 +49,84 @@ export class PrismaCardiorespiratoryRecordRepository
     return cardiorespiratoryRecord.map(PrismaCardiorespiratoryRecordMapper.toDomain);
   }
 
+  async askForAuthorization(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaCardiorespiratoryRecordMapper.toPersistence(cardiorespiratoryRecord);
+
+    await this.prisma.cardiorespiratoryRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          push: userId,
+        },
+      },
+    });
+  }
+  
+  async authorizeAccess(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaCardiorespiratoryRecordMapper.toPersistence(cardiorespiratoryRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.cardiorespiratoryRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+        authorizedUsers: {
+          push: userId,
+        },
+      },
+    });
+  }
+
+  async removePendingAuthorization(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaCardiorespiratoryRecordMapper.toPersistence(cardiorespiratoryRecord);
+
+    const updatedPendingAuthorizationUsers = Array.isArray(data.pendingAuthorizationUsers)
+      ? data.pendingAuthorizationUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.cardiorespiratoryRecord.update({
+      where: { id: data.id },
+      data: {
+        pendingAuthorizationUsers: {
+          set: updatedPendingAuthorizationUsers,
+        },
+      },
+    });
+  }
+
+  async removeAccess(
+    cardiorespiratoryRecord: CardiorespiratoryRecord,
+    userId: string,
+  ): Promise<void> {
+    const data = PrismaCardiorespiratoryRecordMapper.toPersistence(cardiorespiratoryRecord);
+    const updatedAuthorizedUsers = Array.isArray(data.authorizedUsers)
+      ? data.authorizedUsers.filter((id) => id !== userId)
+      : [];
+
+    await this.prisma.cardiorespiratoryRecord.update({
+      where: { id: data.id },
+      data: {
+        authorizedUsers: {
+          set: updatedAuthorizedUsers,
+        },
+      },
+    });
+  }
+
   async create(cardiorespiratoryRecord: CardiorespiratoryRecord): Promise<void> {
     const data = PrismaCardiorespiratoryRecordMapper.toPersistence(cardiorespiratoryRecord);
     await this.prisma.cardiorespiratoryRecord.create({ data });
