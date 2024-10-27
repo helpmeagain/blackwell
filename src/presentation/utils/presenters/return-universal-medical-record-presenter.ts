@@ -11,7 +11,8 @@ export class ReturnUniversalMedicalRecordPresenter {
       specificMedicalRecordsIds: {
         neurofunctionalRecord:
           universalMedicalRecord.neurofunctionalRecordId?.toString() ?? null,
-        cardiorespiratoryRecord: null,
+        cardiorespiratoryRecord: 
+          universalMedicalRecord.cardiorepiratoryRecordId?.toString() ?? null,
         traumatoOrthopedicRecord: null,
       },
       profession: universalMedicalRecord.profession,
