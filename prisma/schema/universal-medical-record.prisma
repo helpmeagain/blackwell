@@ -14,9 +14,11 @@ model UniversalMedicalRecord {
   createdAt              DateTime  @default(now()) @map("created_at")
   updatedAt              DateTime? @updatedAt @map("updated_at")
 
-  Consultation          Consultation[]
-  Patient               Patient?               @relation("record")
-  NeurofunctionalRecord NeurofunctionalRecord?
+  Consultation            Consultation[]
+  Patient                 Patient?                 @relation("record")
+  NeurofunctionalRecord   NeurofunctionalRecord?
+  CardiorespiratoryRecord CardiorespiratoryRecord?
+  TraumaOrthopedicRecord  TraumaOrthopedicRecord?
 
   @@map("universal_medical_records")
 }

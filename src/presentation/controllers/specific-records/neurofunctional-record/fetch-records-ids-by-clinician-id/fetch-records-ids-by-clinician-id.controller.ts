@@ -31,7 +31,7 @@ export class FetchNeurofunctionalRecordController {
 
   @Get()
   @Roles('EMPLOYEE')
-  @ApiTags('Neurofunctional Record')
+  @ApiTags('Specific records - Neurofunctional Record')
   @ApiQuery({ name: 'page', required: false, example: 1, type: Number })
   @ApiQuery({
     name: 'orderBy',

@@ -1,0 +1,130 @@
+model CardiorespiratoryRecord {
+  id                          String                                      @id @default(uuid())
+  clinicianId                 String
+  patientId                   String                                      @unique
+  universalMedicalRecordId    String                                      @unique
+  medicalDiagnosis            String
+  anamnesis                   String
+  physicalExamination         String
+  physiotherapyDepartment     PhysiotherapyDepartment
+  triage                      Triage
+  authorizedUsers             String[]
+  pendingAuthorizationUsers   String[]
+  // lifestyleHabits {
+  alcoholConsumption          Boolean
+  smoker                      Boolean
+  obesity                     Boolean
+  diabetes                    Boolean
+  drugUser                    Boolean
+  physicalActivity            Boolean
+  // }
+  // physicalInspection {
+  isFaceSinusPalpationHurtful Boolean
+  //    nasalSecretion: {
+  type                        NasalSecretionType
+  isFetid                     Boolean
+  quantity                    NasalSecretionQuantity
+  //    }
+  nasalItching                PhysicalInspectionNasalItching
+  sneezing                    PhysicalInspectionNasalItching
+  chestType                   PhysicalInspectionChestType
+  respiratoryOrCardiacSigns   PhysicalInspectionRespiratoryOrCardiacSigns
+  // }
+  // vitalSigns {
+  heartRate                   Float
+  respiratoryRate             Float
+  //    bloodPressure: {
+  systolic                    Float
+  diastolic                   Float
+  //    }
+  temperature                 Float
+  oxygenSaturation            Float
+  // }
+  // pneumofunctionalAssessment: {
+  //     peakFlow: {
+  firstMeasurement            Float
+  secondMeasurement           Float
+  thirdMeasurement            Float
+  //    }
+  //    manovacuometry: {
+  //        pemax: {
+  pemaxFirstMeasurement       Float
+  pemaxSecondMeasurement      Float
+  pemaxThirdMeasurement       Float
+  //        }
+  //        pimax: {
+  pimaxFirstMeasurement       Float
+  pimaxSecondMeasurement      Float
+  pimaxThirdMeasurement       Float
+  //        }
+  //    }
+  // }
+  // cardiofunctionalAssessment: {
+  bmi                         Float
+  abdominalPerimeter          Float
+  waistHipRatio               Float
+  //    bioimpedance: {
+  bodyFat                     Float
+  visceralFat                 Float
+  muscleMassPercentage        Float
+  //    }
+  //    adipometry {
+  //        skinfoldMeasurements {
+  bicipital                   Float
+  tricipital                  Float
+  subscapular                 Float
+  abdominal                   Float
+  //       }
+  //    }    
+  createdAt                   DateTime                                    @default(now())
+  updatedAt                   DateTime?                                   @updatedAt
+
+  clinicians             Clinician              @relation(fields: [clinicianId], references: [id])
+  patients               Patient                @relation(fields: [patientId], references: [id])
+  UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+}
+
+enum NasalSecretionType {
+  purulent
+  mucopurulent
+  mucoid
+  piohematic
+  hematic
+  rosacea
+  greenish
+  yellowish
+}
+
+enum NasalSecretionQuantity {
+  large
+  moderate
+  small
+  absent
+}
+
+enum PhysicalInspectionNasalItching {
+  intermittent
+  persistent
+  absent
+}
+
+enum PhysicalInspectionChestType {
+  kyphotic
+  scoliotic
+  kyphoscoliotic
+  barrel
+  hourglass
+  pectusExcavatum
+  pectusCarinatum
+  normal
+  charpyAngle
+}
+
+enum PhysicalInspectionRespiratoryOrCardiacSigns {
+  accessory
+  retractions
+  hooverSign
+  digitalClubbing
+  jugularVenousDistension
+  normal
+}

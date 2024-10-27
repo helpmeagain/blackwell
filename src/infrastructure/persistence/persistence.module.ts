@@ -12,6 +12,10 @@ import { UniversalMedicalRecordRepository } from '@/application/repositories/uni
 import { PrismaUniversalMedicalRecordRepository } from './prisma/repositories/prisma-universal-medical-record-repository';
 import { NeurofunctionalRecordRepository } from '@/application/repositories/neurofunctional-record-repository';
 import { PrismaNeurofunctionalRecordRepository } from './prisma/repositories/prisma-neurofunctional-record-repository';
+import { CardiorespiratoryRecordRepository } from '@/application/repositories/cardiorespiratory-record-repository';
+import { PrismaCardiorespiratoryRecordRepository } from './prisma/repositories/prisma-cardiorespiratory-record-repository';
+import { TraumaOrthopedicRecordRepository } from '@/application/repositories/trauma-orthopedic-record-repository';
+import { PrismaTraumaOrthopedicRecordRepository } from './prisma/repositories/prisma-trauma-orthopedic-record-repository';
 
 @Module({
   providers: [
@@ -28,6 +32,14 @@ import { PrismaNeurofunctionalRecordRepository } from './prisma/repositories/pri
       provide: NeurofunctionalRecordRepository,
       useClass: PrismaNeurofunctionalRecordRepository,
     },
+    {
+      provide: CardiorespiratoryRecordRepository,
+      useClass: PrismaCardiorespiratoryRecordRepository,
+    },
+    {
+      provide: TraumaOrthopedicRecordRepository,
+      useClass: PrismaTraumaOrthopedicRecordRepository,
+    }
   ],
   exports: [
     PrismaService,
@@ -37,6 +49,8 @@ import { PrismaNeurofunctionalRecordRepository } from './prisma/repositories/pri
     PatientRepository,
     UniversalMedicalRecordRepository,
     NeurofunctionalRecordRepository,
+    CardiorespiratoryRecordRepository,
+    TraumaOrthopedicRecordRepository
   ],
 })
 export class PersistenceModule {}
