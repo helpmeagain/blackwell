@@ -87,7 +87,7 @@ export class CardiorespiratoryRecord extends SpecificMedicalRecord<Cardiorespira
     const cardiorespiratoryRecord = new CardiorespiratoryRecord(
       {
         ...props,
-        physiotherapyDepartment: 'Neurofunctional',
+        physiotherapyDepartment: 'Cardiorespiratory',
         createdAt: props.createdAt ?? new Date(),
       },
       id,
