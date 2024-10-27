@@ -13,7 +13,8 @@ export class ReturnUniversalMedicalRecordPresenter {
           universalMedicalRecord.neurofunctionalRecordId?.toString() ?? null,
         cardiorespiratoryRecord: 
           universalMedicalRecord.cardiorepiratoryRecordId?.toString() ?? null,
-        traumatoOrthopedicRecord: null,
+        traumatoOrthopedicRecord: 
+          universalMedicalRecord.traumaOrthopedicRecordId?.toString() ?? null,
       },
       profession: universalMedicalRecord.profession,
       emergencyContactEmail: universalMedicalRecord.emergencyContactEmail,

@@ -13,6 +13,8 @@ export class PrismaUniversalMedicalRecordMapper {
       NeurofunctionalRecord?: { id: string } | null;
     } & {
       CardiorespiratoryRecord?: { id: string } | null;
+    } & {
+      TraumaOrthopedicRecord?: { id: string } | null;
     },
   ): UniversalMedicalRecord {
     const universalMedicalRecord = UniversalMedicalRecord.create(
@@ -35,6 +37,9 @@ export class PrismaUniversalMedicalRecordMapper {
           : null,
         cardiorepiratoryRecordId: raw.CardiorespiratoryRecord?.id
         ? new UniqueEntityId(raw.CardiorespiratoryRecord.id)
+        : null,
+        traumaOrthopedicRecordId: raw.TraumaOrthopedicRecord?.id
+        ? new UniqueEntityId(raw.TraumaOrthopedicRecord.id)
         : null,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,

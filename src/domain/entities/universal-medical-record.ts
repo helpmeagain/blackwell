@@ -17,6 +17,7 @@ interface UniversalMedicalRecordProps {
   medicationsInUse?: string[] | null;
   neurofunctionalRecordId?: UniqueEntityId | null;
   cardiorepiratoryRecordId?: UniqueEntityId | null;
+  traumaOrthopedicRecordId?: UniqueEntityId | null;
   createdAt: Date;
   updatedAt?: Date | null;
 }
@@ -25,7 +26,11 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
   static create(
     props: Optional<
       UniversalMedicalRecordProps,
-      'consultationsIds' | 'createdAt' | 'neurofunctionalRecordId' | 'cardiorepiratoryRecordId'
+      'consultationsIds' | 
+      'createdAt' | 
+      'neurofunctionalRecordId' | 
+      'cardiorepiratoryRecordId' |
+      'traumaOrthopedicRecordId'
     >,
     id?: UniqueEntityId,
   ) {
@@ -149,6 +154,10 @@ export class UniversalMedicalRecord extends BaseEntity<UniversalMedicalRecordPro
   
   get cardiorepiratoryRecordId(): UniqueEntityId | null | undefined {
     return this.props.cardiorepiratoryRecordId;
+  }
+
+  get traumaOrthopedicRecordId(): UniqueEntityId | null | undefined {
+    return this.props.traumaOrthopedicRecordId;
   }
 
   get createdAt(): Date {
