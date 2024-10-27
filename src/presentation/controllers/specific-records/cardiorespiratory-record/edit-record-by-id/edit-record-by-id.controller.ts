@@ -21,7 +21,7 @@ import {
   validationBody,
   exampleResponse,
   detailedDescription,
-} from './edit-record-schema';
+} from './edit-record-by-id-schema';
 import { BadRequest } from '@/application/common/error-handler/errors/bad-request';
 import { ReturnCardiorespiratoryPresenter } from '@/presentation/utils/presenters/return-cardiorespiratory-presenter';
 import { ResourceNotFound } from '@/application/common/error-handler/errors/resource-not-found';
@@ -36,7 +36,7 @@ export class EditCardiorespiratoryRecordController {
 
   @Put()
   @ApiBearerAuth()
-  @ApiTags('Cardiorespiratory Record')
+  @ApiTags('Specific records - Cardiorespiratory Record')
   @ApiOperation({
     summary: 'Edit a cardiorespiratory record',
     description: detailedDescription,

@@ -21,7 +21,7 @@ import {
   directionValidationBody,
   orderByBodyType,
   orderByValidationBody,
-} from './fetch-records-ids-by-clinician-id-schema';
+} from './fetch-records-by-clinician-id-schema';
 import { NestFetchCardiorespiratoryIdsByClinicianIdUseCase } from '@/infrastructure/adapter/specific-records/cardiorespiratory-record/nest-fetch-records-ids-by-clinician-id-use-case';
 import { Roles } from '@/infrastructure/auth/role/roles.decorator';
 
@@ -31,7 +31,7 @@ export class FetchCardiorespiratoryRecordController {
 
   @Get()
   @Roles('EMPLOYEE')
-  @ApiTags('Cardiorespiratory Record')
+  @ApiTags('Specific records - Cardiorespiratory Record')
   @ApiQuery({ name: 'page', required: false, example: 1, type: Number })
   @ApiQuery({
     name: 'orderBy',

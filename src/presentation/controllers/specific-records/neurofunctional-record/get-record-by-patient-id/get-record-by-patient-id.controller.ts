@@ -27,7 +27,7 @@ export class GetByPatientIdNeurofunctionalController {
   constructor(private getById: NestGetNeurofunctionalByPatientIdUseCase) {}
 
   @Get()
-  @ApiTags('Neurofunctional Record')
+  @ApiTags('Specific records - Neurofunctional Record')
   @ApiOperation({
     summary: 'Get a neurofunctional record by patient id',
     description: detailedDescription,

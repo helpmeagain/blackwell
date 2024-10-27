@@ -38,7 +38,7 @@ export class CreateCardiorespiratoryRecordController {
   @Post()
   @Roles('EMPLOYEE')
   @ApiBearerAuth()
-  @ApiTags('Cardiorespiratory Record')
+  @ApiTags('Specific records - Cardiorespiratory Record')
   @ApiOperation({
     summary: 'Create a cardiorespiratory record',
     description: detailedDescription,

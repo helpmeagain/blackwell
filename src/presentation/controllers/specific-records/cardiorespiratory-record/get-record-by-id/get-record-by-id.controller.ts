@@ -27,7 +27,7 @@ export class GetByIdCardiorespiratoryController {
   constructor(private getById: NestGetCardiorespiratoryByIdUseCase) {}
 
   @Get()
-  @ApiTags('Cardiorespiratory Record')
+  @ApiTags('Specific records - Cardiorespiratory Record')
   @ApiOperation({
     summary: 'Get a cardiorespiratory record by id',
     description: detailedDescription,
