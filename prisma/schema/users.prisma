@@ -15,6 +15,7 @@ model Clinician {
   consultations           Consultation[]
   NeurofunctionalRecord   NeurofunctionalRecord[]
   CardiorespiratoryRecord CardiorespiratoryRecord[]
+  TraumaOrthopedicRecord  TraumaOrthopedicRecord[]
 
   @@map("clinicians")
 }
@@ -42,6 +43,7 @@ model Patient {
   UniversalMedicalRecord  UniversalMedicalRecord?  @relation("record", fields: [universalMedicalRecordId], references: [id])
   NeurofunctionalRecord   NeurofunctionalRecord?
   CardiorespiratoryRecord CardiorespiratoryRecord?
+  TraumaOrthopedicRecord  TraumaOrthopedicRecord?
 
   @@map("patients")
 }

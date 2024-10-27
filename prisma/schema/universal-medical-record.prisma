@@ -18,6 +18,7 @@ model UniversalMedicalRecord {
   Patient                 Patient?                 @relation("record")
   NeurofunctionalRecord   NeurofunctionalRecord?
   CardiorespiratoryRecord CardiorespiratoryRecord?
+  TraumaOrthopedicRecord  TraumaOrthopedicRecord?
 
   @@map("universal_medical_records")
 }

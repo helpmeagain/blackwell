@@ -1,0 +1,40 @@
+model TraumaOrthopedicRecord {
+  id                        String                  @id @default(uuid())
+  clinicianId               String
+  patientId                 String                  @unique
+  universalMedicalRecordId  String                  @unique
+  medicalDiagnosis          String
+  anamnesis                 String
+  physicalExamination       String
+  physiotherapyDepartment   PhysiotherapyDepartment
+  triage                    Triage
+  authorizedUsers           String[]
+  pendingAuthorizationUsers String[]
+  palpation                 String
+  edema                     Boolean
+  pittingTest               Boolean
+  fingerPressureTest        Boolean
+  // perimetry: {
+  rightArm                  Float
+  leftArm                   Float
+  upperRightThigh           Float
+  upperLeftThigh            Float
+  lowerRightThigh           Float
+  lowerLeftThigh            Float
+  rightKnee                 Float
+  leftKnee                  Float
+  // }
+  // subjectivePainAssessment: {
+  intensity                 Float
+  location                  String
+  characteristic            String
+  // }
+  specialOrthopedicTest     String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  clinicians             Clinician              @relation(fields: [clinicianId], references: [id])
+  patients               Patient                @relation(fields: [patientId], references: [id])
+  UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+}
