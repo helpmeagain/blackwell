@@ -11,11 +11,14 @@ import { DenyPendingAuthorizationController } from './deny-pending-authorization
 import { NestDenyPendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-deny-pending-authorization';
 import { RequestAccessController } from './request-access/request-access.controller';
 import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-request-access';
+import { GetAuthorizedUsersController } from './get-authorized-users/get-authorized-users.controller';
+import { NestGetAuthorizedUsersUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-authorized-users';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
   controllers: [
     GetPendingAuthorizationUsersController,
+    GetAuthorizedUsersController,
     RevokeAccessController,
     AuthorizeAccessController,
     DenyPendingAuthorizationController,
@@ -23,6 +26,7 @@ import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-reco
   ],
   providers: [
     NestGetPendingAuthorizationUsersUseCase,
+    NestGetAuthorizedUsersUseCase,
     NestRevokeAccessUseCase,
     NestAuthorizeAccessUseCase,
     NestDenyPendingAuthorizationUseCase,
