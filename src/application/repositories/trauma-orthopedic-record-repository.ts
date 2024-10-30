@@ -3,6 +3,7 @@ import { PaginationParams } from '../common/pagination-params';
 
 export abstract class TraumaOrthopedicRecordRepository {
   abstract findById: (id: string) => Promise<TraumaOrthopedicRecord | null>;
+  abstract findAll: () => Promise<TraumaOrthopedicRecord[]>;
   abstract findByPatientId: (patientId: string) => Promise<TraumaOrthopedicRecord | null>;
   abstract findByUniversalRecordId: (
     universalRecordId: string,

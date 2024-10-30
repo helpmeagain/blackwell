@@ -23,6 +23,14 @@ export class PrismaCardiorespiratoryRecordRepository
     return PrismaCardiorespiratoryRecordMapper.toDomain(cardiorespiratoryRecord);
   }
 
+  async findAll(): Promise<CardiorespiratoryRecord[]> {
+    const cardiorespiratoryRecords = await this.prisma.cardiorespiratoryRecord.findMany();
+
+    return cardiorespiratoryRecords.map(record =>
+      PrismaCardiorespiratoryRecordMapper.toDomain(record)
+    );
+  }
+
   async findByPatientId(patientId: string): Promise<CardiorespiratoryRecord | null> {
     const cardiorespiratoryRecord = await this.prisma.cardiorespiratoryRecord.findUnique({
       where: { patientId },

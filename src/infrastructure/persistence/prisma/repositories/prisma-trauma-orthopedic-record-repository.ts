@@ -23,6 +23,14 @@ export class PrismaTraumaOrthopedicRecordRepository
     return PrismaTraumaOrthopedicRecordMapper.toDomain(traumaorthopedicRecord);
   }
 
+  async findAll(): Promise<TraumaOrthopedicRecord[]> {
+    const traumaorthopedicRecord = await this.prisma.traumaOrthopedicRecord.findMany();
+
+    return traumaorthopedicRecord.map(record =>
+      PrismaTraumaOrthopedicRecordMapper.toDomain(record)
+    );
+  }
+
   async findByPatientId(patientId: string): Promise<TraumaOrthopedicRecord | null> {
     const traumaorthopedicRecord = await this.prisma.traumaOrthopedicRecord.findUnique({
       where: { patientId },

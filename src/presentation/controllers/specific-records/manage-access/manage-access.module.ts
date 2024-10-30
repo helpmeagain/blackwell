@@ -13,12 +13,15 @@ import { RequestAccessController } from './request-access/request-access.control
 import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-request-access';
 import { GetAuthorizedUsersController } from './get-authorized-users/get-authorized-users.controller';
 import { NestGetAuthorizedUsersUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-authorized-users';
+import { GetRecordsSharedWithMeController } from './get-records-shared-with-me/get-records-shared-with-me.controller';
+import { NestGetRecordsSharedWithMeUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-records-shared-with-me';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
   controllers: [
     GetPendingAuthorizationUsersController,
     GetAuthorizedUsersController,
+    GetRecordsSharedWithMeController,
     RevokeAccessController,
     AuthorizeAccessController,
     DenyPendingAuthorizationController,
@@ -27,6 +30,7 @@ import { NestGetAuthorizedUsersUseCase } from '@/infrastructure/adapter/specific
   providers: [
     NestGetPendingAuthorizationUsersUseCase,
     NestGetAuthorizedUsersUseCase,
+    NestGetRecordsSharedWithMeUseCase,
     NestRevokeAccessUseCase,
     NestAuthorizeAccessUseCase,
     NestDenyPendingAuthorizationUseCase,
