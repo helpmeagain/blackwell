@@ -11,11 +11,17 @@ import { DenyPendingAuthorizationController } from './deny-pending-authorization
 import { NestDenyPendingAuthorizationUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-deny-pending-authorization';
 import { RequestAccessController } from './request-access/request-access.controller';
 import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-request-access';
+import { GetAuthorizedUsersController } from './get-authorized-users/get-authorized-users.controller';
+import { NestGetAuthorizedUsersUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-authorized-users';
+import { GetRecordsSharedWithMeController } from './get-records-shared-with-me/get-records-shared-with-me.controller';
+import { NestGetRecordsSharedWithMeUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-records-shared-with-me';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
   controllers: [
     GetPendingAuthorizationUsersController,
+    GetAuthorizedUsersController,
+    GetRecordsSharedWithMeController,
     RevokeAccessController,
     AuthorizeAccessController,
     DenyPendingAuthorizationController,
@@ -23,6 +29,8 @@ import { NestRequestAccessUseCase } from '@/infrastructure/adapter/specific-reco
   ],
   providers: [
     NestGetPendingAuthorizationUsersUseCase,
+    NestGetAuthorizedUsersUseCase,
+    NestGetRecordsSharedWithMeUseCase,
     NestRevokeAccessUseCase,
     NestAuthorizeAccessUseCase,
     NestDenyPendingAuthorizationUseCase,

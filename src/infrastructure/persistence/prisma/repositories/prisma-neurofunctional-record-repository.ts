@@ -23,6 +23,14 @@ export class PrismaNeurofunctionalRecordRepository
     return PrismaNeurofunctionalRecordMapper.toDomain(neurofunctionalRecord);
   }
 
+  async findAll(): Promise<NeurofunctionalRecord[]> {
+    const neurofunctionalRecord = await this.prisma.neurofunctionalRecord.findMany();
+
+    return neurofunctionalRecord.map(record =>
+      PrismaNeurofunctionalRecordMapper.toDomain(record)
+    );
+  }
+
   async findByPatientId(patientId: string): Promise<NeurofunctionalRecord | null> {
     const neurofunctionalRecord = await this.prisma.neurofunctionalRecord.findUnique({
       where: { patientId },

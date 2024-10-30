@@ -3,6 +3,7 @@ import { PaginationParams } from '../common/pagination-params';
 
 export abstract class CardiorespiratoryRecordRepository {
   abstract findById: (id: string) => Promise<CardiorespiratoryRecord | null>;
+  abstract findAll: () => Promise<CardiorespiratoryRecord[]>;
   abstract findByPatientId: (patientId: string) => Promise<CardiorespiratoryRecord | null>;
   abstract findManyByClinicianId: (
     clinicianId: string,

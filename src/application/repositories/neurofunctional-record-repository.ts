@@ -3,6 +3,7 @@ import { PaginationParams } from '../common/pagination-params';
 
 export abstract class NeurofunctionalRecordRepository {
   abstract findById: (id: string) => Promise<NeurofunctionalRecord | null>;
+  abstract findAll: () => Promise<NeurofunctionalRecord[]>;
   abstract findByPatientId: (patientId: string) => Promise<NeurofunctionalRecord | null>;
   abstract findByUniversalRecordId: (
     universalRecordId: string,
