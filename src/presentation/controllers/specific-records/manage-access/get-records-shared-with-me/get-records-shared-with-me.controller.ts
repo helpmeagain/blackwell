@@ -19,7 +19,6 @@ export class GetRecordsSharedWithMeController {
 
   @Get()
   @ApiTags('Manage record access')
-  @Roles('CLIENT')
   @ApiOperation({
     summary: 'Get records shared with me',
     description: detailedDescription,
