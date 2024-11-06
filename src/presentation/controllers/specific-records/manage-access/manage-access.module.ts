@@ -15,6 +15,8 @@ import { GetAuthorizedUsersController } from './get-authorized-users/get-authori
 import { NestGetAuthorizedUsersUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-authorized-users';
 import { GetRecordsSharedWithMeController } from './get-records-shared-with-me/get-records-shared-with-me.controller';
 import { NestGetRecordsSharedWithMeUseCase } from '@/infrastructure/adapter/specific-records/manage-access/nest-get-records-shared-with-me';
+import { RequestAccessByPatientIdController } from './request-access-by-patient-id/request-access.controller';
+import { NestRequestAccessUseCaseByPatientId } from '@/infrastructure/adapter/specific-records/manage-access/nest-request-access-by-patient-id';
 
 @Module({
   imports: [PersistenceModule, CryptographyModule],
@@ -26,6 +28,7 @@ import { NestGetRecordsSharedWithMeUseCase } from '@/infrastructure/adapter/spec
     AuthorizeAccessController,
     DenyPendingAuthorizationController,
     RequestAccessController,
+    RequestAccessByPatientIdController,
   ],
   providers: [
     NestGetPendingAuthorizationUsersUseCase,
@@ -35,6 +38,7 @@ import { NestGetRecordsSharedWithMeUseCase } from '@/infrastructure/adapter/spec
     NestAuthorizeAccessUseCase,
     NestDenyPendingAuthorizationUseCase,
     NestRequestAccessUseCase,
+    NestRequestAccessUseCaseByPatientId,
   ],
 })
 export class ManageAccessModule {}
