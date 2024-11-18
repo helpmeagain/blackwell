@@ -1,6 +1,10 @@
 # Blackwell &middot; [![version](https://img.shields.io/github/package-json/v/helpmeagain/blackwell)](./package.json) [![license](https://img.shields.io/github/license/helpmeagain/blackwell)](./LICENSE.md) [![unit tests](https://img.shields.io/github/actions/workflow/status/helpmeagain/blackwell/run-unit-tests.yml?branch=main&event=push&logo=vitest&logoColor=%23ffffff&label=unit%20tests)](https://github.com/helpmeagain/blackwell/actions/workflows/run-unit-tests.yml) [![e2e tests](https://img.shields.io/github/actions/workflow/status/helpmeagain/blackwell/run-e2e-tests.yml?branch=main&event=push&style=flat&logo=vitest&logoColor=white&label=e2e%20tests)](https://github.com/helpmeagain/blackwell/actions/workflows/run-e2e-tests.yml)
 
-A medical clinic API for managing medical services.
+API developed to manage and streamline operations in a physiotherapy clinic. It provides features for creating and managing medical records, scheduling consultations, and handling patient and clinician profiles. For a detailed overview, refer to the documentation, including the API and architecture references.
+
+This application is built on Clean Architecture and Domain-Driven Design principles, ensuring modularity and maintainability. It is equipped with comprehensive unit and end-to-end (E2E) tests, integrated within a Continuous Integration pipeline, which ensures a stable and secure development process. Security features include RS256-based JWT authentication and Role-Based Access Control (RBAC), protecting sensitive data and ensuring appropriate access levels.
+
+The architecture is inspired by the scalable and tested structure provided in [this Rocketseat repository](https://github.com/rocketseat-education/05-nest-clean).
 
 ## Technologies
 <!-- [![Technologies](https://skillicons.dev/icons?i=ts,prisma,nestjs,postgres,vitest)](./package.json) -->
@@ -48,7 +52,7 @@ cd <project-directory>
 docker-compose up --build -d
 ```
 
-4. Access the application in the localhost
+4. Access the application on localhost at port 8080.
 
 </details>
 
@@ -57,7 +61,7 @@ docker-compose up --build -d
 
 ### Prerequisites
 - Install [node.js](https://nodejs.org/en).
-- Install [postgres](https://www.postgresql.org/).
+- Install and run [postgres](https://www.postgresql.org/).
 
 ### Local setup
     
@@ -85,16 +89,16 @@ Enter your PostgreSQL URL: postgres://your-user-name:your-password@your-hostname
 5. Start the server
 ```bash
 # Using npm
-npm start:prod
+npm start
 
 # Using pnpm
-pnpm start:prod
+pnpm start
 
 # Using yarn
-yarn start:prod
+yarn start
 ```
 
-6. Access the application in the localhost
+6. Access the application on localhost at port 8080.
 
 </details>
 
@@ -103,7 +107,7 @@ yarn start:prod
 
 ### Prerequisites
 - Install [node.js](https://nodejs.org/en).
-- Install [postgres](https://www.postgresql.org/).
+- Install and run [postgres](https://www.postgresql.org/).
 
 ### Local setup
     
@@ -143,6 +147,9 @@ npx prisma generate
 
 # Using pnpm
 pnpm prisma generate
+
+# Using yarn
+yarn prisma generate
 ```
 
 6. Generate JWT - RS256 Keys:
@@ -169,15 +176,21 @@ npm build
 
 # Using pnpm
 pnpm build
+
+# Using yarn
+yarn build
 ```
 
 9. Run the application:
 ```bash
 # Using npm
-npm start:prod
+npm start
 
 # Using pnpm
-pnpm start:prod
+pnpm start
+
+# Using yarn
+yarn start
 ```
 
 10. Access the application in the localhost
