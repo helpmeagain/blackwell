@@ -19,7 +19,7 @@
 
 API developed to manage operations in a physiotherapy clinic. This API features managing and creating records, scheduling consultations and handling patient/clinician profiles. For a detailed overview, refer to the documentation, including the API and architecture references.
 
-This application is built on Clean Architecture and Domain-Driven Design principles for modularity and maintainability. It’s developed with unit and end-to-end tests, integrated with a Continuous Integration pipeline, ensuring a secure development. Security features include RS256-based JWT authentication and RBAC, protecting sensitive data and appropriate access control.
+This application is built on Clean Architecture and Domain-Driven Design principles for modularity and maintainability. It’s developed with unit and end-to-end tests integrated with a Continuous Integration pipeline, ensuring a secure development. Security features include RS256-based JWT authentication and RBAC, protecting sensitive data and appropriate access control.
 
 The architecture is inspired by [this Rocketseat repository](https://github.com/rocketseat-education/05-nest-clean).
 
@@ -466,7 +466,11 @@ cd <project-directory>
 
 3. Run the script:
 ```bash
-docs/scripts/setup.sh
+# Bash
+scripts/setup.sh
+
+# Powershell
+scripts/setup.ps1
 ```
 
 4. Insert the database URL when prompted:
@@ -584,3 +588,6 @@ yarn start
 10. Access the application in the localhost
 
 </details>
+
+## License
+Code released under the [Apache-2.0 license](./LICENSE.txt).
