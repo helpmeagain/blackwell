@@ -117,6 +117,70 @@ You can use the API using the following tools:
   | DELETE     | /manage-access/pending-authorization/deny-access/{userId}          | Deny pending authorization users    | Yes                | Yes (Only the patient-owner) |
 </details>
 
+<details>
+<summary><strong>Architecture Reference</strong></summary>
+  
+### Explanation
+
+This API follows the principles of Clean Architecture, structured into distinct layers, each with well-defined responsibilities. The layers are organized as follows:
+- Presentation Layer: Manages communication with the outside world. It’s responsible for handling input and output, such as displaying data or receiving commands.
+- Infrastructure Layer: Handles communication with external systems and resources like databases, APIs, or third-party services. It provides the concrete implementation of the interfaces defined by other layers.
+- Application Layer: Contains the use cases and business logic that orchestrates the system’s operations. It coordinates the flow of data between the Domain and the Infrastructure layers,
+- Domain Layer: Represents the core business concepts and rules of the system. It is independent of any specific technology or framework and contains the fundamental logic and data models that define the problem domain.
+
+### Architectural diagram
+
+```mermaid
+stateDiagram-v2
+    classDef pres fill:#A8D8FC,color:white, font-size:20px, font-weight:bold
+    classDef infra fill:#A2FDBA,color:white, font-size:20px, font-weight:bold
+    classDef app fill:#FFA09C,color:white, font-size:20px, font-weight:bold
+    classDef dom fill:#FCFDB9,color:white, font-size:20px, font-weight:bold
+
+    Presentation:::pres
+    Infrastructure:::infra
+    Application:::app
+    Domain:::dom
+
+    Presentation --> Infrastructure
+    Infrastructure --> Application
+    Application --> Domain
+
+    state Infrastructure{
+        Adapters
+        Events
+        --
+        Database/ORM
+        --
+        Authentication
+        Cryptography
+    }
+    state Presentation{
+        NestJS
+        Swagger
+        --
+        Controllers
+        Presenters
+        Validations
+    }
+    state Application{
+        UseCases
+        --
+        ErrorHandler
+        Repositories
+    }
+
+    state Domain{
+        Entities
+        ValueObjects
+        --
+        AggregateRoot
+        WatchedList
+    }
+```
+
+</details>
+
 ## Local installation
 
 <details>
