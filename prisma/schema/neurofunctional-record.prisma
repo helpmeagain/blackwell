@@ -1,9 +1,9 @@
 model NeurofunctionalRecord {
   id                          String                  @id @default(uuid())
-  clinicianId                 String
-  patientId                   String                  @unique
-  universalMedicalRecordId    String                  @unique
-  medicalDiagnosis            String
+  clinicianId                 String                  @map("clinician_id")
+  patientId                   String                  @unique @map("patient_id")
+  universalMedicalRecordId    String                  @unique @map("universal_medical_record_id")
+  medicalDiagnosis            String                  @map("medical_diagnosis")
   anamnesis                   String
   physicalExamination         String
   physiotherapyDepartment     PhysiotherapyDepartment
@@ -11,33 +11,33 @@ model NeurofunctionalRecord {
   authorizedUsers             String[]
   pendingAuthorizationUsers   String[]
   // lifestyleHabits {
-  alcoholConsumption          Boolean
+  alcoholConsumption          Boolean                 @map("alcohol_consumption")
   smoker                      Boolean
   obesity                     Boolean
   diabetes                    Boolean
-  drugUser                    Boolean
-  physicalActivity            Boolean
+  drugUser                    Boolean                 @map("drug_user")
+  physicalActivity            Boolean                 @map("physical_activity")
   // }
   // vitalSigns {
-  bloodPressure               Float
-  heartRate                   Float
-  respiratoryRate             Float
-  oxygenSaturation            Float
-  bodyTemperature             Float
+  bloodPressure               Float                   @map("blood_pressure")
+  heartRate                   Float                   @map("heart_rate")
+  respiratoryRate             Float                   @map("respiratory_rate")
+  oxygenSaturation            Float                   @map("oxygen_saturation")
+  bodyTemperature             Float                   @map("body_temperature")
   // }
   // physicalInspection {
-  independentMobility         Boolean
-  usesCrutches                Boolean
-  usesWalker                  Boolean
-  wheelchairUser              Boolean
-  hasScar                     Boolean
-  hasBedsore                  Boolean
+  independentMobility         Boolean                 @map("independent_mobility")
+  usesCrutches                Boolean                 @map("uses_crutches")
+  usesWalker                  Boolean                 @map("uses_walker")
+  wheelchairUser              Boolean                 @map("wheelchair_user")
+  hasScar                     Boolean                 @map("has_scar")
+  hasBedsore                  Boolean                 @map("has_bedsore")
   cooperative                 Boolean
-  nonCooperative              Boolean
+  nonCooperative              Boolean                 @map("non_cooperative")
   hydrated                    Boolean
-  hasHematoma                 Boolean
-  hasEdema                    Boolean
-  hasDeformity                Boolean
+  hasHematoma                 Boolean                 @map("has_hematoma")
+  hasEdema                    Boolean                 @map("has_edema")
+  hasDeformity                Boolean                 @map("has_deformity")
   // }
   // sensoryAssessment {
   superficial                 SuperficialSensation
@@ -49,28 +49,28 @@ model NeurofunctionalRecord {
   //     }
   // }
   // patientMobility {
-  threeMeterWalkTimeInSeconds Float
-  hasFallRisk                 Boolean
+  threeMeterWalkTimeInSeconds Float                   @map("three_meter_walk_time_in_seconds")
+  hasFallRisk                 Boolean                 @map("has_fall_risk")
   //    postureChanges {
   bridge                      MobilityStatus
-  semiRollRight               MobilityStatus
-  semiRollLeft                MobilityStatus
-  fullRoll                    MobilityStatus
+  semiRollRight               MobilityStatus          @map("semi_roll_right")
+  semiRollLeft                MobilityStatus          @map("semi_roll_left")
+  fullRoll                    MobilityStatus          @map("full_roll")
   drag                        MobilityStatus
-  proneToForearmSupport       MobilityStatus
-  forearmSupportToAllFours    MobilityStatus
-  allFours                    MobilityStatus
-  allFoursToKneeling          MobilityStatus
-  kneelingToHalfKneelingRight MobilityStatus
-  kneelingToHalfKneelingLeft  MobilityStatus
-  halfKneelingRightToStanding MobilityStatus
-  halfKneelingLeftToStanding  MobilityStatus
+  proneToForearmSupport       MobilityStatus          @map("prone_to_forearm_support")
+  forearmSupportToAllFours    MobilityStatus          @map("forearm_support_to_all_fours")
+  allFours                    MobilityStatus          @map("all_fours")
+  allFoursToKneeling          MobilityStatus          @map("all_fours_to_kneeling")
+  kneelingToHalfKneelingRight MobilityStatus          @map("kneeling_to_half_kneeling_right")
+  kneelingToHalfKneelingLeft  MobilityStatus          @map("kneeling_to_half_kneeling_left")
+  halfKneelingRightToStanding MobilityStatus          @map("half_kneeling_right_to_standing")
+  halfKneelingLeftToStanding  MobilityStatus          @map("half_kneeling_left_to_standing")
   //     }
   // }
   // physiotherapyAssessment {
   diagnosis                   String
-  treatmentGoals              String
-  physiotherapeuticConduct    String
+  treatmentGoals              String                  @map("treatment_goals")
+  physiotherapeuticConduct    String                  @map("physiotherapeutic_conduct")
   // }
   createdAt                   DateTime                @default(now())
   updatedAt                   DateTime?               @updatedAt
@@ -78,6 +78,8 @@ model NeurofunctionalRecord {
   clinicians             Clinician              @relation(fields: [clinicianId], references: [id])
   patients               Patient                @relation(fields: [patientId], references: [id])
   UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+
+  @@map("neurofunctional_record")
 }
 
 enum PhysiotherapyDepartment {

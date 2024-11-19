@@ -22,8 +22,8 @@
     "tsc:check": "tsc --noEmit",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "npx prisma studio",
-    "prisma:seed": "npx ts-node -r tsconfig-paths/register seed/seed.ts",
-    "prisma:nuke": "npx ts-node -r tsconfig-paths/register seed/nuke.ts"
+    "prisma:seed": "npx ts-node -r tsconfig-paths/register scripts/seed.ts",
+    "prisma:nuke": "npx ts-node -r tsconfig-paths/register scripts/nuke.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.2.0",

@@ -1,72 +1,72 @@
 model CardiorespiratoryRecord {
   id                          String                                      @id @default(uuid())
-  clinicianId                 String
-  patientId                   String                                      @unique
-  universalMedicalRecordId    String                                      @unique
-  medicalDiagnosis            String
+  clinicianId                 String                                      @map("clinician_id")
+  patientId                   String                                      @unique @map("patient_id")
+  universalMedicalRecordId    String                                      @unique @map("universal_medical_record_id")
+  medicalDiagnosis            String                                      @map("medical_diagnosis")
   anamnesis                   String
-  physicalExamination         String
-  physiotherapyDepartment     PhysiotherapyDepartment
+  physicalExamination         String                                      @map("physical_examination")
+  physiotherapyDepartment     PhysiotherapyDepartment                     @map("physiotherapy_department")
   triage                      Triage
-  authorizedUsers             String[]
-  pendingAuthorizationUsers   String[]
+  authorizedUsers             String[]                                    @map("authorized_users")
+  pendingAuthorizationUsers   String[]                                    @map("pending_authorization_users")
   // lifestyleHabits {
-  alcoholConsumption          Boolean
+  alcoholConsumption          Boolean                                     @map("alcohol_consumption")
   smoker                      Boolean
   obesity                     Boolean
   diabetes                    Boolean
-  drugUser                    Boolean
-  physicalActivity            Boolean
+  drugUser                    Boolean                                     @map("drug_user")
+  physicalActivity            Boolean                                     @map("physical_activity")
   // }
   // physicalInspection {
-  isFaceSinusPalpationHurtful Boolean
+  isFaceSinusPalpationHurtful Boolean                                     @map("is_face_sinus_palpation_hurtful")
   //    nasalSecretion: {
   type                        NasalSecretionType
-  isFetid                     Boolean
+  isFetid                     Boolean                                     @map("is_fetid")
   quantity                    NasalSecretionQuantity
   //    }
-  nasalItching                PhysicalInspectionNasalItching
+  nasalItching                PhysicalInspectionNasalItching              @map("nasal_itching")
   sneezing                    PhysicalInspectionNasalItching
-  chestType                   PhysicalInspectionChestType
-  respiratoryOrCardiacSigns   PhysicalInspectionRespiratoryOrCardiacSigns
+  chestType                   PhysicalInspectionChestType                 @map("chest_type")
+  respiratoryOrCardiacSigns   PhysicalInspectionRespiratoryOrCardiacSigns @map("respiratory_or_cardiac_signs")
   // }
   // vitalSigns {
-  heartRate                   Float
-  respiratoryRate             Float
+  heartRate                   Float                                       @map("heart_rate")
+  respiratoryRate             Float                                       @map("respiratory_rate")
   //    bloodPressure: {
   systolic                    Float
   diastolic                   Float
   //    }
   temperature                 Float
-  oxygenSaturation            Float
+  oxygenSaturation            Float                                       @map("oxygen_saturation")
   // }
   // pneumofunctionalAssessment: {
   //     peakFlow: {
-  firstMeasurement            Float
-  secondMeasurement           Float
-  thirdMeasurement            Float
+  firstMeasurement            Float                                       @map("first_measurement")
+  secondMeasurement           Float                                       @map("second_measurement")
+  thirdMeasurement            Float                                       @map("third_measurement")
   //    }
   //    manovacuometry: {
   //        pemax: {
-  pemaxFirstMeasurement       Float
-  pemaxSecondMeasurement      Float
-  pemaxThirdMeasurement       Float
+  pemaxFirstMeasurement       Float                                       @map("pemax_first_measurement")
+  pemaxSecondMeasurement      Float                                       @map("pemax_second_measurement")
+  pemaxThirdMeasurement       Float                                       @map("pemax_third_measurement")
   //        }
   //        pimax: {
-  pimaxFirstMeasurement       Float
-  pimaxSecondMeasurement      Float
-  pimaxThirdMeasurement       Float
+  pimaxFirstMeasurement       Float                                       @map("pimax_first_measurement")
+  pimaxSecondMeasurement      Float                                       @map("pimax_second_measurement")
+  pimaxThirdMeasurement       Float                                       @map("pimax_third_measurement")
   //        }
   //    }
   // }
   // cardiofunctionalAssessment: {
   bmi                         Float
-  abdominalPerimeter          Float
-  waistHipRatio               Float
+  abdominalPerimeter          Float                                       @map("abdominal_perimeter")
+  waistHipRatio               Float                                       @map("waist_hip_ratio")
   //    bioimpedance: {
-  bodyFat                     Float
-  visceralFat                 Float
-  muscleMassPercentage        Float
+  bodyFat                     Float                                       @map("body_fat")
+  visceralFat                 Float                                       @map("visceral_fat")
+  muscleMassPercentage        Float                                       @map("muscle_mass_percentage")
   //    }
   //    adipometry {
   //        skinfoldMeasurements {
@@ -82,6 +82,8 @@ model CardiorespiratoryRecord {
   clinicians             Clinician              @relation(fields: [clinicianId], references: [id])
   patients               Patient                @relation(fields: [patientId], references: [id])
   UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+
+  @@map("cardiorespiratory_record")
 }
 
 enum NasalSecretionType {
