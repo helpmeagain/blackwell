@@ -1,35 +1,35 @@
 model TraumaOrthopedicRecord {
   id                        String                  @id @default(uuid())
-  clinicianId               String
-  patientId                 String                  @unique
-  universalMedicalRecordId  String                  @unique
-  medicalDiagnosis          String
+  clinicianId               String                  @map("clinician_id")
+  patientId                 String                  @unique @map("patient_id")
+  universalMedicalRecordId  String                  @unique @map("universal_medical_record_id")
+  medicalDiagnosis          String                  @map("medical_diagnosis")
   anamnesis                 String
-  physicalExamination       String
-  physiotherapyDepartment   PhysiotherapyDepartment
+  physicalExamination       String                  @map("physical_examination")
+  physiotherapyDepartment   PhysiotherapyDepartment @default(Orthopedic) @map("physiotherapy_department")
   triage                    Triage
-  authorizedUsers           String[]
-  pendingAuthorizationUsers String[]
+  authorizedUsers           String[]                @map("authorized_users")
+  pendingAuthorizationUsers String[]                @map("pending_authorization_users")
   palpation                 String
   edema                     Boolean
-  pittingTest               Boolean
-  fingerPressureTest        Boolean
+  pittingTest               Boolean                 @map("pitting_test")
+  fingerPressureTest        Boolean                 @map("finger_pressure_test")
   // perimetry: {
-  rightArm                  Float
-  leftArm                   Float
-  upperRightThigh           Float
-  upperLeftThigh            Float
-  lowerRightThigh           Float
-  lowerLeftThigh            Float
-  rightKnee                 Float
-  leftKnee                  Float
+  rightArm                  Float                   @map("right_arm")
+  leftArm                   Float                   @map("left_arm")
+  upperRightThigh           Float                   @map("upper_right_thigh")
+  upperLeftThigh            Float                   @map("upper_left_thigh")
+  lowerRightThigh           Float                   @map("lower_right_thigh")
+  lowerLeftThigh            Float                   @map("lower_left_thigh")
+  rightKnee                 Float                   @map("right_knee")
+  leftKnee                  Float                   @map("left_knee")
   // }
   // subjectivePainAssessment: {
   intensity                 Float
   location                  String
   characteristic            String
   // }
-  specialOrthopedicTest     String
+  specialOrthopedicTest     String                  @map("special_orthopedic_test")
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -37,4 +37,6 @@ model TraumaOrthopedicRecord {
   clinicians             Clinician              @relation(fields: [clinicianId], references: [id])
   patients               Patient                @relation(fields: [patientId], references: [id])
   UniversalMedicalRecord UniversalMedicalRecord @relation(fields: [universalMedicalRecordId], references: [id])
+
+  @@map("trauma_orthopedic_records")
 }
