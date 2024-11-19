@@ -1,13 +1,5 @@
 # Blackwell &middot; [![version](https://img.shields.io/github/package-json/v/helpmeagain/blackwell)](./package.json) [![license](https://img.shields.io/github/license/helpmeagain/blackwell)](./LICENSE.md) [![unit tests](https://img.shields.io/github/actions/workflow/status/helpmeagain/blackwell/run-unit-tests.yml?branch=main&event=push&logo=vitest&logoColor=%23ffffff&label=unit%20tests)](https://github.com/helpmeagain/blackwell/actions/workflows/run-unit-tests.yml) [![e2e tests](https://img.shields.io/github/actions/workflow/status/helpmeagain/blackwell/run-e2e-tests.yml?branch=main&event=push&style=flat&logo=vitest&logoColor=white&label=e2e%20tests)](https://github.com/helpmeagain/blackwell/actions/workflows/run-e2e-tests.yml)
 
-API developed to manage operations in a physiotherapy clinic. This API provides features for creating and managing records, scheduling consultations and handling patient/clinician profiles. For a detailed overview, refer to the documentation, including the API and architecture references.
-
-This application is built on Clean Architecture and Domain-Driven Design principles, ensuring modularity and maintainability. It is develop with unit and end-to-end (E2E) tests, integrated within a CI (Continuous Integration) pipeline, ensuring a secure development. Security features include RS256-based JWT authentication and Role-Based Access Control (RBAC), protecting sensitive data and ensuring appropriate access levels.
-
-The architecture is inspired by [this Rocketseat repository](https://github.com/rocketseat-education/05-nest-clean).
-
-## Technologies
-<!-- [![Technologies](https://skillicons.dev/icons?i=ts,prisma,nestjs,postgres,vitest)](./package.json) -->
 ![Typescript](https://img.shields.io/badge/Typescript-blue?style=for-the-badge&logo=Typescript&logoColor=white
 )
 ![NestJS](https://img.shields.io/badge/NestJS-%23ff3232?style=for-the-badge&logo=NestJS&logoColor=white
@@ -21,6 +13,15 @@ The architecture is inspired by [this Rocketseat repository](https://github.com/
 ![Docker](https://img.shields.io/badge/Docker-blue?style=for-the-badge&logo=docker&logoColor=white
 )
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-grey?style=for-the-badge&logo=githubactions&logoColor=white)
+
+<!-- ![Redis](https://img.shields.io/badge/Redis-%23FF6600?style=for-the-badge&logo=Redis&logoColor=white
+) -->
+
+API developed to manage operations in a physiotherapy clinic. This API features managing and creating records, scheduling consultations and handling patient/clinician profiles. For a detailed overview, refer to the documentation, including the API and architecture references.
+
+This application is built on Clean Architecture and Domain-Driven Design principles for modularity and maintainability. It’s developed with unit and end-to-end tests, integrated with a Continuous Integration pipeline, ensuring a secure development. Security features include RS256-based JWT authentication and RBAC, protecting sensitive data and appropriate access control.
+
+The architecture is inspired by [this Rocketseat repository](https://github.com/rocketseat-education/05-nest-clean).
 
 ## Documentation
 
