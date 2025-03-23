@@ -47,10 +47,12 @@ export class AuthenticatePatientController {
       }
     }
 
-    const { accessToken } = result.value;
+    const { accessToken, role, userId } = result.value;
 
     return {
       access_token: accessToken,
+      user_id: userId,
+      role,
     };
   }
 }

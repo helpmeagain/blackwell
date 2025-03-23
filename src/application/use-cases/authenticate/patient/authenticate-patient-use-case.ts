@@ -11,7 +11,7 @@ export interface authenticatePatientRequest {
 
 export type authenticateConsultationResponse = Either<
   WrongCredentials,
-  { accessToken: string }
+  { accessToken: string, userId: string, role: string }
 >;
 
 export class AuthenticatePatientUseCase {
@@ -42,6 +42,6 @@ export class AuthenticatePatientUseCase {
       sub: patient.id.toString(),
       role: 'CLIENT',
     });
-    return right({ accessToken });
+    return right({ accessToken, userId: patient.id.toString(), role: "PATIENT" });
   }
 }
