@@ -9,6 +9,7 @@ import { Consultation } from '@/domain/entities/consultation';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 import { PaginationParams } from '@/application/common/pagination-params';
 import { CacheRepository } from '@/infrastructure/cache/cache-repository';
+import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
@@ -19,7 +20,8 @@ export class PrismaPatientRepository implements PatientRepository {
 
     if (cacheHit) {
       const cachedData = JSON.parse(cacheHit);
-      return cachedData;
+      const patient = PrismaPatientMapper.toDomain(cachedData);
+      return patient;
     }
 
     const patient = await this.prisma.patient.findUnique({
@@ -31,8 +33,8 @@ export class PrismaPatientRepository implements PatientRepository {
     }
 
     const patientToDomain = PrismaPatientMapper.toDomain(patient);
-
-    await this.cache.set(`patient:${patientToDomain.id}`, JSON.stringify(patientToDomain));
+    const persistenceData = PrismaPatientMapper.toPersistence(patientToDomain);
+    await this.cache.set(`patient:${patientToDomain.id}`, JSON.stringify(persistenceData))
     
     return patientToDomain;
   }
