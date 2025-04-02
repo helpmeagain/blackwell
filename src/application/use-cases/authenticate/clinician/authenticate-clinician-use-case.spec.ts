@@ -33,6 +33,8 @@ describe('Authenticate Clinician', () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       accessToken: expect.any(String),
+      role: "CLINICIAN",
+      userId: clinician.id.toString(),
     });
   });
 

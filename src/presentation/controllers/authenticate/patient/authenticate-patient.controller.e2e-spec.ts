@@ -1,50 +1,44 @@
-import { PrismaService } from '@/infrastructure/persistence/prisma/prisma.service';
-import { AppModule } from '@/presentation/app.module';
-import { INestApplication } from '@nestjs/common';
-import { Test } from '@nestjs/testing';
-import { hash } from 'bcryptjs';
-import request from 'supertest';
+import { PersistenceModule } from "@/infrastructure/persistence/persistence.module";
+import { AppModule } from "@/presentation/app.module";
+import { INestApplication } from "@nestjs/common";
+import { Test } from "@nestjs/testing";
+import { hash } from "bcryptjs";
+import request from "supertest";
+import { PatientFactory } from "test/factories/persistence-factories/make-patient-database";
 
-describe('Authenticate patient [E2E]', () => {
+describe("Authenticate patient [E2E]", () => {
   let app: INestApplication;
-  let prisma: PrismaService;
+  let patientFactory: PatientFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, PersistenceModule],
+      providers: [PatientFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();
-    prisma = moduleRef.get(PrismaService);
+    patientFactory = moduleRef.get(PatientFactory);
     await app.init();
   });
 
-  test('[POST] /patients', async () => {
-    await prisma.patient.create({
-      data: {
-        name: 'John',
-        surname: 'Doe',
-        slug: 'john-doe',
-        gender: 'male',
-        birthDate: new Date(),
-        cpf: '12345678901',
-        phoneNumber: '123456789',
-        address: '123 Main St',
-        city: 'New York',
-        state: 'New York',
-        email: 'jonhdoe@email.com',
-        password: await hash('12345', 8),
-      },
+  test("[POST] /patients", async () => {
+    const user = await patientFactory.makeDatabasePatient({
+      email: "jonhdoe@email.com",
+      password: await hash("12345", 8),
     });
 
-    const result = await request(app.getHttpServer()).post('/auth/patient').send({
-      email: 'jonhdoe@email.com',
-      password: '12345',
-    });
+    const result = await request(app.getHttpServer())
+      .post("/auth/patient")
+      .send({
+        email: "jonhdoe@email.com",
+        password: "12345",
+      });
 
     expect(result.statusCode).toBe(200);
     expect(result.body).toEqual({
       access_token: expect.any(String),
+      role: "PATIENT",
+      user_id: user.id.toString(),
     });
   });
 });

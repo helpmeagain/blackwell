@@ -33,6 +33,8 @@ describe('Authenticate Patient', () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       accessToken: expect.any(String),
+      role: "PATIENT",
+      userId: patient.id.toString(),
     });
   });
 
