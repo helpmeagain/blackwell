@@ -20,7 +20,11 @@ jobs:
         env:
           POSTGRES_USER: ghactions
           POSTGRES_PASSWORD: ghactions-password
-          POSTGRES_DB: blackwell 
+          POSTGRES_DB: blackwell
+      cache:
+        image: redis:7.2.7-alpine3.21
+        ports:
+          - 6379:6379
 
     steps:
       - name: Checkout code

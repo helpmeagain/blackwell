@@ -9,13 +9,10 @@
 ![Vitest](https://img.shields.io/badge/Vitest-%259b19?style=for-the-badge&logo=Vitest&logoColor=white
 )
 ![Postgres](https://img.shields.io/badge/Postgres-%23585ce4?style=for-the-badge&logo=PostgreSQL&logoColor=white
-)
+) ![Redis](https://img.shields.io/badge/Redis-%23FF6600?style=for-the-badge&logo=Redis&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-blue?style=for-the-badge&logo=docker&logoColor=white
 )
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-grey?style=for-the-badge&logo=githubactions&logoColor=white)
-
-<!-- ![Redis](https://img.shields.io/badge/Redis-%23FF6600?style=for-the-badge&logo=Redis&logoColor=white
-) -->
 
 API developed to manage operations in a physiotherapy clinic. This API features managing and creating records, scheduling consultations and handling patient/clinician profiles. For a detailed overview, refer to the documentation, including the API and architecture references.
 

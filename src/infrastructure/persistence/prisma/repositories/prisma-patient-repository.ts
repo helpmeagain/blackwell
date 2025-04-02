@@ -8,10 +8,34 @@ import { PrismaUniversalMedicalRecordMapper } from '../mappers/prisma-universal-
 import { Consultation } from '@/domain/entities/consultation';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 import { PaginationParams } from '@/application/common/pagination-params';
+import { CacheRepository } from '@/infrastructure/cache/cache-repository';
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private cache: CacheRepository) {}
+
+  async findById(id: string): Promise<Patient | null> {
+    const cacheHit = await this.cache.get(`patient:${id}`);
+
+    if (cacheHit) {
+      const cachedData = JSON.parse(cacheHit);
+      return cachedData;
+    }
+
+    const patient = await this.prisma.patient.findUnique({
+      where: { id },
+    });
+
+    if (!patient) {
+      return null;
+    }
+
+    const patientToDomain = PrismaPatientMapper.toDomain(patient);
+
+    await this.cache.set(`patient:${patientToDomain.id}`, JSON.stringify(patientToDomain));
+    
+    return patientToDomain;
+  }
 
   async findByEmail(email: string): Promise<Patient | null> {
     const patient = await this.prisma.patient.findUnique({
@@ -53,18 +77,6 @@ export class PrismaPatientRepository implements PatientRepository {
     return patients.map(PrismaPatientMapper.toDomain);
   }
 
-  async findById(id: string): Promise<Patient | null> {
-    const patient = await this.prisma.patient.findUnique({
-      where: { id },
-    });
-
-    if (!patient) {
-      return null;
-    }
-
-    return PrismaPatientMapper.toDomain(patient);
-  }
-
   async findMany({ page, orderBy }: PaginationParams): Promise<Patient[]> {
     const patient = await this.prisma.patient.findMany({
       orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : { createdAt: 'desc' },
@@ -82,7 +94,10 @@ export class PrismaPatientRepository implements PatientRepository {
 
   async save(patient: Patient): Promise<void> {
     const data = PrismaPatientMapper.toPersistence(patient);
-    await this.prisma.patient.update({ where: { id: data.id }, data });
+    await Promise.all([
+      this.prisma.patient.update({ where: { id: data.id }, data }),
+      this.cache.delete(`patient:${data.id}`),
+    ]);
   }
 
   async delete(patient: Patient): Promise<void> {

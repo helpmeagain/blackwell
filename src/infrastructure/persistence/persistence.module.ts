@@ -16,8 +16,10 @@ import { CardiorespiratoryRecordRepository } from '@/application/repositories/ca
 import { PrismaCardiorespiratoryRecordRepository } from './prisma/repositories/prisma-cardiorespiratory-record-repository';
 import { TraumaOrthopedicRecordRepository } from '@/application/repositories/trauma-orthopedic-record-repository';
 import { PrismaTraumaOrthopedicRecordRepository } from './prisma/repositories/prisma-trauma-orthopedic-record-repository';
+import { CacheModule } from '../cache/cache.module';
 
 @Module({
+  imports: [CacheModule],
   providers: [
     PrismaService,
     { provide: ClinicianRepository, useClass: PrismaClinicianRepository },

@@ -16,6 +16,14 @@ services:
       - 'db:/var/lib/postgresql/data'
     networks:
       - blackwell-network
+
+  redis:
+    container_name: blackwell-redis
+    image: redis:7.2.7-alpine3.21
+    ports:
+      - 6379:6379
+    volumes:
+      - 'cache:/var/lib/redis/data'
     
   blackwell-api:
     container_name: blackwell-api
@@ -39,3 +47,4 @@ networks:
 
 volumes:
   db:
+  cache:
