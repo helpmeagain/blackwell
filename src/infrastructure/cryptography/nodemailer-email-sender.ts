@@ -20,7 +20,7 @@ export class NodemailerEmailSender implements EmailSender {
   }
 
   async sendForgotPasswordEmail(email: string, token: string): Promise<void> {
-    const resetLink = `${process.env.FRONTEND_URL}reset-password?token=${token}`;
+    const resetLink = `${process.env.FRONTEND_URL}reset-password/new-password/${token}`;
 
     const mailOptions: nodemailer.SendMailOptions = {
       from: "suporte",

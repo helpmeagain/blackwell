@@ -9,7 +9,6 @@ import { Consultation } from '@/domain/entities/consultation';
 import { PrismaConsultationMapper } from '../mappers/prisma-consultation-mapper';
 import { PaginationParams } from '@/application/common/pagination-params';
 import { CacheRepository } from '@/infrastructure/cache/cache-repository';
-import { UniqueEntityId } from '@/domain/value-objects/unique-entity-id/unique-entity-id';
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
@@ -52,6 +51,14 @@ export class PrismaPatientRepository implements PatientRepository {
   }
 
   async findByCpf(cpf: string): Promise<Patient | null> {
+    const cacheHit = await this.cache.get(`patient:${cpf}`);
+
+    if (cacheHit) {
+      const cachedData = JSON.parse(cacheHit);
+      const patient = PrismaPatientMapper.toDomain(cachedData);
+      return patient;
+    }
+
     const patient = await this.prisma.patient.findUnique({
       where: { cpf },
     });
@@ -60,7 +67,11 @@ export class PrismaPatientRepository implements PatientRepository {
       return null;
     }
 
-    return PrismaPatientMapper.toDomain(patient);
+    const patientToDomain = PrismaPatientMapper.toDomain(patient);
+    const persistenceData = PrismaPatientMapper.toPersistence(patientToDomain);
+    await this.cache.set(`patient:${patientToDomain.cpf}`, JSON.stringify(persistenceData))
+
+    return patientToDomain;
   }
 
   async findBySlug(slug: string): Promise<Patient[] | null> {
