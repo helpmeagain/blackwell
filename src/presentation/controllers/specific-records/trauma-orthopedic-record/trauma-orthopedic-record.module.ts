@@ -10,15 +10,18 @@ import { EditTraumaOrthopedicRecordController } from "./edit-record-by-id/edit-r
 import { FetchTraumaOrthopedicRecordController } from "./fetch-records-ids-by-clinician-id/fetch-records-by-clinician-id.controller";
 import { GetByIdTraumaOrthopedicController } from "./get-record-by-id/get-record-by-id.controller";
 import { GetByPatientIdTraumaOrthopedicController } from "./get-record-by-patient-id/get-record-by-patient-id.controller";
+import { GetTraumaRecordPdfController } from "./export-pdf/export-pdf.controller";
+import { PdfModule } from "@/infrastructure/pdf/pdf.module";
 
 @Module({
-  imports: [PersistenceModule],
+  imports: [PersistenceModule, PdfModule],
   controllers: [
     CreateTraumaOrthopedicRecordController,
     EditTraumaOrthopedicRecordController,
     FetchTraumaOrthopedicRecordController,
     GetByIdTraumaOrthopedicController,
     GetByPatientIdTraumaOrthopedicController,
+    GetTraumaRecordPdfController,
   ],
   providers: [
     NestCreateTraumaOrthopedicRecordUseCase, 
