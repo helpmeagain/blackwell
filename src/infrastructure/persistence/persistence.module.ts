@@ -17,6 +17,8 @@ import { PrismaCardiorespiratoryRecordRepository } from './prisma/repositories/p
 import { TraumaOrthopedicRecordRepository } from '@/application/repositories/trauma-orthopedic-record-repository';
 import { PrismaTraumaOrthopedicRecordRepository } from './prisma/repositories/prisma-trauma-orthopedic-record-repository';
 import { CacheModule } from '../cache/cache.module';
+import { PasswordResetRepository } from '@/application/repositories/password-reset-repository';
+import { PrismaPasswordResetTokenRepository } from './prisma/repositories/prisma-password-reset-repository';
 
 @Module({
   imports: [CacheModule],
@@ -41,6 +43,10 @@ import { CacheModule } from '../cache/cache.module';
     {
       provide: TraumaOrthopedicRecordRepository,
       useClass: PrismaTraumaOrthopedicRecordRepository,
+    },
+    {
+      provide: PasswordResetRepository,
+      useClass: PrismaPasswordResetTokenRepository,
     }
   ],
   exports: [
@@ -52,7 +58,8 @@ import { CacheModule } from '../cache/cache.module';
     UniversalMedicalRecordRepository,
     NeurofunctionalRecordRepository,
     CardiorespiratoryRecordRepository,
-    TraumaOrthopedicRecordRepository
+    TraumaOrthopedicRecordRepository,
+    PasswordResetRepository
   ],
 })
 export class PersistenceModule {}

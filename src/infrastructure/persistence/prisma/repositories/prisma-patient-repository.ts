@@ -101,6 +101,13 @@ export class PrismaPatientRepository implements PatientRepository {
       this.cache.delete(`patient:${data.id}`),
     ]);
   }
+  
+  async updatePassword(id: string, password: string): Promise<void> {
+    await this.prisma.patient.update({
+      where: { id },
+      data: { password },
+    });
+  }
 
   async delete(patient: Patient): Promise<void> {
     const data = PrismaPatientMapper.toPersistence(patient);

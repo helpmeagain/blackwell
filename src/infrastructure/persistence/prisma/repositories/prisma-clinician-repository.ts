@@ -69,6 +69,13 @@ export class PrismaClinicianRepository implements ClinicianRepository {
     await this.prisma.clinician.update({ where: { id: data.id }, data });
   }
 
+  async updatePassword(id: string, password: string): Promise<void> {
+    await this.prisma.clinician.update({
+      where: { id },
+      data: { password },
+    });
+  }
+
   async delete(clinician: Clinician): Promise<void> {
     const data = PrismaClinicianMapper.toPersistence(clinician);
     await this.prisma.clinician.delete({ where: { id: data.id } });

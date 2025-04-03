@@ -9,5 +9,6 @@ export abstract class PatientRepository {
   abstract findMany: (params: PaginationParams) => Promise<Patient[]>;
   abstract create: (patient: Patient) => Promise<void>;
   abstract save: (patient: Patient) => Promise<void>;
+  abstract updatePassword: (id: string, password: string) => Promise<void>;
   abstract delete: (consultation: Patient) => Promise<void>;
 }
