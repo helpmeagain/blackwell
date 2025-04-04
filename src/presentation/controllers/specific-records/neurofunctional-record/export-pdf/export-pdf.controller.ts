@@ -35,14 +35,14 @@ export class GetNeuroRecordPdfController {
 
   @Get()
   @ApiOperation({
-    summary: "Obter PDF de um registro genérico por ID",
+    summary: "Export a PDF file of a neurofunctional record by id",
     description:
-      "Gera e retorna um PDF com os detalhes do registro especificado.",
+      "Generate and return a PDF file with neurofunctional record.",
   })
   @ApiBearerAuth()
-  @ApiOkResponse({ description: "Retorna o PDF do registro" })
-  @ApiNotFoundResponse({ description: "Registro não encontrado" })
-  @ApiUnauthorizedResponse({ description: "Usuário não autorizado" })
+  @ApiOkResponse({ description: "Return a PDF file of the record" })
+  @ApiNotFoundResponse({ description: "Record not found" })
+  @ApiUnauthorizedResponse({ description: "User not authorized" })
   async handle(
     @Param("id") id: string,
     @CurrentUser() user: UserPayload,

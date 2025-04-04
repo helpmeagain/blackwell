@@ -18,31 +18,31 @@ import { Response } from "express";
 import { CurrentUser } from "@/infrastructure/auth/current-user-decorator";
 import { UserPayload } from "@/infrastructure/auth/jwt.strategy";
 import { PdfService } from "@/infrastructure/pdf/pdf.service";
-import { CardiorespiratoryRecordPdfGenerator } from "@/infrastructure/pdf/specific-record/cardio";
 import { BadRequest } from "@/application/common/error-handler/errors/bad-request";
 import { ResourceNotFound } from "@/application/common/error-handler/errors/resource-not-found";
 import { UnauthorizedUser } from "@/application/common/error-handler/errors/unauthorized";
-import { NestGetCardiorespiratoryByIdUseCase } from "@/infrastructure/adapter/specific-records/cardiorespiratory-record/nest-get-record-by-id";
+import { NestGetTraumaOrthopedicByIdUseCase } from "@/infrastructure/adapter/specific-records/trauma-orthopedic-record/nest-get-record-by-id";
+import { OrthopedicRecordPdfGenerator } from "@/infrastructure/pdf/specific-record/trauma";
 
-@Controller("cardiorespiratory-record/export-pdf/:id")
-@ApiTags("Specific records - Cardiorespiratory Record")
-export class GetCardioRecordPdfController {
+@Controller("trauma-orthopedic-record/export-pdf/:id")
+@ApiTags("Specific records - Trauma Orthopedic Record")
+export class GetTraumaRecordPdfController {
   constructor(
-    private readonly getById: NestGetCardiorespiratoryByIdUseCase,
+    private readonly getById: NestGetTraumaOrthopedicByIdUseCase,
     private readonly pdfService: PdfService,
-    private readonly generator: CardiorespiratoryRecordPdfGenerator
+    private readonly generator: OrthopedicRecordPdfGenerator
   ) {}
 
   @Get()
   @ApiOperation({
-    summary: "Obter PDF de um registro genérico por ID",
+    summary: "Export a PDF file of a trauma orthopedic record by id",
     description:
-      "Gera e retorna um PDF com os detalhes do registro especificado.",
+      "Generate and return a PDF file with trauma orthopedic record.",
   })
   @ApiBearerAuth()
-  @ApiOkResponse({ description: "Retorna o PDF do registro" })
-  @ApiNotFoundResponse({ description: "Registro não encontrado" })
-  @ApiUnauthorizedResponse({ description: "Usuário não autorizado" })
+  @ApiOkResponse({ description: "Return a PDF file of the record" })
+  @ApiNotFoundResponse({ description: "Record not found" })
+  @ApiUnauthorizedResponse({ description: "User not authorized" })
   async handle(
     @Param("id") id: string,
     @CurrentUser() user: UserPayload,
@@ -62,11 +62,11 @@ export class GetCardioRecordPdfController {
       }
     }
 
-    const { cardiorespiratoryRecord } = result.value;
+    const { traumaorthopedicRecord } = result.value;
 
     try {
       const pdfBuffer = await this.pdfService.generatePdf(
-        cardiorespiratoryRecord,
+        traumaorthopedicRecord,
         this.generator
       );
 
