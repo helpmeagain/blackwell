@@ -110,6 +110,7 @@ export class PrismaPatientRepository implements PatientRepository {
     await Promise.all([
       this.prisma.patient.update({ where: { id: data.id }, data }),
       this.cache.delete(`patient:${data.id}`),
+      this.cache.delete(`patient:${data.cpf}`),
     ]);
   }
   

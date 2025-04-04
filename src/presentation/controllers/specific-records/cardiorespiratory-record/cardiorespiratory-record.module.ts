@@ -10,22 +10,29 @@ import { FetchCardiorespiratoryRecordController } from "./fetch-records-ids-by-c
 import { NestFetchCardiorespiratoryIdsByClinicianIdUseCase } from "@/infrastructure/adapter/specific-records/cardiorespiratory-record/nest-fetch-records-ids-by-clinician-id-use-case";
 import { EditCardiorespiratoryRecordController } from "./edit-record-by-id/edit-record-by-id.controller";
 import { NestEditCardiorespiratoryByIdUseCase } from "@/infrastructure/adapter/specific-records/cardiorespiratory-record/nest-edit-record";
+import { GetCardioRecordPdfController } from "./export-pdf/export-pdf.controller";
+import { PdfModule } from "@/infrastructure/pdf/pdf.module";
+import { PdfService } from "@/infrastructure/pdf/pdf.service";
+import { CardiorespiratoryRecordPdfGenerator } from "@/infrastructure/pdf/specific-record/cardio";
 
 @Module({
-  imports: [PersistenceModule],
+  imports: [PersistenceModule, PdfModule],
   controllers: [
-    CreateCardiorespiratoryRecordController, 
-    GetByIdCardiorespiratoryController, 
+    CreateCardiorespiratoryRecordController,
+    GetByIdCardiorespiratoryController,
     GetByPatientIdCardiorespiratoryController,
     FetchCardiorespiratoryRecordController,
-    EditCardiorespiratoryRecordController
+    EditCardiorespiratoryRecordController,
+    GetCardioRecordPdfController,
   ],
   providers: [
-    NestCreateCardiorespiratoryRecordUseCase, 
+    NestCreateCardiorespiratoryRecordUseCase,
     NestGetCardiorespiratoryByIdUseCase,
     NestGetCardiorespiratoryByPatientIdUseCase,
     NestFetchCardiorespiratoryIdsByClinicianIdUseCase,
     NestEditCardiorespiratoryByIdUseCase,
-  ]
+    PdfService,
+    CardiorespiratoryRecordPdfGenerator,
+  ],
 })
 export class CardiorespiratoryRecordModule {}
