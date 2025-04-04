@@ -25,7 +25,7 @@ export class PdfService {
   }
 
   private addHeader(doc: typeof PDFDocument) {
-    const logoPath = "docs/images/logo.png";
+    const logoPath = "src/presentation/utils/images/logo.png";
     const headerText = "GPF - Gestão de prontuários de fisioterapia";
     const pageWidth = doc.page.width;
     const margin = 50;
