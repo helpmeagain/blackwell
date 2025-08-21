@@ -2,7 +2,7 @@
     "explorer.compactFolders": false,
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
-        "package.json": ".eslint*, eslint*, prettier*, tsconfig*, vite*, pnpm-lock*, yarn.lock*, bun.lockb, nest*, package-lock.json",
+        "package.json": ".eslint*, eslint*, prettier*, tsconfig*, vite*, pnpm-lock*, yarn.lock*, bun.lockb, nest*, package-lock.json, prisma.config.ts",
         ".gitignore": ".gitattributes",
         "docker-compose.yml": "*.dockerfile, .dockerignore", 
         ".env.local": ".env*",
