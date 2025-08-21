@@ -10,8 +10,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker-password
       POSTGRES_DB: blackwell
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
     volumes:
       - 'db:/var/lib/postgresql/data'
     networks:
@@ -24,6 +22,8 @@ services:
       - 6379:6379
     volumes:
       - 'cache:/var/lib/redis/data'
+    networks:
+      - blackwell-network
     
   blackwell-api:
     container_name: blackwell-api
@@ -34,12 +34,16 @@ services:
       - 8080:8080
     environment:
       - DATABASE_URL=postgresql://postgres:docker-password@postgres:5432/blackwell?schema=public
+      - REDIS_HOST=redis
       - PORT=8080
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
+      - redis
     networks:
       - blackwell-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
 
 networks:
   blackwell-network:

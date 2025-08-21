@@ -1,4 +1,4 @@
-FROM node:20 AS base
+FROM node:24-alpine3.21 AS base
 
 RUN npm i -g pnpm
 
@@ -17,7 +17,7 @@ RUN pnpm prisma generate
 RUN pnpm build
 RUN pnpm prune --prod
 
-FROM node:20-alpine3.19 AS deploy
+FROM node:24-alpine3.21 AS deploy
 
 WORKDIR /usr/src/app
 RUN npm i -g pnpm prisma
