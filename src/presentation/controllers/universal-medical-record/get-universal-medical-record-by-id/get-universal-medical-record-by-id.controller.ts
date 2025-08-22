@@ -1,6 +1,7 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -16,6 +17,7 @@ import {
   exampleResponse,
 } from './get-universal-medical-record-by-id-schema';
 
+@ApiExcludeController()
 @Controller('universal-medical-record/:id')
 export class GetUniversalMedicalRecordByIdController {
   constructor(

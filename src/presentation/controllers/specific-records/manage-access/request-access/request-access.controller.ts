@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiQuery,
@@ -24,6 +25,7 @@ import {
   ParamValidationBody,
 } from './request-access-schema';
 
+@ApiExcludeController()
 @Controller('manage-access/request-access/record-id/:recordId/userId/:userId')
 export class RequestAccessController {
   constructor(private getRequestAccessUseCase: NestRequestAccessUseCase) {}

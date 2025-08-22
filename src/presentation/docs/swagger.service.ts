@@ -1,5 +1,5 @@
 import { INestApplication, Injectable } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
 import { name, description, version, homepage } from '../../../package.json';
 
 @Injectable()
@@ -16,7 +16,10 @@ export class SwaggerService {
       .setExternalDoc('Source code', homepage)
       .addBearerAuth()
       .build();
-    const document = SwaggerModule.createDocument(app, config);
+    const options: SwaggerDocumentOptions = {
+      autoTagControllers: false,
+    };
+    const document = SwaggerModule.createDocument(app, config, options);
     SwaggerModule.setup('api', app, document, {
       swaggerOptions: {
         tagsSorter: 'alpha',

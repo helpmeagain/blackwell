@@ -9,6 +9,7 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiExcludeController,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -27,6 +28,7 @@ import { CurrentUser } from '@/infrastructure/auth/current-user-decorator';
 import { UserPayload } from '@/infrastructure/auth/jwt.strategy';
 import { UnauthorizedUser } from '@/application/common/error-handler/errors/unauthorized';
 
+@ApiExcludeController()
 @Controller('universal-medical-record/:id')
 export class EditMedicalRecordByIdController {
   constructor(private editMedicalRecordById: NestEditUniversalMedicalRecordByIdUseCase) {}
