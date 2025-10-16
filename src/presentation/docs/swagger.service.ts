@@ -1,6 +1,7 @@
 import { INestApplication, Injectable } from '@nestjs/common';
 import { DocumentBuilder, SwaggerDocumentOptions, SwaggerModule } from '@nestjs/swagger';
 import { name, description, version, homepage } from '../../../package.json';
+import * as fs from 'fs';
 
 @Injectable()
 export class SwaggerService {
@@ -15,12 +16,16 @@ export class SwaggerService {
       )
       .setExternalDoc('Source code', homepage)
       .addBearerAuth()
+      .addServer('http://localhost:8080', 'Localhost')
+      .addServer('http://localhost:3000', 'Localhost')
+      .addServer('https://blackwell.onrender.com', 'Production')
       .build();
     const options: SwaggerDocumentOptions = {
       autoTagControllers: false,
     };
     const document = SwaggerModule.createDocument(app, config, options);
     SwaggerModule.setup('api', app, document, {
+      jsonDocumentUrl: 'api-json',
       swaggerOptions: {
         tagsSorter: 'alpha',
         operationsSorter: function (
@@ -45,5 +50,6 @@ export class SwaggerService {
         },
       },
     });
+    fs.writeFileSync('./docs/swagger.json', JSON.stringify(document));
   }
 }

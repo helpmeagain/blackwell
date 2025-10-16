@@ -20,11 +20,34 @@ else
 fi
 
 # Prompt user for PostgreSQL URL
-read -p "Enter your PostgreSQL URL: " DATABASE_URL
+DEFAULT_DB_URL="postgresql://postgres:docker-password@localhost:5432/blackwell?schema=public"
+read -p "Enter your PostgreSQL URL (default: $DEFAULT_DB_URL): " DATABASE_URL
+DATABASE_URL=${DATABASE_URL:-$DEFAULT_DB_URL}
 
-# Create .env file and set DATABASE_URL
+
+# Prompt user for Redis configuration
+DEFAULT_REDIS_HOST="127.0.0.1"
+DEFAULT_REDIS_PORT="6379"
+DEFAULT_REDIS_DB="0"
+
+read -p "Enter your Redis host (default: $DEFAULT_REDIS_HOST): " REDIS_HOST
+REDIS_HOST=${REDIS_HOST:-$DEFAULT_REDIS_HOST}
+
+read -p "Enter your Redis port (default: $DEFAULT_REDIS_PORT): " REDIS_PORT
+REDIS_PORT=${REDIS_PORT:-$DEFAULT_REDIS_PORT}
+
+read -p "Enter your Redis DB (default: $DEFAULT_REDIS_DB): " REDIS_DB
+REDIS_DB=${REDIS_DB:-$DEFAULT_REDIS_DB}
+
+# Create .env file and set environment variables
 cat <<EOL > .env
+# Database
 DATABASE_URL="${DATABASE_URL}"
+
+# Redis
+REDIS_HOST="${REDIS_HOST}"
+REDIS_PORT="${REDIS_PORT}"
+REDIS_DB="${REDIS_DB}"
 EOL
 
 # Generate files for Prisma data model
@@ -70,4 +93,13 @@ else
     yarn build
 fi
 
-echo "Setup complete. Run the application using 'npm start', 'pnpm start', or 'yarn start'."
+echo "------------------------------------------------------------"
+echo "✅ Setup complete. Run the application using:"
+if [[ "$PACKAGE_MANAGER" == "npm" ]]; then
+    echo "   npm start"
+elif [[ "$PACKAGE_MANAGER" == "pnpm" ]]; then
+    echo "   pnpm start"
+else
+    echo "   yarn start"
+fi
+echo "------------------------------------------------------------"
